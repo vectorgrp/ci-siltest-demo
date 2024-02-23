@@ -1,0 +1,17 @@
+ECU/SUT/
+test-*
+*.vscenario
+*.vtestunit
+*.dll
+environment-make/nodelayer/
+vTESTstudio/*.settings
+vTESTstudio/obj_LightControl
+**/*.vtuexe
+Default.venvironment/
+SIP/
+ECU/Appl/GenData/
+ECU/Appl/GenDataVtt/
+ECU/Log/
+ECU/Solution/
+ECU/*_workingCopy.*
+ECU/MakeParameters.xml

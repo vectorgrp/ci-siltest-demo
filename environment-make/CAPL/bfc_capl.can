@@ -1,0 +1,141 @@
+/*@!Encoding:1252*/
+includes
+{
+  #include "capl.cin"
+  #include "bfc_impl.cin"
+}
+
+variables
+{
+  const double LightIntensityToOff = 70;
+  const double LightIntensityToOn = 60;
+  const dword HysteresisTimeToOff = 3 * 100000;
+  const dword HysteresisTimeToOn = 2 * 100000;
+  const dword ModelCycleTime = 10; // ms
+  mstimer statemachinetimer;
+  enum AutoModeStates { Enter, LightOff, LightOn, LightToOff, LightToOn};
+  enum AutoModeStates automode;
+}
+
+on preStart
+{
+  if ( implementation == VTT_DLL || implementation == VTT_Ext )
+  {
+    ILNodeControlSimulationOff("%NODE_NAME%");
+  }
+}
+
+on signal LightSwitch
+{
+  if ( implementation == CAPL )
+  {
+    switch ($LightSwitch) {
+      case (vtSig_LightSwitch::Off):
+        $HeadLight = vtSig_HeadLight::Off;
+        break;
+      case (vtSig_LightSwitch::On):
+        $HeadLight = vtSig_HeadLight::On;
+        break;
+      case (vtSig_LightSwitch::Auto):
+        automode = Enter;
+        setTimerCyclic(statemachinetimer,ModelCycleTime);
+        write("Entering automode");
+        break;
+      case (vtSig_LightSwitch::SNA):
+        $HeadLight = vtSig_HeadLight::On;
+        write("SNA received as LightSwitch value");
+        break;
+      default:
+        $HeadLight = vtSig_HeadLight::On;
+        write("Invalid value received for LightSwitch");break;
+    }
+    if ( $LightSwitch != vtSig_LightSwitch::Auto )
+    {
+      cancelTimer(statemachinetimer);
+    }
+  }
+}
+
+on timer statemachinetimer
+{
+  enum VtSig_LightSwitch prev_Sw;
+  enum AutoModeStates prev_automode;
+  dword timeStamp = 0;
+  
+  if ( implementation == CAPL )
+  {
+    switch(automode)
+    {
+      case (Enter):
+        timeStamp = timeNow();
+        if (@Interface::LightIntensity > LightIntensityToOff)
+        {
+          automode = LightOff;
+        } else {
+          automode = LightOn;
+        }
+        break;
+      case (LightOff):
+        if (@Interface::LightIntensity < LightIntensityToOn)
+      {
+        automode = LightToOn;
+      } else {
+        timeStamp = timeNow();
+      }
+        break;
+      case (LightOn):
+        if (@Interface::LightIntensity > LightIntensityToOff)
+        {
+          automode = LightToOff;
+        } else {
+          timeStamp = timeNow();
+        }
+        break;
+      case (LightToOff):
+        if (@Interface::LightIntensity <= LightIntensityToOff)
+      {
+        automode = LightOn;
+      }
+        if (timeStamp + HysteresisTimeToOff <= timeNow())
+        {
+          automode = LightOff;
+        }
+        break;
+      case (LightToOn):
+        if (@Interface::LightIntensity >= LightIntensityToOn)
+      {
+        automode = LightOff;
+      }
+        if (timeStamp + HysteresisTimeToOn <= timeNow())
+        {
+          automode = LightOn;
+        }
+        break;
+    }
+    if (automode == LightOn)
+    {
+      //@Interface::Debug = @Interface::LightIntensity;
+      $HeadLight = vtSig_HeadLight::On;
+    }
+    if (automode == LightOff)
+    {
+      $HeadLight = vtSig_HeadLight::Off;
+    }
+    if (automode != prev_automode)
+    {
+      write("Automode is now %d",automode);
+      prev_automode = automode;
+    }
+  }
+}
+
+on sysvar Interface::LightIntensity
+{
+  double val;
+  
+  if ( implementation == VTT_DLL || implementation == VTT_Ext )
+  {
+    sysSetVariableFloat("VTT::BFC::Adc","AdcLightIntensity",@this*3.3/100);
+    //@VTT::BFC::Adc::AdcLightIntensity = @this*3.3/100;
+  }
+}

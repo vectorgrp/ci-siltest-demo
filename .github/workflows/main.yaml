@@ -1,0 +1,207 @@
+name: call-workflow
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  checks: write
+  
+jobs:
+  build-sut:
+    runs-on: vtt-6.3.53
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Move Sip
+        shell: powershell
+        run : |
+          # Ensure the destination directory exists
+          $destination = ".\Sip"
+          if (-not (Test-Path $destination)) {
+            New-Item -ItemType Directory -Path $destination
+          }
+          Move-Item -Path "C:\Microsar-Sip\*" -Destination $destination
+      - name: Run DaVinci & VTT
+        run: |
+            VttMake make ./ECU/LightControl.vttmake;
+            if(-Not $?)
+            {
+              Write-Host "VttMake step failed." -ForegroundColor red
+              Exit -1
+            }       
+      - name: Export ECU/SUT
+        uses: actions/upload-artifact@v3
+        env: 
+          http_proxy: ""
+          https_proxy: "" 
+        with:
+          name: SUT
+          path: ./ECU/SUT
+          retention-days: 7
+      - name: Check dll 
+        run : ls ECU/SUT/
+          
+  compile-tests:
+    runs-on: canoe-17.3.91
+    needs: [build-sut]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Fetch SUT Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: SUT
+          path: ECU/SUT     
+        env:
+          http_proxy: ""
+          https_proxy: ""
+      - name: Compile tests
+        run : TestUnitBuildCLI ./vTeststudio/LightControl.vtsoproj
+      - name: Export compiled tests
+        uses: actions/upload-artifact@v3
+        env: 
+          http_proxy: ""
+          https_proxy: "" 
+        with:
+          name: Compiled tests
+          path: |
+            ./vTeststudio/auto
+            ./vTeststudio/basic
+          retention-days: 7
+
+          
+  compile-simulation:
+    needs: [build-sut, compile-tests]
+    runs-on: canoe-17.3.91
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Fetch SUT Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: SUT
+          path: ECU/SUT     
+        env:
+          http_proxy: ""
+          https_proxy: ""
+      - name: Fetch test artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Compiled tests
+          path: vTESTstudio  
+        env:
+          http_proxy: ""
+          https_proxy: ""
+      - name: Compile simulation
+        run: |
+            environment-make -o ./environment-make -A Win32 ./environment-make/venvironment.yaml;
+            test-unit-make -e ./environment-make/Default.venvironment -o ./environment-make/ ./vTestStudio/basic/basic.vtuexe ./vTestStudio/auto/auto.vtuexe;
+      - name: Export environment-make
+        uses: actions/upload-artifact@v3
+        env: 
+          http_proxy: ""
+          https_proxy: "" 
+        with:
+          name: environment-make
+          path: ./environment-make/
+          retention-days: 7
+ 
+  run-tests-simulation:
+    needs: compile-simulation
+    runs-on: canoe-17.3.91
+    strategy:
+      matrix:
+        TESTNAME: [auto, basic]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Fetch SUT Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: SUT
+          path: ECU/SUT        
+        env:
+          http_proxy: ""
+          https_proxy: ""
+      - name: Fetch venvironment artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: environment-make
+          path: environment-make        
+        env:
+          http_proxy: ""
+          https_proxy: ""
+      - name: Fetch test artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Compiled tests
+          path: vTESTstudio       
+        env:
+          http_proxy: ""
+          https_proxy: ""
+      - name: run_canoe
+        id: canoe
+        run : |
+          & canoe4sw-se ./environment-make/Default.venvironment -d ./test-${{ matrix.TESTNAME }}.vtestunit --win32 --port-rtk-api none --test-unit ./environment-make/${{ matrix.TESTNAME }}.vtestunit;
+          echo "The last exit code is  $LASTEXITCODE"
+      - name: Copy Test Results
+        if: always()
+        run : |
+          Copy-Item -Path "./test-${{ matrix.TESTNAME }}.vtestunit/TestReports/" -Destination "./TestReports/" -Recurse ;
+          New-Item -ItemType "directory" "./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files" ; Move-Item -Path "./test-${{ matrix.TESTNAME }}.vtestunit/*.wlog","./test-${{ matrix.TESTNAME }}.vtestunit/*.wlog.txt" -Destination "./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files/";
+          Write-Host "exporting wlog binary log files to readable format ...";
+          Get-ChildItem ./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files/ -Filter *.wlog | 
+          Foreach-Object {
+            $fullName = $_.FullName
+            Write-Host "  - exporting $fullName to readable asci text ...";
+            $content = wlogdump.exe $fullName
+            $content | Set-Content ($fullName + '.txt')
+          }
+      - name: Convert Test Report to XUnit
+        uses: ./.github/actions/convert-vtestreport-to-xunit
+        with:
+          vTestReportInputFile: "./TestReports/${{ matrix.TESTNAME }}.vtestreport"
+          xUnitOutputFile: "./TestReports/${{ matrix.TESTNAME }}_xunit.xml"
+      - name: Export Test Reports
+        if: always()
+        uses: actions/upload-artifact@v3
+        env: 
+          http_proxy: ""
+          https_proxy: "" 
+        with:
+          name: Test Reports
+          path: |
+            ./TestReports/
+            ./test-${{ matrix.TESTNAME }}/wlog-files
+          retention-days: 7
+
+  display-test-report:
+    if: ${{ !cancelled() }}
+    needs: run-tests-simulation
+    runs-on: canoe-17.3.91
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Fetch testreport artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Test Reports
+          path: .        
+        env:
+          http_proxy: ""
+          https_proxy: "" 
+      - uses: dorny/test-reporter@v1.7.0
+        with:
+          fail-on-error: "false"
+          name: CANoe4SW_SE Tests                   # Name of the check run which will be created
+          path: "./TestReports/*_xunit.xml"  # Path to test results
+          reporter: java-junit                      # Format of test results
+          
+        env:
+          # Explicitly disable the Proxy, as NODE seems to ignore no_proxy
+          http_proxy: ""
+          https_proxy: ""
+

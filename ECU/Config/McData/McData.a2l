@@ -1,0 +1,97 @@
+/*********************************************************************************************************************
+ *  COPYRIGHT                                                                                                        *
+ *  ---------------------------------------------------------------------------------------------------------------- *
+ *  Copyright (c) 2013 - 2022 by Vector Informatik GmbH.                                        All rights reserved. *
+ *                                                                                                                   *
+ *                This software is copyright protected and proprietary to Vector Informatik GmbH.                    *
+ *                Vector Informatik GmbH grants to you only those rights as set out in the license conditions.       *
+ *                All other rights remain with Vector Informatik GmbH.                                               *
+ *  ---------------------------------------------------------------------------------------------------------------- *
+ *  FILE DESCRIPTION                                                                                                 *
+ *  ---------------------------------------------------------------------------------------------------------------- *
+ *             File: McData.a2l                                                                                      *
+ *      Description: MICROSAR A2L file                                                                               *
+ *     Generated at: 2022-04-29 13:17:49                                                                             *
+ *        Generator: MICROSAR McDataConverter, Version 1.1.0.0                                                       *
+ *  ---------------------------------------------------------------------------------------------------------------- *
+ *  CUSTOMER INFORMATION                                                                                             *
+ *  ---------------------------------------------------------------------------------------------------------------- *
+ *         Customer:                                                                                                 *
+ *    Serial Number: PAI3524                                                                                         *
+ *  Delivery Number:                                                                                                 *
+ *      Expiry Date:                                                                                                 *
+ *********************************************************************************************************************/
+
+
+    /begin RECORD_LAYOUT VECTOR_RL_BOOLEAN
+      FNC_VALUES 1 UBYTE ROW_DIR DIRECT
+    /end RECORD_LAYOUT
+
+    /begin RECORD_LAYOUT VECTOR_RL_FLOAT32_IEEE
+      FNC_VALUES 1 FLOAT32_IEEE ROW_DIR DIRECT
+    /end RECORD_LAYOUT
+
+    /begin RECORD_LAYOUT VECTOR_RL_FLOAT64_IEEE
+      FNC_VALUES 1 FLOAT64_IEEE ROW_DIR DIRECT
+    /end RECORD_LAYOUT
+
+    /begin RECORD_LAYOUT VECTOR_RL_SBYTE
+      FNC_VALUES 1 SBYTE ROW_DIR DIRECT
+    /end RECORD_LAYOUT
+
+    /begin RECORD_LAYOUT VECTOR_RL_SLONG
+      FNC_VALUES 1 SLONG ROW_DIR DIRECT
+    /end RECORD_LAYOUT
+
+    /begin RECORD_LAYOUT VECTOR_RL_SWORD
+      FNC_VALUES 1 SWORD ROW_DIR DIRECT
+    /end RECORD_LAYOUT
+
+    /begin RECORD_LAYOUT VECTOR_RL_UBYTE
+      FNC_VALUES 1 UBYTE ROW_DIR DIRECT
+    /end RECORD_LAYOUT
+
+    /begin RECORD_LAYOUT VECTOR_RL_ULONG
+      FNC_VALUES 1 ULONG ROW_DIR DIRECT
+    /end RECORD_LAYOUT
+
+    /begin RECORD_LAYOUT VECTOR_RL_UWORD
+      FNC_VALUES 1 UWORD ROW_DIR DIRECT
+    /end RECORD_LAYOUT
+
+    /begin GROUP BswM ""
+    /end GROUP
+
+    /begin GROUP CanIf ""
+    /end GROUP
+
+    /begin GROUP CanNm ""
+    /end GROUP
+
+    /begin GROUP CanSM ""
+    /end GROUP
+
+    /begin GROUP Com ""
+    /end GROUP
+
+    /begin GROUP ComM ""
+    /end GROUP
+
+    /begin GROUP EcuM ""
+    /end GROUP
+
+    /begin GROUP Fee ""
+    /end GROUP
+
+    /begin GROUP Nm ""
+    /end GROUP
+
+    /begin GROUP NvM ""
+    /end GROUP
+
+    /begin GROUP PduR ""
+    /end GROUP
+
+    /begin GROUP Rte ""
+    /end GROUP
+

@@ -1,0 +1,17 @@
+name: 'Conver-vTestReport-to-xunit'
+description: 'Converts a vtestreport file to a xunit file'
+inputs:
+  vTestReportInputFile:
+    description: 'Path of the vTestReport input file'
+    required: true
+  xUnitOutputFile:
+    description: 'Path of the xunit output file'
+    required: true    
+runs:
+  using: "composite"
+  steps:
+    - name: convert-to-xunit
+      shell: powershell
+      run : |
+        write-host "Converting ${{ inputs.vTestReportInputFile }} to ${{ inputs.xUnitOutputFile }}"
+        & ReportViewerCli -r "${{ inputs.vTestReportInputFile }}" -xu "${{ inputs.xUnitOutputFile }}"
