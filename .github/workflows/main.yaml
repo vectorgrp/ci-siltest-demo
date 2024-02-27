@@ -24,6 +24,14 @@ jobs:
             New-Item -ItemType Directory -Path $destination
           }
           Move-Item -Path "C:\Microsar-Sip\*" -Destination $destination
+          # Ensure the files have been moved
+          $itemsInDestination = Get-ChildItem -Path $destination
+          if ($itemsInDestination.Count -gt 0) {
+            Write-Output "Files have been moved to $destination."
+          } else {
+            Write-Output "No files found in $destination."
+            exit 1 # Exit the script with an error status
+          }
       - name: Run DaVinci & VTT
         run: |
             VttMake make ./ECU/LightControl.vttmake;
