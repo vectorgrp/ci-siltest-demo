@@ -7,6 +7,7 @@ on:
 
 permissions:
   checks: write
+  contents: read
   
 jobs:
   build-sut:
@@ -14,8 +15,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: Move Sip
         shell: powershell
         run : |
@@ -51,8 +50,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: Fetch SUT Artifact
         uses: actions/download-artifact@v3
         with:
@@ -82,8 +79,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: Fetch SUT Artifact
         uses: actions/download-artifact@v3
         with:
@@ -123,8 +118,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: Fetch SUT Artifact
         uses: actions/download-artifact@v3
         with:
