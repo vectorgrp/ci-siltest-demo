@@ -25,7 +25,7 @@ jobs:
           if (-not (Test-Path $destination)) {
             New-Item -ItemType Directory -Path $destination
           }
-          Copy-Item -Path "C:\Microsar-Sip\*" -Destination $destination -Recurse
+          Copy-Item -Path "C:\Microsar-Sip\*" -Destination $destination -Recurse -Force
           # Ensure the files have been moved
           $itemsInDestination = Get-ChildItem -Path $destination
           if ($itemsInDestination.Count -gt 0) {
