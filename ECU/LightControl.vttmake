@@ -20,6 +20,7 @@
             <IncludeFolders>
                 <IncludeFolder>Appl\Simulink\slprj\autosar\_sharedutils</IncludeFolder>
                 <IncludeFolder>Appl\Include</IncludeFolder>
+                <IncludeFolder>Appl\GenDataVtt</IncludeFolder>
             </IncludeFolders>
         </GenerateVcxProject>
 
