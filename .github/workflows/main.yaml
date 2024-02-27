@@ -15,11 +15,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with: 
+          clean: "false"
       - name: Copy Sip to working directory
         shell: powershell
         run : |
           # Ensure the destination directory exists
-          $destination = ".\Sip"
+          $destination = ".\SIP"
           if (-not (Test-Path $destination)) {
             New-Item -ItemType Directory -Path $destination
           }
