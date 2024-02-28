@@ -57,7 +57,7 @@ jobs:
         run : ls ECU/SUT/
           
   compile-tests:
-    runs-on: [self-hosted, Windows, X64]
+    runs-on: [self-hosted, Windows, canoe]
     needs: [build-sut]
     steps:
       - name: Checkout repository
@@ -87,7 +87,7 @@ jobs:
           
   compile-simulation:
     needs: [build-sut, compile-tests]
-    runs-on: [self-hosted, Windows, X64]
+    runs-on: [self-hosted, Windows, canoe]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -123,7 +123,7 @@ jobs:
  
   run-tests-simulation:
     needs: compile-simulation
-    runs-on: [self-hosted, Windows, X64]
+    runs-on: [self-hosted, Windows, canoe]
     strategy:
       matrix:
         TESTNAME: [auto, basic]
@@ -193,7 +193,7 @@ jobs:
   display-test-report:
     if: ${{ !cancelled() }}
     needs: run-tests-simulation
-    runs-on: [self-hosted, Windows, X64]
+    runs-on: [self-hosted, Windows, canoe]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
