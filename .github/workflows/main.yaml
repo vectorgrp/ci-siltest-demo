@@ -16,13 +16,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Cache ECU Folder
+      - name: Cache SUT
         id: cache-sut
         uses: actions/cache@v4
         with:
           path: |
             ./ECU/SUT
           key: ${{ hashFiles('./ECU/**') }}
+
+      - name: Cache BSW
+        id: cache-bsw
+        uses: actions/cache@v4
+        with:
+          path: |
+            ./ECU/Appl/GenDataVTT
+          key: ${{ hashFiles('./ECU/LightControl.dpa','./ECU/Config') }}
 
       - name: Copy Sip to working directory
         if: steps.cache-sut.outputs.cache-hit != 'true'
@@ -47,7 +55,12 @@ jobs:
       - name: Run DaVinci & VTT
         if: steps.cache-sut.outputs.cache-hit != 'true'
         run: |
-          VttMake make ./ECU/LightControl.vttmake;
+          if ${{ steps.cache-bsw.outputs.cache-hit != 'true' }}{
+            VttMake make ./ECU/LightControl.vttmake;
+          }
+          else {
+            VttMake make ./ECU/LightControl.vttmake --excludeDVCfgCmd; 
+          }
           if(-Not $?)
           {
             Write-Host "VttMake step failed." -ForegroundColor red
