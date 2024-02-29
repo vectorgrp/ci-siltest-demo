@@ -15,9 +15,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with: 
-          clean: "false"
+
+      - name: Cache ECU Folder
+        id: cache-sut
+        uses: actions/cache@v4
+        with:
+          path: |
+            ./ECU/SUT
+          key: ${{ hashFiles('./ECU/**') }}
+
       - name: Copy Sip to working directory
+        if: steps.cache-sut.outputs.cache-hit != 'true'
         shell: powershell
         run : |
           # Ensure the destination directory exists
@@ -37,13 +45,15 @@ jobs:
             exit 1 # Exit the script with an error status
           }
       - name: Run DaVinci & VTT
+        if: steps.cache-sut.outputs.cache-hit != 'true'
         run: |
-            VttMake make ./ECU/LightControl.vttmake;
-            if(-Not $?)
-            {
-              Write-Host "VttMake step failed." -ForegroundColor red
-              Exit -1
-            }       
+          VttMake make ./ECU/LightControl.vttmake;
+          if(-Not $?)
+          {
+            Write-Host "VttMake step failed." -ForegroundColor red
+            Exit -1
+          }       
+
       - name: Export ECU/SUT
         uses: actions/upload-artifact@v3
         env: 
