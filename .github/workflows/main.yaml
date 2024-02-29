@@ -54,8 +54,10 @@ jobs:
           }
       - name: Run DaVinci & VTT
         if: steps.cache-sut.outputs.cache-hit != 'true'
+        env:
+          cache-bsw-hit: ${{ steps.cache-bsw.outputs.cache-hit }}
         run: |
-          if ${{ steps.cache-bsw.outputs.cache-hit != 'true' }}{
+          if ($env:cache-bsw-hit -ne 'true'){
             VttMake make ./ECU/LightControl.vttmake;
           }
           else {
