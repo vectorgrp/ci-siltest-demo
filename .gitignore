@@ -10,7 +10,6 @@ vTESTstudio/obj_LightControl
 Default.venvironment/
 SIP/
 ECU/Appl/GenData/
-#ECU/Appl/GenDataVtt/
 ECU/Log/
 ECU/Solution/
 ECU/*_workingCopy.*
