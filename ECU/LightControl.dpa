@@ -13,7 +13,7 @@
             <SipId>PAI3524</SipId>
         </SipIds>
         <TargetType>Virtual Target (vVIRTUALtarget)</TargetType>
-        <UseCases>
+        <UseCases> 
             <UseCase Vector="vSwUpdM data processing" Value="None"/>
             <UseCase Vector="MemMap_ARM_Derivative" Value="None"/>
         </UseCases>
