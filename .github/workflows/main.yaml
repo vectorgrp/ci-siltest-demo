@@ -11,7 +11,7 @@ permissions:
   
 jobs:
   build-sut:
-    runs-on: [self-hosted, Windows, vtt]
+    runs-on: vtt
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -82,7 +82,7 @@ jobs:
         run : ls ECU/SUT/
           
   compile-tests:
-    runs-on: [self-hosted, Windows, canoe]
+    runs-on: canoe
     needs: [build-sut]
     steps:
       - name: Checkout repository
@@ -112,7 +112,7 @@ jobs:
           
   compile-simulation:
     needs: [build-sut, compile-tests]
-    runs-on: [self-hosted, Windows, canoe]
+    runs-on: canoe
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -148,7 +148,7 @@ jobs:
  
   run-tests-simulation:
     needs: compile-simulation
-    runs-on: [self-hosted, Windows, canoe]
+    runs-on: canoe
     strategy:
       matrix:
         TESTNAME: [auto, basic]
@@ -218,7 +218,7 @@ jobs:
   display-test-report:
     if: ${{ !cancelled() }}
     needs: run-tests-simulation
-    runs-on: [self-hosted, Windows, canoe]
+    runs-on: canoe
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
