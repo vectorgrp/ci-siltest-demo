@@ -209,7 +209,7 @@ jobs:
           http_proxy: ""
           https_proxy: "" 
         with:
-          name: Test Reports
+          name: Test Reports ${{ matrix.TESTNAME }}
           path: |
             ./TestReports/
             ./test-${{ matrix.TESTNAME }}/wlog-files
