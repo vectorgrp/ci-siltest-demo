@@ -239,7 +239,7 @@ jobs:
         with:
           fail-on-error: "false"
           name: CANoe4SW_SE Tests                   # Name of the check run which will be created
-          path: "TestReportsAuto/TestReports/*_xunit.xml , TestReportsBasic/TestReports/*_xunit.xml"  # Path to test results
+          path: "TestReportsAuto/TestReports/auto_xunit.xml , TestReportsBasic/TestReports/basic_xunit.xml"  # Path to test results
           reporter: java-junit                      # Format of test results
         env:
           # Explicitly disable the Proxy, as NODE seems to ignore no_proxy
