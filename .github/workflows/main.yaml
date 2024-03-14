@@ -222,10 +222,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Fetch testreport artifact
+      - name: Fetch testreport auto artifact
         uses: actions/download-artifact@v4
         with:
-          path: .        
+          name: Test Reports Auto
+          path: ./TestReportsAuto/    
+      - name: Fetch testreport basic artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Test Reports Basic
+          path: ./TestReportsBasic/     
         env:
           http_proxy: ""
           https_proxy: "" 
@@ -233,7 +239,7 @@ jobs:
         with:
           fail-on-error: "false"
           name: CANoe4SW_SE Tests                   # Name of the check run which will be created
-          path: "./TestReports/*_xunit.xml"  # Path to test results
+          path: "./TestReportsAuto/TestReports/*_xunit.xml , ./TestReportsBasic/TestReports/*_xunit.xml"  # Path to test results
           reporter: java-junit                      # Format of test results
         env:
           # Explicitly disable the Proxy, as NODE seems to ignore no_proxy
