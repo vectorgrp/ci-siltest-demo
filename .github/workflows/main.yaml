@@ -225,12 +225,12 @@ jobs:
       - name: Fetch testreport auto artifact
         uses: actions/download-artifact@v4
         with:
-          name: Test Reports Auto
+          name: Test Reports auto
           path: ./TestReportsAuto/    
       - name: Fetch testreport basic artifact
         uses: actions/download-artifact@v4
         with:
-          name: Test Reports Basic
+          name: Test Reports basic
           path: ./TestReportsBasic/     
         env:
           http_proxy: ""
