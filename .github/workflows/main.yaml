@@ -225,7 +225,6 @@ jobs:
       - name: Fetch testreport artifact
         uses: actions/download-artifact@v4
         with:
-          name: Test Reports
           path: .        
         env:
           http_proxy: ""
