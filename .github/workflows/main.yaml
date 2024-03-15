@@ -235,6 +235,12 @@ jobs:
         env:
           http_proxy: ""
           https_proxy: "" 
+      - name: check where reports have been placed
+        run: |
+          ls 
+          ls TestReportsBasic/
+          ls TestReportsBasic/TestReports/
+
       - uses: dorny/test-reporter@v1
         with:
           fail-on-error: "false"
