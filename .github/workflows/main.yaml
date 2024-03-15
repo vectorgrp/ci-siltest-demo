@@ -14,7 +14,7 @@ jobs:
     runs-on: vtt
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Cache SUT
         id: cache-sut
@@ -70,7 +70,7 @@ jobs:
           }       
 
       - name: Export ECU/SUT
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         env: 
           http_proxy: ""
           https_proxy: "" 
@@ -86,9 +86,9 @@ jobs:
     needs: [build-sut]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Fetch SUT Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: SUT
           path: ECU/SUT     
@@ -98,7 +98,7 @@ jobs:
       - name: Compile tests
         run : TestUnitBuildCLI ./vTeststudio/LightControl.vtsoproj
       - name: Export compiled tests
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         env: 
           http_proxy: ""
           https_proxy: "" 
@@ -115,9 +115,9 @@ jobs:
     runs-on: canoe
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Fetch SUT Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: SUT
           path: ECU/SUT     
@@ -125,7 +125,7 @@ jobs:
           http_proxy: ""
           https_proxy: ""
       - name: Fetch test artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Compiled tests
           path: vTESTstudio  
@@ -137,7 +137,7 @@ jobs:
             environment-make -o ./environment-make -A Win32 ./environment-make/venvironment.yaml;
             test-unit-make -e ./environment-make/Default.venvironment -o ./environment-make/ ./vTestStudio/basic/basic.vtuexe ./vTestStudio/auto/auto.vtuexe;
       - name: Export environment-make
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         env: 
           http_proxy: ""
           https_proxy: "" 
@@ -154,9 +154,9 @@ jobs:
         TESTNAME: [auto, basic]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Fetch SUT Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: SUT
           path: ECU/SUT        
@@ -164,7 +164,7 @@ jobs:
           http_proxy: ""
           https_proxy: ""
       - name: Fetch venvironment artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: environment-make
           path: environment-make        
@@ -172,7 +172,7 @@ jobs:
           http_proxy: ""
           https_proxy: ""
       - name: Fetch test artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: Compiled tests
           path: vTESTstudio       
@@ -204,12 +204,12 @@ jobs:
           xUnitOutputFile: "./TestReports/${{ matrix.TESTNAME }}_xunit.xml"
       - name: Export Test Reports
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         env: 
           http_proxy: ""
           https_proxy: "" 
         with:
-          name: Test Reports
+          name: Test Reports ${{ matrix.TESTNAME }}
           path: |
             ./TestReports/
             ./test-${{ matrix.TESTNAME }}/wlog-files
@@ -221,22 +221,39 @@ jobs:
     runs-on: canoe
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Fetch testreport artifact
-        uses: actions/download-artifact@v3
+        uses: actions/checkout@v4
+      - name: Fetch testreport auto artifact
+        uses: actions/download-artifact@v4
         with:
-          name: Test Reports
-          path: .        
+          name: Test Reports auto
+          path: ./TestReportsAuto/    
+      - name: Fetch testreport basic artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Test Reports basic
+          path: ./TestReportsBasic/     
         env:
           http_proxy: ""
           https_proxy: "" 
-      - uses: dorny/test-reporter@v1.7.0
+      - name: Merge Test Reports
+        shell: pwsh
+        run: |
+          $targetDir = "./TestReports"
+          if (-not (Test-Path $targetDir)) {
+            New-Item -ItemType Directory -Path $targetDir
+          }
+          $sourceDirs = @("./TestReportsAuto/TestReports", "./TestReportsBasic/TestReports")
+          foreach ($dir in $sourceDirs) {
+            Get-ChildItem -Path $dir -Filter "*_xunit.xml" -Recurse | ForEach-Object {
+              Copy-Item -Path $_.FullName -Destination $targetDir
+            }
+          }
+      - uses: dorny/test-reporter@v1
         with:
           fail-on-error: "false"
           name: CANoe4SW_SE Tests                   # Name of the check run which will be created
-          path: "./TestReports/*_xunit.xml"  # Path to test results
+          path: "TestReports/*_xunit.xml"  # Path to test results
           reporter: java-junit                      # Format of test results
-          
         env:
           # Explicitly disable the Proxy, as NODE seems to ignore no_proxy
           http_proxy: ""
