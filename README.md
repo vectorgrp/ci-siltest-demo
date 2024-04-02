@@ -11,8 +11,8 @@ Hello, and welcome to the CI-Demo-Repository.
   - [Repository Layout](#repository-layout)
   - [Pipeline Overview](#pipeline-overview)
   - [Trigger the pipeline](#trigger-the-pipeline)
-  - [Prepare the pipeline](#prepare-the-pipeline)
   - [View the pipeline](#view-the-pipeline)
+  - [Prepare the pipeline](#prepare-the-pipeline)
   - [Remarks](#remarks)
 
 ## Introduction
@@ -71,8 +71,6 @@ To trigger the pipeline, using the webeditor, do the following steps:
 
 4. On the top right of the page, is an entry box, to commit the changes. It will prompt you to give a commit message. Write in text here as you like, and afterwards click the "Commit changes" button.
 
-## Prepare the pipeline
-
 ## View the pipeline
 
 To see the pipeline working and the CANoe4SW_SE Test-Report:
@@ -87,6 +85,10 @@ To see the pipeline working and the CANoe4SW_SE Test-Report:
 
 For an image based guide, [click here](/doc/view-pipeline-and-tests.md)</br>
 More details about the functionality of Vector Tools inside the pipeline can be viewed [here](/doc/pipeline.md).
+
+## Prepare the pipeline
+
+Due to the infrastructure's on-demand nature, it scales down to zero when not in use. To ensure the infrastructure is ready for immediate use, we recommend initiating the pipeline approximately 30 minutes prior to your actual need. This "warm-up" period allows the infrastructure to be fully operational and available the moment you require it.
 
 ## Remarks
 
