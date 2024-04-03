@@ -111,6 +111,7 @@ jobs:
 
           
   compile-simulation:
+    if: ${{ !cancelled() }}
     needs: [build-sut, compile-tests]
     runs-on: canoe
     steps:
@@ -147,6 +148,7 @@ jobs:
           retention-days: 7
  
   run-tests-simulation:
+    if: ${{ !cancelled() }}
     needs: compile-simulation
     runs-on: canoe
     strategy:
