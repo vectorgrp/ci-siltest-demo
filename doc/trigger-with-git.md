@@ -80,4 +80,4 @@ To see the pipeline working and the CANoe4SW_SE Test-Report:
 
 ```
 
-For an image based guide, [click here](/view-pipeline-and-tests.md)
+For an image based guide, [click here](/doc/view-pipeline-and-tests.md)

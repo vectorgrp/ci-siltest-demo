@@ -31,7 +31,6 @@ Afterwards you can observe the test-results and see, if your changes broke some 
 - [environment-make](/environment-make/) contains all files to run CANoe Make. Most importantly the `LightControl.venvironment.yaml` file, which describes the CANoe4SW SE setup.
 - [doc](/doc/) contains documentation and additional infos.
 - [ECU](/ECU/) contains the source code for the virtual ECU, which gets tested in this demo pipeline.
-- [vtestreport-styles](/vtestreport-styles) contains the files needed, to transfrom the .vtestreport files into xunit, using the vTestReportViewer and cscript.
 - [vTESTstudio](/vTESTstudio) contains the vTESTstudio project with the tests units.
 
 ## Pipeline Overview
