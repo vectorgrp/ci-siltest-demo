@@ -46,6 +46,8 @@ graph TD
     D --> |Run Auto tests with virtual ECU| F[CANoe Test Report Viewer]
     E --> |Run Basic tests with virtual ECU| F[CANoe Test Report Viewer]
     F --> |Generate xunit test report| G(Done)
+
+    T[TestUnitBuildCLI] --> |Compile Tests| C
 ```
 
 </div>
