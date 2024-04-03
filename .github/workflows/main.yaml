@@ -200,6 +200,7 @@ jobs:
             $content | Set-Content ($fullName + '.txt')
           }
       - name: Convert Test Report to XUnit
+        if: always()
         uses: ./.github/actions/convert-vtestreport-to-xunit
         with:
           vTestReportInputFile: "./TestReports/${{ matrix.TESTNAME }}.vtestreport"
