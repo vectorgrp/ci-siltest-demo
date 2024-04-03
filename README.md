@@ -77,7 +77,7 @@ To see the pipeline working and the CANoe4SW_SE Test-Report:
 
 ```text
  Click "Actions" on the top. -> 
- Choose the most recent workflow run. ->
+ Choose the most recent workflow run "passed" or "failed". ->
  Click on the last job "CANoe4SW_SE Tests" listed on the left side bar. ->
  View the test results.
 

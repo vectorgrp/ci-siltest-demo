@@ -17,8 +17,9 @@ git config --global http.proxy [http://proxyUsername:proxyPassword@proxy.server.
 
 ```text
 Click on your user-icon on the top right. ->
-Select "Preferences". ->
-Select "Access Tokens" on the left side. ->
+Select "Settings". ->
+Select "Developer settings" on the Bottom left side. ->
+Select "Personal access tokens -> Tokens" on the left side. ->
 Follow the instructions on the side to create a token and save it in a save space (e.g. KeePass)
 ```
 
@@ -27,7 +28,7 @@ Follow the instructions on the side to create a token and save it in a save spac
     If you are asked for a username and password, the password is your personal access token.
 
 ```powershell
-git clone https://gitlab.citc-dev.de/vector-employees/ci-lightctrl-demo.git
+git clone https://github.com/vectorgrp/ci-siltest-demo.git
 ```
 
 4. Change into the folder.
@@ -72,10 +73,9 @@ git push
 To see the pipeline working and the CANoe4SW_SE Test-Report:
 
 ```text
- Click "CI/CD" on the left side. -> 
- Choose the most recent run by clicking in the status icon "passed" or "failed". ->
- Click on "Tests" on center of the screen. ->
- Click on the listed Job. ->
+ Click "Actions" on the top. -> 
+ Choose the most recent workflow run. ->
+ Click on the last job "CANoe4SW_SE Tests" listed on the left side bar. ->
  View the test results.
 
 ```
