@@ -95,14 +95,6 @@ jobs:
         env:
           http_proxy: ""
           https_proxy: ""
-      - name: Fetch test artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: Compiled tests
-          path: vTESTstudio  
-        env:
-          http_proxy: ""
-          https_proxy: ""
       - name: Compile simulation
         run: |
             environment-make -o ./environment-make -A Win32 ./environment-make/venvironment.yaml;
@@ -139,14 +131,6 @@ jobs:
         with:
           name: environment-make
           path: environment-make        
-        env:
-          http_proxy: ""
-          https_proxy: ""
-      - name: Fetch test artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: Compiled tests
-          path: vTESTstudio       
         env:
           http_proxy: ""
           https_proxy: ""
