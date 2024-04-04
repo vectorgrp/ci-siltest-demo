@@ -82,7 +82,7 @@ jobs:
         run : ls ECU/SUT/
           
   compile-simulation:
-    needs: [build-sut, compile-tests]
+    needs: [build-sut]
     runs-on: canoe
     steps:
       - name: Checkout repository
