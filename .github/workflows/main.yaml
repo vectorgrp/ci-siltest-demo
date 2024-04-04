@@ -81,35 +81,6 @@ jobs:
       - name: Check dll 
         run : ls ECU/SUT/
           
-  compile-tests:
-    runs-on: canoe
-    needs: [build-sut]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Fetch SUT Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: SUT
-          path: ECU/SUT     
-        env:
-          http_proxy: ""
-          https_proxy: ""
-      - name: Compile tests
-        run : TestUnitBuildCLI ./vTeststudio/LightControl.vtsoproj
-      - name: Export compiled tests
-        uses: actions/upload-artifact@v4
-        env: 
-          http_proxy: ""
-          https_proxy: "" 
-        with:
-          name: Compiled tests
-          path: |
-            ./vTeststudio/auto
-            ./vTeststudio/basic
-          retention-days: 7
-
-          
   compile-simulation:
     needs: [build-sut, compile-tests]
     runs-on: canoe
@@ -135,7 +106,7 @@ jobs:
       - name: Compile simulation
         run: |
             environment-make -o ./environment-make -A Win32 ./environment-make/venvironment.yaml;
-            test-unit-make -e ./environment-make/Default.venvironment -o ./environment-make/ ./vTestStudio/basic/basic.vtuexe ./vTestStudio/auto/auto.vtuexe;
+            test-unit-make -e ./environment-make/Default.venvironment -o ./environment-make/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
       - name: Export environment-make
         uses: actions/upload-artifact@v4
         env: 
