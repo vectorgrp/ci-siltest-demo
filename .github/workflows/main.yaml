@@ -81,38 +81,9 @@ jobs:
       - name: Check dll 
         run : ls ECU/SUT/
           
-  compile-tests:
-    runs-on: canoe
-    needs: [build-sut]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Fetch SUT Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: SUT
-          path: ECU/SUT     
-        env:
-          http_proxy: ""
-          https_proxy: ""
-      - name: Compile tests
-        run : TestUnitBuildCLI ./vTeststudio/LightControl.vtsoproj
-      - name: Export compiled tests
-        uses: actions/upload-artifact@v4
-        env: 
-          http_proxy: ""
-          https_proxy: "" 
-        with:
-          name: Compiled tests
-          path: |
-            ./vTeststudio/auto
-            ./vTeststudio/basic
-          retention-days: 7
-
-          
   compile-simulation:
     if: ${{ !cancelled() }}
-    needs: [build-sut, compile-tests]
+    needs: [build-sut]
     runs-on: canoe
     steps:
       - name: Checkout repository
@@ -122,14 +93,6 @@ jobs:
         with:
           name: SUT
           path: ECU/SUT     
-        env:
-          http_proxy: ""
-          https_proxy: ""
-      - name: Fetch test artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: Compiled tests
-          path: vTESTstudio  
         env:
           http_proxy: ""
           https_proxy: ""
@@ -170,14 +133,6 @@ jobs:
         with:
           name: environment-make
           path: environment-make        
-        env:
-          http_proxy: ""
-          https_proxy: ""
-      - name: Fetch test artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: Compiled tests
-          path: vTESTstudio       
         env:
           http_proxy: ""
           https_proxy: ""
