@@ -99,7 +99,7 @@ jobs:
       - name: Compile simulation
         run: |
             environment-make -o ./environment-make -A Win32 ./environment-make/venvironment.yaml;
-            test-unit-make -e ./environment-make/Default.venvironment -o ./environment-make/ ./vTestStudio/basic/basic.vtuexe ./vTestStudio/auto/auto.vtuexe;
+            test-unit-make -e ./environment-make/Default.venvironment -o ./environment-make/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
       - name: Export environment-make
         uses: actions/upload-artifact@v4
         env: 
