@@ -13,11 +13,18 @@ The intention of this repository is to serve as an example how such a system cou
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Overview](#overview)
+  - [Repository Layout](#repository-layout)
   - [Implementation of the Example Scenario Using the Vector CLI Toolchain](#implementation-of-the-example-scenario-using-the-vector-cli-toolchain)
     - [Workflow Elements explained:](#workflow-elements-explained)
       - [Jobs and Steps:](#jobs-and-steps)
-  - [Repository Layout](#repository-layout)
-  - [Pipeline Overview](#pipeline-overview)
+    - [Virutal ECU Generation](#virutal-ecu-generation)
+    - [Simulation Enviromment \& Test Unit Compilation](#simulation-enviromment--test-unit-compilation)
+    - [Run the Simulation \& Execute the Test Units](#run-the-simulation--execute-the-test-units)
+    - [Test Result Visualization](#test-result-visualization)
+  - [Deploying as a GitHub Action Pipeline](#deploying-as-a-github-action-pipeline)
+    - [Vector Tools Execution in Containers](#vector-tools-execution-in-containers)
+    - [Caching Implementation](#caching-implementation)
+    - [Passing Artifacts](#passing-artifacts)
   - [Trigger the pipeline](#trigger-the-pipeline)
   - [View the pipeline](#view-the-pipeline)
   - [Prepare the pipeline](#prepare-the-pipeline)
@@ -44,18 +51,31 @@ To facilitate the development of this ECU, the development organization performs
 The virtual ECU is built using Vector vVIRTUALtarget.
 The ECU is executed as part of a remaining bus simulation environment using Vector CANoe4SW SE.
 In this simulation environment, the system test cases, that are authored in a YAML-based format and implemented using CAPL , can then be executed.
-These test cases can be efficiently created and managed through our complimentary VSCode plugins.
+These test cases can be efficiently created and managed through our complimentary VSCode plugin, more info can be found [here](https://marketplace.visualstudio.com/items?itemName=VectorGroup.test-unit)
 
 For an ideal integration into the development workflow, the test workflow as depicted below is set up to run automatically whenever a pull request is opened on the repository.
 Pull requests may contain changes to the ECU source code, the ECU BSW configuration, the test cases, and the simulation setup.
 The test workflow consists of three stages: Rebuilding the SUT, simulation and test cases, running the simulations, and preparing the test results for display in the Web UI.
 Rebuilding all parts of the simulation ensures that the test run considers exactly the changes provided in the given pull request, independent of any other changes that may be tested in parallel in concurrent pull requests.
 
-TBD: see [here]() for an example pull request with an execution of the test workflow. -> TBD: Ensure that there is one!
+see below for an example pull request with an execution of the test workflow.
+
+<img src="doc/resources/images/PR_Disconnected_Sensor.PNG" width=300 align="right">
 
 We will explain the individual steps of the test workflow in more detail in subsequent sections.
 
 <br clear="right">
+
+
+## Repository Layout
+
+- [environment-make](/environment-make/) contains all files to run CANoe Make. Most importantly the `LightControl.venvironment.yaml` file, which describes the CANoe4SW SE setup.
+- [doc](/doc/) contains documentation and additional infos.
+- [ECU](/ECU/) contains the source code for the virtual ECU, which gets tested in this demo pipeline.
+- [test](/test) contains the Capl Test cases along with their yaml format test that defines them
+
+
+The pipeline file is located [here](/.github/workflows/main.yaml)
 
 ## Implementation of the Example Scenario Using the Vector CLI Toolchain
 
@@ -89,33 +109,105 @@ Here's the main elements of the following workflow [GitHub Action Workflow](.git
 
 - **Artifact Management**: Throughout the process, artifacts such as the compiled SUT, test cases, and test results are managed efficiently. They are used to pass outputs between jobs, ensuring that each step of the pipeline has access to the necessary inputs and outputs without redundant operations.
 
-## Repository Layout
+### Virutal ECU Generation
 
-- [environment-make](/environment-make/) contains all files to run CANoe Make. Most importantly the `LightControl.venvironment.yaml` file, which describes the CANoe4SW SE setup.
-- [doc](/doc/) contains documentation and additional infos.
-- [ECU](/ECU/) contains the source code for the virtual ECU, which gets tested in this demo pipeline.
-- [vTESTstudio](/vTESTstudio) contains the vTESTstudio project with the tests units.
 
-## Pipeline Overview
+<img src="doc/resources/images/Build_Simulation.png" alt="drawing">
 
-<div class="table" align="center">
+The first step in the test workflow is to build the ECU SWC source code and ECU BSW/RTE configuration into a virutal ECU.
+This is done using the `VttMake.exe` CLI executable of Vector vVIRTUALtarget.
+`VttMake.exe` takes as input an XML file [`LightControl.vttmake`](ECU/LightControl.vttmake).
+While being an XML file, the syntax of the `.vttmake` file format is designed to be so simple that it can be edited with any text editor.
+The `.vttmake` file tells vVIRTUALtarget where to find the ECU project with the BSW configuration (Line 5) and points to the SWC implementation files (Lines 12-24).
+Furthermore, it tells vVIRTUALtarget which compiler is used for building the ECU, so that the glue code between the BSW and the simulation tool and the build configuration can be generated accordingly.
+`VttMake.exe` can also launch the DaVinci Configurator to generate the BSW configuation and RTE configuration into source code as well as call the configured compiler to compile the Virtual ECU as a shared library.
 
-```mermaid
-graph TD
-    A[DaVinci Configurator] -->|Build BSW| B[VTT]
-    B --> |Build virtual ECU| C[Environment-Make & Test-Unit-Make]
-    C --> |Generate scenario and test-units| D[CANoe4SW SE] 
-    C --> |Generate scenario and test-units| E[CANoe4SW SE] 
-    D --> |Run Auto tests with virtual ECU| F[CANoe Test Report Viewer]
-    E --> |Run Basic tests with virtual ECU| F[CANoe Test Report Viewer]
-    F --> |Generate xunit test report| G(Done)
+You can find all input artifacts for this job in the [`ECU` folder](ECU/).
+The most notable output artifacts are the `ECU.dll`, the DLL containing the executable code for the virtual ECU, along with several files containing metadata for the DLL, all of which will be loaded into the CANoe simulation later on.
 
-    T[TestUnitBuildCLI] --> |Compile Tests| C
-```
+### Simulation Enviromment & Test Unit Compilation
 
-</div>
+<img src="doc/resources/images/Build-Simulation.svg" alt="drawing">
 
-The pipeline file is located [here](/.github/workflows/main.yaml)
+The ECU configuration assumes a certain operation environment.
+In the example, the LightControl ECU expects a connection to a CAN bus with other ECUs present to get sensor readings from and to send actuation commands to.
+To provide this environment in the SIL Test, a CANoe remaining bus simulation is used that provides the needed CAN bus and that provides mocks of other ECUs the LightControl ECU needs to communicate with.
+
+The simulation environment is defined in [`venvironment.yaml`](environment-make/venvironment.yaml).
+This file defines the communication networks (Line 11), the communication description for these networks (Line 7) as well as all of the simulation participants.
+Lines 27-35 load in the virtual ECU created previously, whereas Lines 17 onwards and Lines 37 and onwards define two mocked ECUs.
+The mocked ECUs are implemented using CAPL.
+Their implementation is also [available in this repository](environment-make/CAPL/).
+
+The simulation definition in `venvironment.yaml` is designed to be written by hand using any YAML-capable editor.
+It is then read by the `environment-make` tool.
+`environment-make` gathers all input artifacts parts of the simulation (network databases, CAPL code, virtual ECUs) and compiles them into a simulation environment, suitable for execution by CANoe4SW SE.
+
+Static input artifacts to creating the simulation environment are stored in [`environment-make`](/environment-make/).
+The only input artifact that is not static is the virtual ECU.
+It is collected from the [Virtual ECU Generation](#virutal-ecu-generation) step using the artifact handling capabilities of GitHub.
+The output artifact of this step is the simulation environment folder `environment-make/lightcontrol_scenario.vscenario/Default.venvironment`.
+
+Next, the tests for execution in CANoe4SW SE are implemented as test units in VSCode using Vector provided pluggins, they can be defined in yaml format, for [example](test/auto/auto.vtestunit.yaml)
+Once the tests are prepared, the compilation of the test is done by running the `test-unit-make` tool, providing it with the location of the simulation environment as well as the location of the `.vtestunit.yaml` files created previously.
+`test-unit-make` does not have a control file, it takes all of its configuration as command line parameters.
+
+The output artifacts of the compiled tests are generated as `.vtestunit` files and they are located in the environment folder as well `environment-make`, each test unit will have its own folder in this directory.
+
+### Run the Simulation & Execute the Test Units
+
+<img src="doc/resources/images/Run-Simulation.svg" alt="drawing">
+
+Once all parts of the simulation and the test units are prepared, CANoe4SW SE is run to execute the simulation.
+CANoe4SW SE simply reads the simulation environment and the test cases to execute in that environment from the command line.
+When CANoe4SW SE is started, the simulation is started automatically.
+CANoe4SW SE also automatically starts executing all test units that were given on the command line.
+When test execution has finished, the simulation is stopped.
+A brief information on the test results is given as part of the command line output.
+The exit code of the CANoe4SW SE executable also indicates a test success or test failure.
+For more detailed information, a standard `.vtestreport` file is produced for every test unit that was executed.
+The `.vtestreport` can be stored as a build artifact for later review.
+
+Note that not all test units for a given simulation environment have to be given to CANoe4SW SE at once.
+Test units can be split across multiple parallel CANoe4SW SE executions, allowing for parallel execution on multiple runner instances of an automated test system.
+This project makes use of the feature of Matrix Jobs to spawn independent simulation runs for every single test unit, thus parallelizing test execution, so long as there are sufficient compute resources available.
+
+Input artifacts to this step are the `Default.venvironment` folder as well as the respective test units folder.
+The output artifact is one `.vtestreport` file per test unit provided to CANoe4SW SE.
+Each `.vtestreport` file is named after the corresponding test unit.
+
+### Test Result Visualization
+
+<img src="doc/resources/images/ReportViewer.png" alt="drawing">
+
+The output of CANoe4SW SE can be used to give an overall idea of test success/test failure of the provided state of the repository.
+However, in many cases it is necessary to have more in-depth information on which test cases passed or failed, e.g. to compute statistics on test success or to identify tests that are currently accepted to fail and should thus not impact the test verdict.
+
+To this end, Vector TestReportViewer provides the `ReportViewerCLI` which can be used to export each `.vtestreport` to XUnit files that can be conmsumed by other tools.
+As part of this sample, the XUnit result is displayed in the Web UI.
+
+The input artifacts to this step are the `.vtestreport` files produced by the CANoe4SW SE simulation runs.
+The output artifacts are `_xunit.xml` files.
+
+Note that `.vtestreport` files can be processed independently of one another.
+Thus, this step can also be parallelized if the need arises.
+
+## Deploying as a GitHub Action Pipeline
+
+### Vector Tools Execution in Containers
+
+- **Containerized Execution**: Vector tools run within Docker containers, ensuring consistent, isolated environments for each test run, facilitating replicable tests and simulations.
+- **Dockerfiles Location**: Required Dockerfiles for setting up these containers are located under a default installation path, like `C:\Users\Public\Documents\Vector\CANoe4SW Server Edition\17 (x64)\Samples\`. These files configure the necessary environments for Vector tools.
+
+### Caching Implementation
+
+- **Efficiency Through Caching**: The workflow utilizes caching for the SUT and BSW components, enhancing efficiency by reducing build times and conserving resources.
+- **Caching Strategy**: Utilizes GitHub Actions' `cache@v4` action to cache specific directories, with cache keys based on file hashes to detect changes and ensure that only modified components are rebuilt.
+
+### Passing Artifacts
+
+- **Artifact Sharing Between Jobs**: Compiled components, such as the SUT and simulation environments, are efficiently passed between jobs using GitHub Actions' artifact management features.
+- **Artifact Retention**: Artifacts are set with retention policies (e.g., 7 days) to be available as needed without consuming unnecessary storage.
 
 ## Trigger the pipeline
 
