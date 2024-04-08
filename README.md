@@ -60,7 +60,7 @@ Rebuilding all parts of the simulation ensures that the test run considers exact
 
 see below for an example pull request with an execution of the test workflow.
 
-<img src="doc/resources/images/PR_Disconnected_Sensor.PNG" width=300 align="right">
+<img src="doc/resources/images/PR_Disconnected_Sensor.PNG" width=300>
 
 We will explain the individual steps of the test workflow in more detail in subsequent sections.
 
