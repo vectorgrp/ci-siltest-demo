@@ -83,7 +83,7 @@ The pipeline file is located [here](/.github/workflows/main.yaml)
 To facilitate the aforementioned scenario, Vector provides its tools as a CLI toolchain version for automated operation, along with configuration formats following the everything-as-code philosophy.
 In this section we will explain the steps involved in the test pipeline and how to use the Vector CLI toolchain in these steps.
 
-If you are already familiar with the CLI toolchain and are just looking for sample configurations, see [CANoe simulation environment](environment-make/LightControl.venvironment.yaml), [VttMake configuration](ECU/LightControl.vttmake), [GitHub Action Workflow](.github/workflows/)
+If you are already familiar with the CLI toolchain and are just looking for sample configurations, see [CANoe simulation environment](environment-make/venvironment.yaml), [VttMake configuration](ECU/LightControl.vttmake), [GitHub Action Workflow](.github/workflows/main.yaml)
 
 The overall test workflow consists of three stages:
 * The Build stage, where the SUT, the simulation and the test units are rebuilt from source.
