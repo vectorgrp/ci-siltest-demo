@@ -14,7 +14,7 @@ The intention of this repository is to serve as an example how such a system cou
   - [Introduction](#introduction)
   - [Overview](#overview)
   - [Repository Layout](#repository-layout)
-  - [Implementation of the Example Scenario Using the Vector CLI Toolchain](#implementation-of-the-example-scenario-using-the-vector-cli-toolchain)
+  - [Implementation Example Using the Vector CLI Toolchain](#implementation-example-using-the-vector-cli-toolchain)
     - [Workflow Elements explained:](#workflow-elements-explained)
       - [Jobs and Steps:](#jobs-and-steps)
     - [Virutal ECU Generation](#virutal-ecu-generation)
@@ -77,10 +77,9 @@ We will explain the individual steps of the test workflow in more detail in subs
 
 The pipeline file is located [here](/.github/workflows/main.yaml)
 
-## Implementation of the Example Scenario Using the Vector CLI Toolchain
+## Implementation Example Using the Vector CLI Toolchain
 
-
-To facilitate the aforementioned scenario, Vector provides its tools as a CLI toolchain version for automated operation, along with configuration formats following the everything-as-code philosophy.
+Vector offers its suite of tools in a CLI toolchain format for streamlined automated operations, along with configuration formats following the everything-as-code philosophy.
 In this section we will explain the steps involved in the test pipeline and how to use the Vector CLI toolchain in these steps.
 
 If you are already familiar with the CLI toolchain and are just looking for sample configurations, see [CANoe simulation environment](environment-make/venvironment.yaml), [VttMake configuration](ECU/LightControl.vttmake), [GitHub Action Workflow](.github/workflows/main.yaml)
