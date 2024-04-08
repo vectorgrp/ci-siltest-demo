@@ -50,7 +50,7 @@ You can find more details about the ECU in [SUT.md](SUT.md).
 To facilitate the development of this ECU, the development organization performs large parts of their system testing as Software-in-the-Loop tests using a virtual ECU.
 The virtual ECU is built using Vector vVIRTUALtarget.
 The ECU is executed as part of a remaining bus simulation environment using Vector CANoe4SW SE.
-In this simulation environment, the system test cases, that are authored in a YAML-based format and implemented using CAPL , can then be executed.
+In this simulation environment the system test cases that are authored in a YAML-based format and implemented using CAPL can then be executed.
 These test cases can be efficiently created and managed through our complimentary VSCode plugin, more info can be found [here](https://marketplace.visualstudio.com/items?itemName=VectorGroup.test-unit)
 
 For an ideal integration into the development workflow, the test workflow as depicted below is set up to run automatically whenever a pull request is opened on the repository.
