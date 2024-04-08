@@ -72,7 +72,7 @@ We will explain the individual steps of the test workflow in more detail in subs
 - [environment-make](/environment-make/) contains all files to run CANoe Make. Most importantly the `LightControl.venvironment.yaml` file, which describes the CANoe4SW SE setup.
 - [doc](/doc/) contains documentation and additional infos.
 - [ECU](/ECU/) contains the source code for the virtual ECU, which gets tested in this demo pipeline.
-- [test](/test) contains the Capl Test cases along with their yaml format test that defines them
+- [test folder](/test) contains the Capl Test cases along with their yaml format test that defines them
 
 
 The pipeline file is located [here](/.github/workflows/main.yaml)
