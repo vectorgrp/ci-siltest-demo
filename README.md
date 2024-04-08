@@ -69,10 +69,10 @@ We will explain the individual steps of the test workflow in more detail in subs
 
 ## Repository Layout
 
-- [environment-make](/environment-make/) contains all files to run CANoe Make. Most importantly the `LightControl.venvironment.yaml` file, which describes the CANoe4SW SE setup.
-- [doc](/doc/) contains documentation and additional infos.
-- [ECU](/ECU/) contains the source code for the virtual ECU, which gets tested in this demo pipeline.
-- [test](/test) contains the Capl Test cases along with their yaml format test that defines them
+- [environment-make folder](/environment-make/) contains all files to run environment-make. Most importantly the `LightControl.venvironment.yaml` file, which describes the CANoe4SW SE setup.
+- [doc folder](/doc/) contains documentation and additional infos.
+- [ECU folder](/ECU/) contains the source code for the virtual ECU, which gets tested in this demo pipeline.
+- [test folder](/test) contains the Capl Test cases along with their yaml format test that defines them
 
 
 The pipeline file is located [here](/.github/workflows/main.yaml)
@@ -85,7 +85,7 @@ In this section we will explain the steps involved in the test pipeline and how 
 If you are already familiar with the CLI toolchain and are just looking for sample configurations, see [CANoe simulation environment](environment-make/venvironment.yaml), [VttMake configuration](ECU/LightControl.vttmake), [GitHub Action Workflow](.github/workflows/main.yaml)
 
 The overall test workflow consists of three stages:
-* The Build stage, where the SUT, the simulation and the test units are rebuilt from source.
+* The Build stage, where the SUT, the environment and the test units are rebuilt from source.
 * The Simulate stage, where test units are executed in the simulated environment.
 * The Display stage, where test results are converted for further processing, e.g., display in a Web UI dashboard.
 
