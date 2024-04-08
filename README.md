@@ -144,7 +144,7 @@ It is then read by the `environment-make` tool.
 
 Static input artifacts to creating the simulation environment are stored in [`environment-make` folder](/environment-make/).
 The only input artifact that is not static is the virtual ECU.
-It is collected from the [Virtual ECU Generation](#virutal-ecu-generation) step using the artifact handling capabilities of GitHub.
+It is collected from the [`Virtual ECU Generation` step](#virutal-ecu-generation) using the artifact handling capabilities of GitHub.
 The output artifact of this step is the simulation environment folder `environment-make/lightcontrol_scenario.vscenario/Default.venvironment`.
 
 Next, the tests for execution in CANoe4SW SE are implemented as test units in VSCode using Vector provided pluggins, they can be defined in yaml format, for [example](test/auto/auto.vtestunit.yaml)
