@@ -69,9 +69,9 @@ We will explain the individual steps of the test workflow in more detail in subs
 
 ## Repository Layout
 
-- [environment-make](/environment-make/) contains all files to run CANoe Make. Most importantly the `LightControl.venvironment.yaml` file, which describes the CANoe4SW SE setup.
-- [doc](/doc/) contains documentation and additional infos.
-- [ECU](/ECU/) contains the source code for the virtual ECU, which gets tested in this demo pipeline.
+- [environment-make folder](/environment-make/) contains all files to run environment-make. Most importantly the `LightControl.venvironment.yaml` file, which describes the CANoe4SW SE setup.
+- [doc folder](/doc/) contains documentation and additional infos.
+- [ECU folder](/ECU/) contains the source code for the virtual ECU, which gets tested in this demo pipeline.
 - [test folder](/test) contains the Capl Test cases along with their yaml format test that defines them
 
 
