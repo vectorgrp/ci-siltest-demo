@@ -142,7 +142,7 @@ The simulation definition in `venvironment.yaml` is designed to be written by ha
 It is then read by the `environment-make` tool.
 `environment-make` gathers all input artifacts parts of the simulation (network databases, CAPL code, virtual ECUs) and compiles them into a simulation environment, suitable for execution by CANoe4SW SE.
 
-Static input artifacts to creating the simulation environment are stored in [`environment-make`](/environment-make/).
+Static input artifacts to creating the simulation environment are stored in [`environment-make` folder](/environment-make/).
 The only input artifact that is not static is the virtual ECU.
 It is collected from the [Virtual ECU Generation](#virutal-ecu-generation) step using the artifact handling capabilities of GitHub.
 The output artifact of this step is the simulation environment folder `environment-make/lightcontrol_scenario.vscenario/Default.venvironment`.
