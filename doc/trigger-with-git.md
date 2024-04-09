@@ -34,7 +34,7 @@ git clone https://github.com/vectorgrp/ci-siltest-demo.git
 4. Change into the folder.
 
 ```powershell
-cd .\ci-lightctrl-demo\
+cd .\ci-siltest-demo\
 ```
 
 5. Create your own branch.
