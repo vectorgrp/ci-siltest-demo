@@ -132,7 +132,7 @@ The ECU configuration assumes a certain operation environment.
 In the example, the LightControl ECU expects a connection to a CAN bus with other ECUs present to get sensor readings from and to send actuation commands to.
 To provide this environment in the SIL Test, a CANoe remaining bus simulation is used that provides the needed CAN bus and that provides mocks of other ECUs the LightControl ECU needs to communicate with.
 
-The simulation environment is defined in [`venvironment.yaml`](environment-make/venvironment.yaml).
+The simulation environment is defined in [`venvironment.yaml`](environment-make/venvironment.yaml), which can be created with the assistance of a VSCode plugin [Simulation and Test Environment](https://marketplace.visualstudio.com/items?itemName=VectorGroup.simulation-and-test-environment)
 This file defines the communication networks (Line 11), the communication description for these networks (Line 7) as well as all of the simulation participants.
 Lines 27-35 load in the virtual ECU created previously, whereas Lines 17 onwards and Lines 37 and onwards define two mocked ECUs.
 The mocked ECUs are implemented using CAPL.
