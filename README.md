@@ -1,6 +1,6 @@
 # Vector CANoe CLI Toolchain & Continuous Testing Sample
 
-This project shows an example how to implement an automated Software-in-the-Loop test workflow (SIL-Test) for the development of an automotive ECU using the Vector toolchain, consisting of MICROSAR Classic, the DaVinci Toolchain, vVIRTUALtarget and [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/)(CANoe4SW SE).
+This project shows an example how to implement an automated Software-in-the-Loop test workflow (SIL-Test) for the development of an automotive ECU using the Vector toolchain, consisting of MICROSAR Classic, the DaVinci Toolchain, [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/) and [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/)(CANoe4SW SE).
 
 The core part of the automated SIL-test approach is the use of text-based specification formats for simulation environments, allowing simulation environments to be constructed on a per-commit basis, thus supporting a branch/merge workflow with fast testing and change feedback of SIL-based system tests.
 Furthermore, the on-demand construction of simulation setups also allows test execution to scale with the amount of available compute resources, rather than being limited by the availability of human operators for integrating new versions of the System-under-Test (SUT) into a simulation.
@@ -47,7 +47,7 @@ It is implemented as an AUTOSAR SWC running on top of Vector MICROSAR Classic.
 You can find more details about the ECU in [SUT.md](SUT.md).
 
 To facilitate the development of this ECU, the development organization performs large parts of their system testing as Software-in-the-Loop tests using a virtual ECU.
-The virtual ECU is built using Vector vVIRTUALtarget.
+The virtual ECU is built using Vector [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/).
 The ECU is executed as part of a remaining bus simulation environment using Vector CANoe4SW SE.
 In this simulation environment the system test cases that are authored in a YAML-based format and implemented using CAPL can then be executed.
 These test cases can be efficiently created and managed through our complimentary VSCode plugin, more info can be found [here](https://marketplace.visualstudio.com/items?itemName=VectorGroup.test-unit)
@@ -113,12 +113,12 @@ Here's the main elements of the following workflow [GitHub Action Workflow](.git
 <img src="doc/resources/images/Build_Simulation.png" alt="drawing">
 
 The first step in the test workflow is to build the ECU SWC source code and ECU BSW/RTE configuration into a virutal ECU.
-This is done using the `VttMake.exe` CLI executable of Vector vVIRTUALtarget.
+This is done using the `VttMake.exe` CLI executable of Vector [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/).
 `VttMake.exe` takes as input an XML file [`LightControl.vttmake`](ECU/LightControl.vttmake).
 While being an XML file, the syntax of the `.vttmake` file format is designed to be so simple that it can be edited with any text editor.
-The `.vttmake` file tells vVIRTUALtarget where to find the ECU project with the BSW configuration (Line 5) and points to the SWC implementation files (Lines 12-24).
-Furthermore, it tells vVIRTUALtarget which compiler is used for building the ECU, so that the glue code between the BSW and the simulation tool and the build configuration can be generated accordingly.
-`VttMake.exe` can also launch the DaVinci Configurator to generate the BSW configuation and RTE configuration into source code as well as call the configured compiler to compile the Virtual ECU as a shared library.
+The `.vttmake` file tells [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/) where to find the ECU project with the BSW configuration (Line 5) and points to the SWC implementation files (Lines 12-24).
+Furthermore, it tells [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/) which compiler is used for building the ECU, so that the glue code between the BSW and the simulation tool and the build configuration can be generated accordingly.
+`VttMake.exe` can also launch the [DaVinci Configurator](https://www.vector.com/int/en/products/products-a-z/software/davinci-configurator-classic/) to generate the BSW configuation and RTE configuration into source code as well as call the configured compiler to compile the Virtual ECU as a shared library.
 
 You can find all input artifacts for this job in the [`ECU` folder](ECU/).
 The most notable output artifacts are the `ECU.dll`, the DLL containing the executable code for the virtual ECU, along with several files containing metadata for the DLL, all of which will be loaded into the CANoe simulation later on.
