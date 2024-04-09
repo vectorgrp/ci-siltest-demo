@@ -69,7 +69,7 @@ We will explain the individual steps of the test workflow in more detail in subs
 
 ## Repository Layout
 
-- [environment-make folder](/environment-make/) contains all files to run environment-make. Most importantly the `LightControl.venvironment.yaml` file, which describes the CANoe4SW SE setup.
+- [environment-make folder](/environment-make/) contains all files to run environment-make. Most importantly the `LightControl.venvironment.yaml` file, which describes the CANoe4SW Server Edition setup.
 - [doc folder](/doc/) contains documentation and additional infos.
 - [ECU folder](/ECU/) contains the source code for the virtual ECU, which gets tested in this demo pipeline.
 - [test folder](/test) contains the Capl Test cases along with their yaml format test that defines them
@@ -140,14 +140,14 @@ Their implementation is also [available in this repository](environment-make/CAP
 
 The simulation definition in `venvironment.yaml` is designed to be written by hand using any YAML-capable editor.
 It is then read by the `environment-make` tool.
-`environment-make` gathers all input artifacts parts of the simulation (network databases, CAPL code, virtual ECUs) and compiles them into a simulation environment, suitable for execution by CANoe4SW SE.
+`environment-make` gathers all input artifacts parts of the simulation (network databases, CAPL code, virtual ECUs) and compiles them into a simulation environment, suitable for execution by CANoe4SW Server Edition.
 
 Static input artifacts to creating the simulation environment are stored in [`environment-make` folder](/environment-make/).
 The only input artifact that is not static is the virtual ECU.
 It is collected from the [`Virtual ECU Generation` step](#virutal-ecu-generation) using the artifact handling capabilities of GitHub.
 The output artifact of this step is the simulation environment folder `environment-make/lightcontrol_scenario.vscenario/Default.venvironment`.
 
-Next, the tests for execution in CANoe4SW SE are implemented as test units in VSCode using Vector provided pluggins, they can be defined in yaml format, for example as in [auto.vtestunit.yaml](test/auto/auto.vtestunit.yaml).
+Next, the tests for execution in CANoe4SW Server Edition are implemented as test units in VSCode using Vector provided pluggins, they can be defined in yaml format, for example as in [auto.vtestunit.yaml](test/auto/auto.vtestunit.yaml).
 Once the tests are prepared, the compilation of the test is done by running the `test-unit-make` tool, providing it with the location of the simulation environment as well as the location of the `.vtestunit.yaml` files created previously.
 `test-unit-make` does not have a control file, it takes all of its configuration as command line parameters.
 
@@ -157,35 +157,35 @@ The output artifacts of the compiled tests are generated as `.vtestunit` files a
 
 <img src="doc/resources/images/Run-Simulation.svg" alt="drawing">
 
-Once all parts of the simulation and the test units are prepared, CANoe4SW SE is run to execute the simulation.
-CANoe4SW SE simply reads the simulation environment and the test cases to execute in that environment from the command line.
-When CANoe4SW SE is started, the simulation is started automatically.
-CANoe4SW SE also automatically starts executing all test units that were given on the command line.
+Once all parts of the simulation and the test units are prepared, CANoe4SW Server Edition is run to execute the simulation.
+CANoe4SW Server Edition simply reads the simulation environment and the test cases to execute in that environment from the command line.
+When CANoe4SW Server Edition is started, the simulation is started automatically.
+CANoe4SW Server Edition also automatically starts executing all test units that were given on the command line.
 When test execution has finished, the simulation is stopped.
 A brief information on the test results is given as part of the command line output.
-The exit code of the CANoe4SW SE executable also indicates a test success or test failure.
+The exit code of the CANoe4SW Server Edition executable also indicates a test success or test failure.
 For more detailed information, a standard `.vtestreport` file is produced for every test unit that was executed.
 The `.vtestreport` can be stored as a build artifact for later review.
 
-Note that not all test units for a given simulation environment have to be given to CANoe4SW SE at once.
-Test units can be split across multiple parallel CANoe4SW SE executions, allowing for parallel execution on multiple runner instances of an automated test system.
+Note that not all test units for a given simulation environment have to be given to CANoe4SW Server Edition at once.
+Test units can be split across multiple parallel CANoe4SW Server Edition executions, allowing for parallel execution on multiple runner instances of an automated test system.
 This project makes use of the feature of Matrix Jobs to spawn independent simulation runs for every single test unit, thus parallelizing test execution, so long as there are sufficient compute resources available.
 
 Input artifacts to this step are the `Default.venvironment` folder as well as the respective test units folder.
-The output artifact is one `.vtestreport` file per test unit provided to CANoe4SW SE.
+The output artifact is one `.vtestreport` file per test unit provided to CANoe4SW Server Edition.
 Each `.vtestreport` file is named after the corresponding test unit.
 
 ### Test Result Visualization
 
 <img src="doc/resources/images/ReportViewer.png" alt="drawing">
 
-The output of CANoe4SW SE can be used to give an overall idea of test success/test failure of the provided state of the repository.
+The output of CANoe4SW Server Edition can be used to give an overall idea of test success/test failure of the provided state of the repository.
 However, in many cases it is necessary to have more in-depth information on which test cases passed or failed, e.g. to compute statistics on test success or to identify tests that are currently accepted to fail and should thus not impact the test verdict.
 
 To this end, Vector TestReportViewer provides the `ReportViewerCLI` which can be used to export each `.vtestreport` to XUnit files that can be conmsumed by other tools.
 As part of this sample, the XUnit result is displayed in the Web UI.
 
-The input artifacts to this step are the `.vtestreport` files produced by the CANoe4SW SE simulation runs.
+The input artifacts to this step are the `.vtestreport` files produced by the CANoe4SW Server Edition simulation runs.
 The output artifacts are `_xunit.xml` files.
 
 Note that `.vtestreport` files can be processed independently of one another.
