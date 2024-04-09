@@ -1,6 +1,6 @@
 # Vector CANoe CLI Toolchain & Continuous Testing Sample
 
-This project shows an example how to implement an automated Software-in-the-Loop test workflow (SIL-Test) for the development of an automotive ECU using the Vector toolchain, consisting of MICROSAR Classic, the DaVinci Toolchain, vVIRTUALtarget and CANoe4SW Server Edition (CANoe4SW SE).
+This project shows an example how to implement an automated Software-in-the-Loop test workflow (SIL-Test) for the development of an automotive ECU using the Vector toolchain, consisting of MICROSAR Classic, the DaVinci Toolchain, vVIRTUALtarget and [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/)(CANoe4SW SE).
 
 The core part of the automated SIL-test approach is the use of text-based specification formats for simulation environments, allowing simulation environments to be constructed on a per-commit basis, thus supporting a branch/merge workflow with fast testing and change feedback of SIL-based system tests.
 Furthermore, the on-demand construction of simulation setups also allows test execution to scale with the amount of available compute resources, rather than being limited by the availability of human operators for integrating new versions of the System-under-Test (SUT) into a simulation.
@@ -28,7 +28,6 @@ The intention of this repository is to serve as an example how such a system cou
   - [Trigger the pipeline](#trigger-the-pipeline)
   - [View the pipeline](#view-the-pipeline)
   - [Prepare the pipeline](#prepare-the-pipeline)
-  - [Remarks](#remarks)
 
 ## Introduction
 
@@ -69,7 +68,7 @@ We will explain the individual steps of the test workflow in more detail in subs
 
 ## Repository Layout
 
-- [environment-make folder](/environment-make/) contains all files to run environment-make. Most importantly the `LightControl.venvironment.yaml` file, which describes the CANoe4SW Server Edition setup.
+- [environment-make folder](/environment-make/) contains all files to run environment-make. Most importantly the `LightControl.venvironment.yaml` file, which describes the [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) setup.
 - [doc folder](/doc/) contains documentation and additional infos.
 - [ECU folder](/ECU/) contains the source code for the virtual ECU, which gets tested in this demo pipeline.
 - [test folder](/test) contains the Capl Test cases along with their yaml format test that defines them
@@ -147,7 +146,7 @@ The only input artifact that is not static is the virtual ECU.
 It is collected from the [`Virtual ECU Generation` step](#virutal-ecu-generation) using the artifact handling capabilities of GitHub.
 The output artifact of this step is the simulation environment folder `environment-make/lightcontrol_scenario.vscenario/Default.venvironment`.
 
-Next, the tests for execution in CANoe4SW Server Edition are implemented as test units in VSCode using Vector provided pluggins, they can be defined in yaml format, for example as in [auto.vtestunit.yaml](test/auto/auto.vtestunit.yaml).
+Next, the tests for execution in [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) are implemented as test units in VSCode using Vector provided pluggins, they can be defined in yaml format, for example as in [auto.vtestunit.yaml](test/auto/auto.vtestunit.yaml).
 Once the tests are prepared, the compilation of the test is done by running the `test-unit-make` tool, providing it with the location of the simulation environment as well as the location of the `.vtestunit.yaml` files created previously.
 `test-unit-make` does not have a control file, it takes all of its configuration as command line parameters.
 
@@ -157,18 +156,18 @@ The output artifacts of the compiled tests are generated as `.vtestunit` files a
 
 <img src="doc/resources/images/Run-Simulation.svg" alt="drawing">
 
-Once all parts of the simulation and the test units are prepared, CANoe4SW Server Edition is run to execute the simulation.
-CANoe4SW Server Edition simply reads the simulation environment and the test cases to execute in that environment from the command line.
-When CANoe4SW Server Edition is started, the simulation is started automatically.
-CANoe4SW Server Edition also automatically starts executing all test units that were given on the command line.
+Once all parts of the simulation and the test units are prepared, [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) is run to execute the simulation.
+[CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) simply reads the simulation environment and the test cases to execute in that environment from the command line.
+When [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) is started, the simulation is started automatically.
+[CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) also automatically starts executing all test units that were given on the command line.
 When test execution has finished, the simulation is stopped.
 A brief information on the test results is given as part of the command line output.
-The exit code of the CANoe4SW Server Edition executable also indicates a test success or test failure.
+The exit code of the [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) executable also indicates a test success or test failure.
 For more detailed information, a standard `.vtestreport` file is produced for every test unit that was executed.
 The `.vtestreport` can be stored as a build artifact for later review.
 
-Note that not all test units for a given simulation environment have to be given to CANoe4SW Server Edition at once.
-Test units can be split across multiple parallel CANoe4SW Server Edition executions, allowing for parallel execution on multiple runner instances of an automated test system.
+Note that not all test units for a given simulation environment have to be given to [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) at once.
+Test units can be split across multiple parallel [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) executions, allowing for parallel execution on multiple runner instances of an automated test system.
 This project makes use of the feature of Matrix Jobs to spawn independent simulation runs for every single test unit, thus parallelizing test execution, so long as there are sufficient compute resources available.
 
 Input artifacts to this step are the `Default.venvironment` folder as well as the respective test units folder.
@@ -179,13 +178,13 @@ Each `.vtestreport` file is named after the corresponding test unit.
 
 <img src="doc/resources/images/ReportViewer.png" alt="drawing">
 
-The output of CANoe4SW Server Edition can be used to give an overall idea of test success/test failure of the provided state of the repository.
+The output of [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) can be used to give an overall idea of test success/test failure of the provided state of the repository.
 However, in many cases it is necessary to have more in-depth information on which test cases passed or failed, e.g. to compute statistics on test success or to identify tests that are currently accepted to fail and should thus not impact the test verdict.
 
 To this end, Vector TestReportViewer provides the commandline tool `ReportViewerCLI` which can be used to export each `.vtestreport` file to XUnit format that can be conmsumed by other tools.
 As part of this sample, the XUnit result is displayed in the Web UI.
 
-The input artifacts to this step are the `.vtestreport` files produced by the CANoe4SW Server Edition simulation runs.
+The input artifacts to this step are the `.vtestreport` files produced by the [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) simulation runs.
 The output artifacts are `_xunit.xml` files.
 
 Note that `.vtestreport` files can be processed independently of one another.
@@ -248,8 +247,3 @@ More details about the functionality of Vector Tools inside the pipeline can be 
 Due to the infrastructure's on-demand nature, it scales down to zero when not in use. To ensure the infrastructure is ready for immediate use, we recommend initiating the pipeline approximately 30 minutes prior to your actual need. This "warm-up" period allows the infrastructure to be fully operational and available the moment you require it.
 
 After the completion of the last job in your pipeline, the infrastructure remains active for an additional 10 minutes before automatically scaling down to zero. If you require an extension of this active period, please reach out to an administrator.
-
-## Remarks
-
-- As you got through the files of the repo, you see that the Microsar-SIP part is missing. Due to licensing, this part has been moved to the runner for this demo.
-If you use this pipeline on your own code and repo, you would commit it along the ECU source files.
