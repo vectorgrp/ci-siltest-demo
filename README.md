@@ -27,7 +27,6 @@ The intention of this repository is to serve as an example how such a system cou
     - [Passing Artifacts](#passing-artifacts)
   - [Trigger the pipeline](#trigger-the-pipeline)
   - [View the pipeline](#view-the-pipeline)
-  - [Prepare the pipeline](#prepare-the-pipeline)
 
 ## Introduction
 
@@ -144,7 +143,7 @@ It is then read by the `environment-make` tool.
 Static input artifacts to creating the simulation environment are stored in [`environment-make` folder](/environment-make/).
 The only input artifact that is not static is the virtual ECU.
 It is collected from the [`Virtual ECU Generation` step](#virutal-ecu-generation) using the artifact handling capabilities of GitHub.
-The output artifact of this step is the simulation environment folder `environment-make/lightcontrol_scenario.vscenario/Default.venvironment`.
+The output artifact of this step is the simulation environment folder `environment-make/Default.venvironment`.
 
 Next, the tests for execution in [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) are implemented as test units in VSCode using Vector provided pluggins, they can be defined in yaml format, for example as in [auto.vtestunit.yaml](test/auto/auto.vtestunit.yaml).
 Once the tests are prepared, the compilation of the test is done by running the `test-unit-make` tool, providing it with the location of the simulation environment as well as the location of the `.vtestunit.yaml` files created previously.
@@ -214,7 +213,7 @@ The second one is to use the git command-line tool. For this option, follow the 
 
 To trigger the pipeline, using the webeditor, do the following steps:
 
-1. Go to the file you want to edit. For example /ECU/Appl/Source/LightCtrl.c
+1. Go to the file you want to edit. For example [this file](/ECU/Appl/Source/LightCtrl.c)
 
 2. On the top right, there is a button called "Edit this file". Press it to be able to edit the file.
 
@@ -241,9 +240,3 @@ To see the pipeline working and the CANoe4SW_SE Test-Report:
 
 For an image based guide, [click here](/doc/view-pipeline-and-tests.md)</br>
 More details about the functionality of Vector Tools inside the pipeline can be viewed [here](/doc/pipeline.md).
-
-## Prepare the pipeline
-
-Due to the infrastructure's on-demand nature, it scales down to zero when not in use. To ensure the infrastructure is ready for immediate use, we recommend initiating the pipeline approximately 30 minutes prior to your actual need. This "warm-up" period allows the infrastructure to be fully operational and available the moment you require it.
-
-After the completion of the last job in your pipeline, the infrastructure remains active for an additional 10 minutes before automatically scaling down to zero. If you require an extension of this active period, please reach out to an administrator.
