@@ -124,7 +124,7 @@ The most notable output artifacts are the `ECU.dll`, the DLL containing the exec
 
 ### Simulation Enviromment & Test Unit Compilation
 
-<img src="doc/resources/images/Build-Simulation.svg" alt="drawing">
+<img src="doc/resources/images/Build_Simulation.png" alt="drawing">
 
 The ECU configuration assumes a certain operation environment.
 In the example, the LightControl ECU expects a connection to a CAN bus with other ECUs present to get sensor readings from and to send actuation commands to.
