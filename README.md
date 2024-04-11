@@ -227,7 +227,7 @@ To trigger the pipeline, using the web editor, do the following steps:
 
 ## View the pipeline
 
-To see the pipeline working and the CANoe4SW_SE Test Report:
+To see the pipeline working and the CANoe4SW Server Edition Test Report:
 
 ```text
  Click "Actions" on the top. -> 
