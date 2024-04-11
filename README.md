@@ -109,7 +109,7 @@ Here's the main elements of the following workflow [GitHub Action Workflow](.git
 ### Virutal ECU Generation
 
 
-<img src="doc/resources/images/Build_Simulation.png" alt="drawing">
+<img src="doc/resources/images/Build_SUT.PNG" alt="drawing">
 
 The first step in the test workflow is to build the ECU SWC source code and ECU BSW/RTE configuration into a virutal ECU.
 This is done using the `VttMake.exe` CLI executable of Vector [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/).
