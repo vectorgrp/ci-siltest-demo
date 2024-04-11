@@ -130,8 +130,7 @@ The ECU configuration assumes a certain operation environment.
 In the example, the LightControl ECU expects a connection to a CAN bus with other ECUs present to get sensor readings from and to send actuation commands to.
 To provide this environment in the SIL Test, a CANoe remaining bus simulation is used that provides the needed CAN bus and that provides mocks of other ECUs the LightControl ECU needs to communicate with.
 
-The simulation environment is defined in [`venvironment.yaml`](environment-make/venvironment.yaml), which can be created with the assistance of a VSCode plugin [Simulation and Test Environment](https://marketplace.visualstudio.com/items?itemName=VectorGroup.simulation-and-test-environment)
-This file defines the communication networks (Line 11), the communication description for these networks (Line 7) as well as all of the simulation participants.
+The simulation environment is defined in [`venvironment.yaml`](environment-make/venvironment.yaml), which can be created with the assistance of a VSCode plugin [Simulation and Test Environment](https://marketplace.visualstudio.com/items?itemName=VectorGroup.simulation-and-test-environment). This file defines the communication networks (Line 11), the communication description for these networks (Line 7) as well as all of the simulation participants.
 Lines 27-35 load in the virtual ECU created previously, whereas Lines 17 onwards and Lines 37 and onwards define two mocked ECUs.
 The mocked ECUs are implemented using CAPL.
 Their implementation is also [available in this repository](environment-make/CAPL/).
@@ -180,7 +179,7 @@ Each `.vtestreport` file is named after the corresponding test unit.
 The output of [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) can be used to give an overall idea of test success/test failure of the provided state of the repository.
 However, in many cases it is necessary to have more in-depth information on which test cases passed or failed, e.g. to compute statistics on test success or to identify tests that are currently accepted to fail and should thus not impact the test verdict.
 
-To this end, Vector TestReportViewer provides the commandline tool `ReportViewerCLI` which can be used to export each `.vtestreport` file to XUnit format that can be conmsumed by other tools.
+To this end, Vector Test Report Viewer provides the commandline tool `ReportViewerCLI` which can be used to export each `.vtestreport` file to XUnit format that can be conmsumed by other tools.
 As part of this sample, the XUnit result is displayed in the Web UI.
 
 The input artifacts to this step are the `.vtestreport` files produced by the [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) simulation runs.
@@ -194,7 +193,7 @@ Thus, this step can also be parallelized if the need arises.
 ### Vector Tools Execution in Containers
 
 - **Containerized Execution**: Vector tools run within Docker containers, ensuring consistent, isolated environments for each test run, facilitating replicable tests and simulations.
-- **Dockerfiles Location**: Required Dockerfiles for setting up these containers are located under a default installation path, like `C:\Users\Public\Documents\Vector\CANoe4SW Server Edition\17 (x64)\Samples\`. These files configure the necessary environments for Vector tools.
+- **Dockerfiles Location**: Required Dockerfiles for setting up these containers are located under a default installation path, like `C:\Users\Public\Documents\Vector\CANoe4SW Server Edition\17 (x64)\Samples\` when [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) is installed. These files configure the necessary environments for Vector tools.
 
 ### Caching Implementation
 
@@ -208,10 +207,10 @@ Thus, this step can also be parallelized if the need arises.
 
 ## Trigger the pipeline
 
-There are two ways, on how to trigger the pipeline. The first and easy way, is to use the GitHub provided webeditor.
+There are two ways, on how to trigger the pipeline. The first and easy way, is to use the GitHub provided web editor.
 The second one is to use the git command-line tool. For this option, follow the instructions [here](/doc/trigger-with-git.md)
 
-To trigger the pipeline, using the webeditor, do the following steps:
+To trigger the pipeline, using the web editor, do the following steps:
 
 1. Go to the file you want to edit. For example [this file](/ECU/Appl/Source/LightCtrl.c)
 
