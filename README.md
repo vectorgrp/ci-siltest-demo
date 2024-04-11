@@ -193,7 +193,7 @@ Thus, this step can also be parallelized if the need arises.
 ### Vector Tools Execution in Containers
 
 - **Containerized Execution**: Vector tools run within Docker containers, ensuring consistent, isolated environments for each test run, facilitating replicable tests and simulations.
-- **Dockerfiles Location**: Required Dockerfiles for setting up these containers are located under a default installation path, like `C:\Users\Public\Documents\Vector\CANoe4SW Server Edition\17 (x64)\Samples\`. These files configure the necessary environments for Vector tools.
+- **Dockerfiles Location**: Required Dockerfiles for setting up these containers are located under a default installation path, like `C:\Users\Public\Documents\Vector\CANoe4SW Server Edition\17 (x64)\Samples\` when [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) is installed. These files configure the necessary environments for Vector tools.
 
 ### Caching Implementation
 
