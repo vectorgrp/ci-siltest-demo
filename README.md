@@ -70,7 +70,7 @@ We will explain the individual steps of the test workflow in more detail in subs
 - [environment-make folder](/environment-make/) contains all files to run environment-make. Most importantly the `LightControl.venvironment.yaml` file, which describes the [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) setup.
 - [doc folder](/doc/) contains documentation and additional infos.
 - [ECU folder](/ECU/) contains the source code for the virtual ECU, which gets tested in this demo pipeline.
-- [test folder](/test) contains the Capl Test cases along with their yaml format test that defines them
+- [test folder](/test) contains the CAPL test cases along with their yaml format test that defines them
 
 
 The pipeline file is located [here](/.github/workflows/main.yaml)
