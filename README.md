@@ -43,7 +43,7 @@ Afterwards you can observe the test-results and see, if your changes broke some 
 The system developed in this example is the LightControl ECU.
 The LightControl ECU implements an automatic control of the low beams of a car.
 It is implemented as an AUTOSAR SWC running on top of Vector MICROSAR Classic.
-You can find more details about the ECU in [SUT.md](SUT.md).
+You can find more details about the ECU in [SUT.md](/doc/SUT.md).
 
 To facilitate the development of this ECU, the development organization performs large parts of their system testing as Software-in-the-Loop tests using a virtual ECU.
 The virtual ECU is built using Vector [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/).
