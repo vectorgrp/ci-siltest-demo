@@ -1,9 +1,9 @@
 # Vector CANoe CLI Toolchain & Continuous Testing Sample
 
-This project shows an example how to implement an automated Software-in-the-Loop test workflow (SIL-Test) for the development of an automotive ECU using the Vector toolchain, consisting of MICROSAR Classic, the DaVinci Toolchain, [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/) and [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/)(CANoe4SW SE).
+This project shows an example how to implement an automated Software-in-the-Loop test workflow (SIL Test) for the development of an automotive ECU using the Vector toolchain, consisting of MICROSAR Classic, the DaVinci Toolchain, [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/) and [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/)(CANoe4SW SE).
 
-The core part of the automated SIL-test approach is the use of text-based specification formats for simulation environments, allowing simulation environments to be constructed on a per-commit basis, thus supporting a branch/merge workflow with fast testing and change feedback of SIL-based system tests.
-Furthermore, the on-demand construction of simulation setups also allows test execution to scale with the amount of available compute resources, rather than being limited by the availability of human operators for integrating new versions of the System-under-Test (SUT) into a simulation.
+The core part of the automated SIL test approach is the use of text-based specification formats for simulation environments, allowing simulation environments to be constructed on a per-commit basis, thus supporting a branch/merge workflow with fast testing and change feedback of SIL-based system tests.
+Furthermore, the on-demand construction of simulation setups also allows test execution to scale with the amount of available compute resources, rather than being limited by the availability of human operators for integrating new versions of the System Under Test (SUT) into a simulation.
 
 The intention of this repository is to serve as an example how such a system could be implemented as well as to be used as a starting point for implementing custom, project-specific test workflows.
 
@@ -31,7 +31,7 @@ The intention of this repository is to serve as an example how such a system cou
 ## Introduction
 
 In an ever growing and more complex world, CI / CD solutions are key to develop and provide fast and reliable software solutions. By combining the work of the whole team in one repository and automatically test the changes, CI / CD provides fast testing and change feedback.
-This repository should give you a peek into the capabilities of Vector tools in a CI context. Starting with the changes of C-Code for an ECU, triggering the whole compilation and testing of the virtual ECU. Leading to test-reports, showing you if your changes broke some tests or functionality of your ECU.
+This repository should give you a peek into the capabilities of Vector tools in a CI context. Starting with the changes of C-Code for an ECU, triggering the whole compilation and testing of the virtual ECU. Leading to test reports, showing you if your changes broke some tests or functionality of your ECU.
 
 In this demo repository, you can take action, by editing the C Files under [/ECU/Appl/](/ECU/Appl/) to trigger the attached CI pipeline and see the Vector Tools in action.
 Afterwards you can observe the test results and see, if your changes broke some tests.
@@ -228,7 +228,7 @@ To trigger the pipeline, using the webeditor, do the following steps:
 
 ## View the pipeline
 
-To see the pipeline working and the CANoe4SW_SE Test-Report:
+To see the pipeline working and the CANoe4SW_SE Test Report:
 
 ```text
  Click "Actions" on the top. -> 
