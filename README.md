@@ -1,6 +1,6 @@
 # Vector CANoe CLI Toolchain & Continuous Testing Sample
 
-This project shows an example how to implement an automated Software-in-the-Loop test workflow (SIL Test) for the development of an automotive ECU using the Vector toolchain, consisting of MICROSAR Classic, the DaVinci Toolchain, [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/) and [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/)(CANoe4SW SE).
+This project shows an example how to implement an automated Software-in-the-Loop test workflow (SIL Test) for the development of an automotive ECU using the Vector toolchain, consisting of MICROSAR Classic, the DaVinci Toolchain, [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/) and [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/)(canoe4sw-se).
 
 The core part of the automated SIL test approach is the use of text-based specification formats for simulation environments, allowing simulation environments to be constructed on a per-commit basis, thus supporting a branch/merge workflow with fast testing and change feedback of SIL-based system tests.
 Furthermore, the on-demand construction of simulation setups also allows test execution to scale with the amount of available compute resources, rather than being limited by the availability of human operators for integrating new versions of the System Under Test (SUT) into a simulation.
