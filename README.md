@@ -207,10 +207,10 @@ Thus, this step can also be parallelized if the need arises.
 
 ## Trigger the pipeline
 
-There are two ways, on how to trigger the pipeline. The first and easy way, is to use the GitHub provided webeditor.
+There are two ways, on how to trigger the pipeline. The first and easy way, is to use the GitHub provided web editor.
 The second one is to use the git command-line tool. For this option, follow the instructions [here](/doc/trigger-with-git.md)
 
-To trigger the pipeline, using the webeditor, do the following steps:
+To trigger the pipeline, using the web editor, do the following steps:
 
 1. Go to the file you want to edit. For example [this file](/ECU/Appl/Source/LightCtrl.c)
 
