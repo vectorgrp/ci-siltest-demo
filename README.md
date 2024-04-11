@@ -215,16 +215,16 @@ To trigger the pipeline, using the webeditor, do the following steps:
 
 1. Go to the file you want to edit. For example [this file](/ECU/Appl/Source/LightCtrl.c)
 
-2. On the top right, there is a button called "Edit this file". Press it to be able to edit the file.
+2. On the top right, there is a button called `Edit this file`. Press it to be able to edit the file.
 
 3. Do the changes and additions to the file you like.
     E.g.:
     Uncomment line 59 (“//rtb_LightIntensity_LightIntensi = 0;”) in the source code "/ECU/Appl/Simulink/LightCtrl_Model_autosar_rtw/LightCtrl_SWC.c" to cause test fails.  
     Info: Some tests will set the light intensity value and expect a changed head light result. Because the light intensity is now statically set to value zero, some tests will fail.
 
-4. On the top right of the page, is an entry box, to commit the changes. It will prompt you to give a commit message as well as an option to create a separate branch out of your commit. Select Creating a new branch and write in text there as you like, and afterwards click the "Propose changes" button.
+4. On the top right of the page, is an entry box, to commit the changes `Commit changes...`. It will prompt you to give a commit message as well as an option to create a separate branch out of your commit. Select Creating a new branch and write in text there as you like, and afterwards click the `Propose changes` button.
 
-5. Click on Create pull request button to attempt to merge your changes with the main branch thus triggering the pipeline automatically
+5. Click on `Create pull request` button to attempt to merge your changes with the main branch thus triggering the pipeline automatically
 
 ## View the pipeline
 
