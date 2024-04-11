@@ -179,7 +179,7 @@ Each `.vtestreport` file is named after the corresponding test unit.
 The output of [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) can be used to give an overall idea of test success/test failure of the provided state of the repository.
 However, in many cases it is necessary to have more in-depth information on which test cases passed or failed, e.g. to compute statistics on test success or to identify tests that are currently accepted to fail and should thus not impact the test verdict.
 
-To this end, Vector TestReportViewer provides the commandline tool `ReportViewerCLI` which can be used to export each `.vtestreport` file to XUnit format that can be conmsumed by other tools.
+To this end, Vector Test Report Viewer provides the commandline tool `ReportViewerCLI` which can be used to export each `.vtestreport` file to XUnit format that can be conmsumed by other tools.
 As part of this sample, the XUnit result is displayed in the Web UI.
 
 The input artifacts to this step are the `.vtestreport` files produced by the [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) simulation runs.
