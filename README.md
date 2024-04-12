@@ -30,26 +30,24 @@ The intention of this repository is to serve as an example how such a system cou
 
 ## Introduction
 
-In an ever growing and more complex world, CI / CD solutions are key to develop and provide fast and reliable software solutions. By combining the work of the whole team in one repository and automatically test the changes, CI / CD provides fast testing and change feedback.
-This repository should give you a peek into the capabilities of Vector tools in a CI context. Starting with the changes of C-Code for an ECU, triggering the whole compilation and testing of the virtual ECU. Leading to test reports, showing you if your changes broke some tests or functionality of your ECU.
+CI / CT solutions are key to develop and provide fast and reliable software solutions. By combining the work of the whole team in one repository and automatically test the changes, CI / CT provides fast testing and change feedback.
+This repository should give you a peek of how to setup a Continuous Test (CT) environment with CANoe4SW Server Edition for vVIRTUALtarget ECUs. Starting with the changes of C code for an ECU, we are triggering the whole compilation and testing process of the virtual ECU. Test reports will show you if your changes broke some tests or functionality of your ECU.
 
-In this demo repository, you can take action, by editing the C Files under [/ECU/Appl/](/ECU/Appl/) to trigger the attached CI pipeline and see the Vector Tools in action.
-Afterwards you can observe the test results and see, if your changes broke some tests.
+In this demo repository, you can take action, by editing the C files under [/ECU/Appl/](/ECU/Appl/) to trigger the attached CI pipeline and see the involved Vector tools in action.
+Afterwards you can observe the test results.
 
 ## Overview
 
 <img src="doc/resources/images/OnPullRequest.svg" width=300 align="right">
 
-The system developed in this example is the LightControl ECU.
-The LightControl ECU implements an automatic control of the low beams of a car.
+The "LightControl" ECU in this example implements an automatic control of the low beams of a car.
 It is implemented as an AUTOSAR SWC running on top of Vector MICROSAR Classic.
 
-
-To facilitate the development of this ECU, the development organization performs large parts of their system testing as Software-in-the-Loop tests using a virtual ECU.
+To facilitate the development of this ECU, the development organization performs large parts of their system testing as SIL tests using a virtual ECU.
 The virtual ECU is built using Vector [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/).
-The ECU is executed as part of a remaining bus simulation environment using Vector CANoe4SW SE.
-In this simulation environment the system test cases that are authored in a YAML-based format and implemented using CAPL can then be executed.
-These test cases can be efficiently created and managed through our [`Vector Test Unit` VSCode plugin](https://marketplace.visualstudio.com/items?itemName=VectorGroup.test-unit).
+The ECU is integrated in a CANoe4SW Server Edition simulation environment with remaining bus simulation.
+In this simulation environment the system test cases are implemented using CAPL and organized in YAML-based format.
+These test cases can be efficiently created and managed through our [`Vector Test Unit` Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=VectorGroup.test-unit).
 
 For an ideal integration into the development workflow, the test workflow as depicted below is set up to run automatically whenever a pull request is opened on the repository.
 Pull requests may contain changes to the ECU source code, the ECU BSW configuration, the test cases, and the simulation setup.
@@ -112,15 +110,15 @@ Here's the main elements of the following workflow [GitHub Action Workflow](.git
 <img src="doc/resources/images/Build_SUT.PNG" alt="drawing">
 
 The first step in the test workflow is to build the ECU SWC source code and ECU BSW/RTE configuration into a virutal ECU.
-This is done using the `VttMake.exe` CLI executable of Vector [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/).
+This is done using the `VttMake.exe` CLI executable of [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/).
 `VttMake.exe` takes as input an XML file [`LightControl.vttmake`](ECU/LightControl.vttmake).
 While being an XML file, the syntax of the `.vttmake` file format is designed to be so simple that it can be edited with any text editor.
 The `.vttmake` file tells [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/) where to find the ECU project with the BSW configuration (Line 5) and points to the SWC implementation files (Lines 12-24).
 Furthermore, it tells [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/) which compiler is used for building the ECU, so that the glue code between the BSW and the simulation tool and the build configuration can be generated accordingly.
-`VttMake.exe` can also launch the [DaVinci Configurator](https://www.vector.com/int/en/products/products-a-z/software/davinci-configurator-classic/) to generate the BSW configuation and RTE configuration into source code as well as call the configured compiler to compile the Virtual ECU as a shared library.
+`VttMake.exe` can also launch [DaVinci Configurator](https://www.vector.com/int/en/products/products-a-z/software/davinci-configurator-classic/) to generate the BSW and RTE source code. That also calls the configured compiler to compile the virtual ECU.
 
 You can find all input artifacts for this job in the [`ECU` folder](ECU/).
-The most notable output artifacts are the `ECU.dll`, the DLL containing the executable code for the virtual ECU, along with several files containing metadata for the DLL, all of which will be loaded into the CANoe simulation later on.
+The most notable output artifacts are the `ECU.dll`, the DLL containing the executable code for the virtual ECU, along with several files containing metadata for the DLL, all of which will be later loaded into the CANoe simulation.
 
 ### Simulation Enviromment & Test Unit Compilation
 
@@ -128,10 +126,10 @@ The most notable output artifacts are the `ECU.dll`, the DLL containing the exec
 
 The ECU configuration assumes a certain operation environment.
 In the example, the LightControl ECU expects a connection to a CAN bus with other ECUs present to get sensor readings from and to send actuation commands to.
-To provide this environment in the SIL Test, a CANoe remaining bus simulation is used that provides the needed CAN bus and that provides mocks of other ECUs the LightControl ECU needs to communicate with.
+To provide this environment in the SIL Test, a CANoe remaining bus simulation is used that mocks the communication of other ECUs surrounding the LightControl ECU.
 
-The simulation environment is defined in [`venvironment.yaml`](environment-make/venvironment.yaml), which can be created with the assistance of a VSCode plugin [Simulation and Test Environment](https://marketplace.visualstudio.com/items?itemName=VectorGroup.simulation-and-test-environment). This file defines the communication networks (Line 11), the communication description for these networks (Line 7) as well as all of the simulation participants.
-Lines 27-35 load in the virtual ECU created previously, whereas Lines 17 onwards and Lines 37 and onwards define two mocked ECUs.
+The simulation environment is defined in [`venvironment.yaml`](environment-make/venvironment.yaml), which can be created with the assistance of a Visual Studio Code plugin [Simulation and Test Environment](https://marketplace.visualstudio.com/items?itemName=VectorGroup.simulation-and-test-environment). This file defines the communication networks (Line 11), the communication description for these networks (Line 7) as well as the simulation participants.
+Lines 27-35 integrated the previously created virtual ECU, whereas lines 17 onwards and Lines 37 and onwards define two mocked ECUs.
 The mocked ECUs are implemented using CAPL.
 Their implementation is also [available in this repository](environment-make/CAPL/).
 
@@ -144,7 +142,7 @@ The only input artifact that is not static is the virtual ECU.
 It is collected from the [`Virtual ECU Generation` step](#virutal-ecu-generation) using the artifact handling capabilities of GitHub.
 The output artifact of this step is the simulation environment folder `environment-make/Default.venvironment`.
 
-Next, the tests for execution in [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) are implemented as test units in VSCode using Vector provided pluggins, they can be defined in yaml format, for example as in [auto.vtestunit.yaml](test/auto/auto.vtestunit.yaml).
+Next, the tests for execution in [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) are implemented as test units in Visual Studio Code using Vector provided plugins, they can be defined in yaml format, for example as in [auto.vtestunit.yaml](test/auto/auto.vtestunit.yaml).
 Once the tests are prepared, the compilation of the test is done by running the `test-unit-make` tool, providing it with the location of the simulation environment as well as the location of the `.vtestunit.yaml` files created previously.
 `test-unit-make` does not have a control file, it takes all of its configuration as command line parameters.
 
@@ -156,8 +154,7 @@ The output artifacts of the compiled tests are generated as `.vtestunit` files a
 
 Once all parts of the simulation and the test units are prepared, [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) is run to execute the simulation.
 [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) simply reads the simulation environment and the test cases to execute in that environment from the command line.
-When [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) is started, the simulation is started automatically.
-[CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) also automatically starts executing all test units that were given on the command line.
+[CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) will start the simulation automatically after is launch. It also automatically starts executing all test units that were specified by command line.
 When test execution has finished, the simulation is stopped.
 A brief information on the test results is given as part of the command line output.
 The exit code of the [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) executable also indicates a test success or test failure.
