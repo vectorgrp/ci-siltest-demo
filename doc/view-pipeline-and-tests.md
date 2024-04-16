@@ -1,17 +1,17 @@
 # Image based guide to view pipeline
 
-## Click "CI/CD" on the left side
+## Click "Actions" on the top
 
-<img src="resources/images/repo-select-ci.png" alt="drawing" width="75%" height=75%>
+<img src="resources/images/actions.PNG" alt="drawing" width="75%" height=75%>
 
-## Choose the most recent run by clicking in the status icon "passed" or "failed"
+## Choose the most recent workflow run "passed" or "failed"
 
-<img src="resources/images/repo-ci-screen.png" alt="drawing" width="75%" height=75%/>
+<img src="resources/images/workflows.PNG" alt="drawing" width="75%" height=75%/>
 
-## Click on "Tests" on center of the screen
+## Click on the last job "CANoe4SW_SE Tests" listed on the left side bar.
 
-<img src="resources/images/repo-test-select.png" alt="drawing" width="75%" height=75%/>
+<img src="resources/images/workflow_run.PNG" alt="drawing" width="75%" height=75%/>
 
-## Click on the listed job and view the test results
+## View the test results
 
-<img src="resources/images/repo-ci-test-view.png" alt="drawing" width="75%" height=75%/>
+<img src="resources/images/tests.PNG" alt="drawing" width="75%" height=75%/>
