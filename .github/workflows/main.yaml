@@ -3,7 +3,9 @@ name: call-workflow
 on:
   push:
   pull_request:
-  workflow_dispatch:
+  schedule:
+    # Runs every 30 minutes
+    - cron: '*/30 * * * *'
 
 permissions:
   checks: write
@@ -15,23 +17,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Cache SUT
-        id: cache-sut
-        uses: actions/cache@v4
-        with:
-          path: |
-            ./ECU/SUT
-          key: ${{ hashFiles('./ECU/**') }}
-
-      - name: Cache BSW
-        id: cache-bsw
-        uses: actions/cache@v4
-        with:
-          path: |
-            ./ECU/Appl/GenDataVTT
-          key: ${{ hashFiles('./ECU/LightControl.dpa','./ECU/Config') }}
-
       - name: Copy Sip to working directory
         if: steps.cache-sut.outputs.cache-hit != 'true'
         shell: powershell
