@@ -142,7 +142,7 @@ jobs:
           canoe4sw-se ./environment-make/Default.venvironment -d ./test-${{ matrix.TESTNAME }}.vtestunit --win32 --port-rtk-api none --test-unit ./environment-make/${{ matrix.TESTNAME }}.vtestunit;
           echo "The last exit code is  $LASTEXITCODE"
       - name: Copy Test Results
-        if: always()
+        if: ${{ !cancelled() }}
         run : |
           Copy-Item -Path "./test-${{ matrix.TESTNAME }}.vtestunit/TestReports/" -Destination "./TestReports/" -Recurse ;
           New-Item -ItemType "directory" "./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files" ; Move-Item -Path "./test-${{ matrix.TESTNAME }}.vtestunit/*.wlog","./test-${{ matrix.TESTNAME }}.vtestunit/*.wlog.txt" -Destination "./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files/";
@@ -154,14 +154,28 @@ jobs:
             $content = wlogdump.exe $fullName
             $content | Set-Content ($fullName + '.txt')
           }
+      - name: Convert Wlog Files to Text
+        if: ${{ !cancelled() }}
+        id: convertLogFiles
+        shell: powershell
+        run: |
+          $wlogFilesPath = "./test-${{ matrix.TESTNAME }}.vtestunit"
+          Get-ChildItem -Path $wlogFilesPath -Filter *.wlog | ForEach-Object {
+            $fullName = $_.FullName
+            Write-Host "  - exporting $fullName to readable asci text ...";
+            $content = & wlogdump.exe $fullName
+            $content | Set-Content ($fullName + '.txt')
+          }
+          ls $wlogFilesPath
       - name: Convert Test Report to XUnit
-        if: always()
+        id: convertTestReport
+        if: ${{ !cancelled() }}
         uses: ./.github/actions/convert-vtestreport-to-xunit
         with:
           vTestReportInputFile: "./TestReports/${{ matrix.TESTNAME }}.vtestreport"
           xUnitOutputFile: "./TestReports/${{ matrix.TESTNAME }}_xunit.xml"
       - name: Export Test Reports
-        if: always()
+        if: ${{ !cancelled() && steps.convertTestReport.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         env: 
           http_proxy: ""
@@ -172,6 +186,16 @@ jobs:
             ./TestReports/
             ./test-${{ matrix.TESTNAME }}/wlog-files
           retention-days: 7
+      - name: Upload wlog Text Files
+        if: ${{ !cancelled() && steps.convertLogFiles.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        env:
+          # Explicitly disable the Proxy, as NODE seems to ignore no_proxy
+          http_proxy: ""
+          https_proxy: ""
+        with:
+          name: Wlog Files ${{ matrix.TESTNAME }}
+          path: ./test-${{ matrix.TESTNAME }}.vtestunit\*.txt
 
   display-test-report:
     if: ${{ !cancelled() }}
