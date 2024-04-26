@@ -37,6 +37,6 @@ jobs:
       - name: Delete old branches
         uses: beatlabs/delete-old-branches-action@v0.0.10
         with:
-          github_token: ${{ github.token }}
+          repo_token: ${{ github.token }}
           date: '1 day ago' 
           default_branches: main,golden_workflow,stage # Adjust the protected branches as necessary
