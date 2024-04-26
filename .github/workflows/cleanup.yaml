@@ -6,14 +6,13 @@ on:
     # Runs at midnight UTC every day
     - cron: '0 0 * * *'
 
-permissions:
-  contents: write # only for delete-branch option
-  issues: write
-  pull-requests: write
-
 jobs:
   cleanup:
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -40,3 +39,4 @@ jobs:
           github_token: ${{ github.token }}
           date: '1 day ago' 
           default_branches: main,golden_workflow,stage # Adjust the protected branches as necessary
+ 53
