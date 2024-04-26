@@ -39,4 +39,3 @@ jobs:
           github_token: ${{ github.token }}
           date: '1 day ago' 
           default_branches: main,golden_workflow,stage # Adjust the protected branches as necessary
- 53
