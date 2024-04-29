@@ -10,7 +10,7 @@ on:
 permissions:
   checks: write
   contents: read
-  
+
 jobs:
   build-sut:
     runs-on: vtt
