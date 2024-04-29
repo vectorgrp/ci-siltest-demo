@@ -40,4 +40,4 @@ jobs:
           repo_token: ${{ github.token }}
           date: '1 day ago' 
           default_branches: Golden_workflow,stage,main # Adjust the protected branches as necessary
-          dry_run: true
+          dry_run: false
