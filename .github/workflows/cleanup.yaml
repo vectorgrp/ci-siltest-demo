@@ -38,6 +38,6 @@ jobs:
         uses: beatlabs/delete-old-branches-action@v0.0.10
         with:
           repo_token: ${{ github.token }}
-          date: '5 days ago' 
+          date: '15 days ago' 
           default_branches: Golden_workflow,stage,main # Adjust the protected branches as necessary
           dry_run: false
