@@ -32,7 +32,7 @@ jobs:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
           retain_days: 7
-          keep_minimum_runs: 1
+          keep_minimum_runs: 0
           check_branch_existence: true
 
       - name: Delete old branches
