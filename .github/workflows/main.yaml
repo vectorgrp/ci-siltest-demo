@@ -163,6 +163,20 @@ jobs:
         env:
           http_proxy: ""
           https_proxy: "" 
+      
+      - name: Convert Test Report to XUnit basic
+        if: ${{ !cancelled() }}
+        uses: ./.github/actions/convert-vtestreport-to-xunit
+        with:
+          vTestReportInputFile: "./TestReports/basic.vtestreport"
+          xUnitOutputFile: "./TestReports/basic_xunit.xml"
+      
+      - name: Convert Test Report to XUnit auto
+        if: ${{ !cancelled() }}
+        uses: ./.github/actions/convert-vtestreport-to-xunit
+        with:
+          vTestReportInputFile: "./TestReports/auto.vtestreport"
+          xUnitOutputFile: "./TestReports/auto_xunit.xml"
       - name: Merge Test Reports
         shell: pwsh
         run: |
@@ -176,22 +190,6 @@ jobs:
               Copy-Item -Path $_.FullName -Destination $targetDir
             }
           }
-      - name: Convert Test Report to XUnit basic
-        id: convertTestReport
-        if: ${{ !cancelled() }}
-        uses: ./.github/actions/convert-vtestreport-to-xunit
-        with:
-          vTestReportInputFile: "./TestReports/basic.vtestreport"
-          xUnitOutputFile: "./TestReports/basic_xunit.xml"
-
-      - name: Convert Test Report to XUnit auto
-        id: convertTestReport
-        if: ${{ !cancelled() }}
-        uses: ./.github/actions/convert-vtestreport-to-xunit
-        with:
-          vTestReportInputFile: "./TestReports/auto.vtestreport"
-          xUnitOutputFile: "./TestReports/auto_xunit.xml"
-
       - uses: dorny/test-reporter@v1
         with:
           fail-on-error: "false"
