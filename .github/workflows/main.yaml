@@ -76,11 +76,6 @@ jobs:
           http_proxy: ""
           https_proxy: ""
       
-      - name: Force Failure
-        run: |
-          echo "This step will intentionally fail."
-          exit 1
-          
       - name: Compile simulation
         run: |
             environment-make -o ./environment-make -A Win32 ./environment-make/venvironment.yaml;
@@ -112,6 +107,10 @@ jobs:
         env:
           http_proxy: ""
           https_proxy: ""
+      - name: Force Failure
+        run: |
+          echo "This step will intentionally fail."
+          exit 1
       - name: Fetch venvironment artifact
         uses: actions/download-artifact@v4
         with:
