@@ -62,7 +62,6 @@ jobs:
         run : ls ECU/SUT/
           
   compile-simulation:
-    if: ${{ !cancelled() }}
     needs: [build-sut]
     runs-on: canoe
     steps:
@@ -91,7 +90,6 @@ jobs:
           retention-days: 7
  
   run-tests-simulation:
-    if: ${{ !cancelled() }}
     needs: compile-simulation
     runs-on: canoe
     strategy:
@@ -178,7 +176,7 @@ jobs:
           path: ./test-${{ matrix.TESTNAME }}.vtestunit\*.txt
 
   display-test-report:
-    if: ${{ !cancelled() }}
+    if: ${{ needs.run-tests-simulation.result != 'skipped' && !cancelled() }}
     needs: run-tests-simulation
     runs-on: canoe
     steps:
