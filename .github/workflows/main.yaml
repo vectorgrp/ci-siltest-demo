@@ -78,16 +78,16 @@ jobs:
       
       - name: Compile simulation
         run: |
-            environment-make -o ./environment-make -A Win32 ./environment-make/venvironment.yaml;
-            test-unit-make -e ./environment-make/Default.venvironment -o ./environment-make/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
-      - name: Export environment-make
+            environment-make -o ./build -A Win32 ./build/venvironment.yaml;
+            test-unit-make -e ./build/Default.venvironment -o ./build/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
+      - name: Export build outputs
         uses: actions/upload-artifact@v4
         env: 
           http_proxy: ""
           https_proxy: "" 
         with:
-          name: environment-make
-          path: ./environment-make/
+          name: build-outputs
+          path: ./build/
           retention-days: 7
  
   run-tests-simulation:
@@ -107,30 +107,26 @@ jobs:
         env:
           http_proxy: ""
           https_proxy: ""
-      - name: Force Failure
-        run: |
-          echo "This step will intentionally fail."
-          exit 1
       - name: Fetch venvironment artifact
         uses: actions/download-artifact@v4
         with:
-          name: environment-make
-          path: environment-make        
+          name: build-outputs
+          path: build       
         env:
           http_proxy: ""
           https_proxy: ""
       - name: run_canoe
         id: canoe
         run : |
-          canoe4sw-se ./environment-make/Default.venvironment -d ./test-${{ matrix.TESTNAME }}.vtestunit --win32 --port-rtk-api none --test-unit ./environment-make/${{ matrix.TESTNAME }}.vtestunit;
+          canoe4sw-se ./build/Default.venvironment -d ./testresult-${{ matrix.TESTNAME }}.vtestunit --win32 --port-rtk-api none --test-unit ./build/${{ matrix.TESTNAME }}.vtestunit;
           echo "The last exit code is  $LASTEXITCODE"
       - name: Copy Test Results
         if: ${{ !cancelled() }}
         run : |
-          Copy-Item -Path "./test-${{ matrix.TESTNAME }}.vtestunit/TestReports/" -Destination "./TestReports/" -Recurse ;
-          New-Item -ItemType "directory" "./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files" ; Move-Item -Path "./test-${{ matrix.TESTNAME }}.vtestunit/*.wlog","./test-${{ matrix.TESTNAME }}.vtestunit/*.wlog.txt" -Destination "./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files/";
+          Copy-Item -Path "./testresult-${{ matrix.TESTNAME }}.vtestunit/TestReports/" -Destination "./TestReports/" -Recurse ;
+          New-Item -ItemType "directory" "./testresult-${{ matrix.TESTNAME }}.vtestunit/wlog-files" ; Move-Item -Path "./testresult-${{ matrix.TESTNAME }}.vtestunit/*.wlog","./testresult-${{ matrix.TESTNAME }}.vtestunit/*.wlog.txt" -Destination "./testresult-${{ matrix.TESTNAME }}.vtestunit/wlog-files/";
           Write-Host "exporting wlog binary log files to readable format ...";
-          Get-ChildItem ./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files/ -Filter *.wlog | 
+          Get-ChildItem ./testresult-${{ matrix.TESTNAME }}.vtestunit/wlog-files/ -Filter *.wlog | 
           Foreach-Object {
             $fullName = $_.FullName
             Write-Host "  - exporting $fullName to readable asci text ...";
@@ -142,7 +138,7 @@ jobs:
         id: convertLogFiles
         shell: powershell
         run: |
-          $wlogFilesPath = "./test-${{ matrix.TESTNAME }}.vtestunit"
+          $wlogFilesPath = "./testresult-${{ matrix.TESTNAME }}.vtestunit"
           Get-ChildItem -Path $wlogFilesPath -Filter *.wlog | ForEach-Object {
             $fullName = $_.FullName
             Write-Host "  - exporting $fullName to readable asci text ...";
@@ -178,7 +174,7 @@ jobs:
           https_proxy: ""
         with:
           name: Wlog Files ${{ matrix.TESTNAME }}
-          path: ./test-${{ matrix.TESTNAME }}.vtestunit\*.txt
+          path: ./testresult-${{ matrix.TESTNAME }}.vtestunit\*.txt
 
   display-test-report:
     if: ${{ needs.run-tests-simulation.result != 'skipped' && !cancelled() }}
