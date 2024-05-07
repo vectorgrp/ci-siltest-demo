@@ -120,41 +120,9 @@ jobs:
         run : |
           canoe4sw-se ./build/Default.venvironment -d ./testresult-${{ matrix.TESTNAME }}.vtestunit --win32 --port-rtk-api none --test-unit ./build/${{ matrix.TESTNAME }}.vtestunit;
           echo "The last exit code is  $LASTEXITCODE"
-      - name: Copy Test Results
-        if: ${{ !cancelled() }}
-        run : |
-          Copy-Item -Path "./testresult-${{ matrix.TESTNAME }}.vtestunit/TestReports/" -Destination "./TestReports/" -Recurse ;
-          New-Item -ItemType "directory" "./testresult-${{ matrix.TESTNAME }}.vtestunit/wlog-files" ; Move-Item -Path "./testresult-${{ matrix.TESTNAME }}.vtestunit/*.wlog","./testresult-${{ matrix.TESTNAME }}.vtestunit/*.wlog.txt" -Destination "./testresult-${{ matrix.TESTNAME }}.vtestunit/wlog-files/";
-          Write-Host "exporting wlog binary log files to readable format ...";
-          Get-ChildItem ./testresult-${{ matrix.TESTNAME }}.vtestunit/wlog-files/ -Filter *.wlog | 
-          Foreach-Object {
-            $fullName = $_.FullName
-            Write-Host "  - exporting $fullName to readable asci text ...";
-            $content = wlogdump.exe $fullName
-            $content | Set-Content ($fullName + '.txt')
-          }
-      - name: Convert Wlog Files to Text
-        if: ${{ !cancelled() }}
-        id: convertLogFiles
-        shell: powershell
-        run: |
-          $wlogFilesPath = "./testresult-${{ matrix.TESTNAME }}.vtestunit"
-          Get-ChildItem -Path $wlogFilesPath -Filter *.wlog | ForEach-Object {
-            $fullName = $_.FullName
-            Write-Host "  - exporting $fullName to readable asci text ...";
-            $content = & wlogdump.exe $fullName
-            $content | Set-Content ($fullName + '.txt')
-          }
-          ls $wlogFilesPath
-      - name: Convert Test Report to XUnit
-        id: convertTestReport
-        if: ${{ !cancelled() }}
-        uses: ./.github/actions/convert-vtestreport-to-xunit
-        with:
-          vTestReportInputFile: "./TestReports/${{ matrix.TESTNAME }}.vtestreport"
-          xUnitOutputFile: "./TestReports/${{ matrix.TESTNAME }}_xunit.xml"
+
       - name: Export Test Reports
-        if: ${{ !cancelled() && steps.convertTestReport.outcome == 'success' }}
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         env: 
           http_proxy: ""
@@ -162,8 +130,7 @@ jobs:
         with:
           name: Test Reports ${{ matrix.TESTNAME }}
           path: |
-            ./TestReports/
-            ./test-${{ matrix.TESTNAME }}/wlog-files
+            ./testresult-${{ matrix.TESTNAME }}.vtestunit/TestReports/
           retention-days: 7
       - name: Upload wlog Text Files
         if: ${{ !cancelled() && steps.convertLogFiles.outcome == 'success' }}
@@ -209,6 +176,22 @@ jobs:
               Copy-Item -Path $_.FullName -Destination $targetDir
             }
           }
+      - name: Convert Test Report to XUnit basic
+        id: convertTestReport
+        if: ${{ !cancelled() }}
+        uses: ./.github/actions/convert-vtestreport-to-xunit
+        with:
+          vTestReportInputFile: "./TestReports/basic.vtestreport"
+          xUnitOutputFile: "./TestReports/basic_xunit.xml"
+
+      - name: Convert Test Report to XUnit auto
+        id: convertTestReport
+        if: ${{ !cancelled() }}
+        uses: ./.github/actions/convert-vtestreport-to-xunit
+        with:
+          vTestReportInputFile: "./TestReports/auto.vtestreport"
+          xUnitOutputFile: "./TestReports/auto_xunit.xml"
+
       - uses: dorny/test-reporter@v1
         with:
           fail-on-error: "false"
