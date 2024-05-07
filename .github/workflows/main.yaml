@@ -78,7 +78,7 @@ jobs:
       
       - name: Compile simulation
         run: |
-            environment-make -o ./build -A Win32 ./build/venvironment.yaml;
+            environment-make -o ./build -A Win32 ./environment-make/venvironment.yaml;
             test-unit-make -e ./build/Default.venvironment -o ./build/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
       - name: Export build outputs
         uses: actions/upload-artifact@v4
