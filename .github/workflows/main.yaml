@@ -32,26 +32,6 @@ jobs:
             ./ECU/Appl/GenDataVTT
           key: ${{ hashFiles('./ECU/LightControl.dpa','./ECU/Config') }}
 
-      - name: Copy Sip to working directory
-        if: steps.cache-sut.outputs.cache-hit != 'true'
-        shell: powershell
-        run : |
-          # Ensure the destination directory exists
-          $destination = ".\SIP"
-          if (-not (Test-Path $destination)) {
-            New-Item -ItemType Directory -Path $destination
-          }
-          Copy-Item -Path "C:\Microsar-Sip\*" -Destination $destination -Recurse -Force
-          # Ensure the files have been moved
-          $itemsInDestination = Get-ChildItem -Path $destination
-          if ($itemsInDestination.Count -gt 0) {
-            Write-Output "Files have been moved to $destination."
-            # List the files
-            Get-ChildItem -Path $destination 
-          } else {
-            Write-Output "No files found in $destination."
-            exit 1 # Exit the script with an error status
-          }
       - name: Run DaVinci & VTT
         if: steps.cache-sut.outputs.cache-hit != 'true'
         env:

@@ -31,7 +31,7 @@
         <Source>./Appl/Source</Source>
         <ServiceComponents>./Config/ServiceComponents</ServiceComponents>
         <Logs>./Log</Logs>
-        <SIP>../SIP</SIP>
+        <SIP>C:/Microsar-Sip</SIP>
         <StartMenu></StartMenu>
         <ApplicationComponentFolders>
             <ApplicationComponentFolder>./Config/ApplicationComponents</ApplicationComponentFolder>
