@@ -16,6 +16,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Force Failure
+        run: |
+          echo "This step will intentionally fail."
+          exit 1
       - name: Cache SUT
         id: cache-sut
         uses: actions/cache@v4
