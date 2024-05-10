@@ -62,7 +62,7 @@ jobs:
         run : ls ECU/SUT/
           
   compile-simulation:
-    #needs: [build-sut]
+    needs: [build-sut]
     runs-on: canoe-staging
     steps:
       - name: Checkout repository
