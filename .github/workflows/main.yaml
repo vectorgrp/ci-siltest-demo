@@ -166,7 +166,6 @@ jobs:
       
       - name: Convert Test Report to XUnit basic
         if: ${{ !cancelled() }}
-        uses: ./.github/actions/convert-vtestreport-to-xunit
         run: |
           write-host "Converting ./TestReports/basic.vtestreport to ./TestReports/basic_xunit.xml"
           ReportViewerCli -r "./TestReports/basic.vtestreport" -xu "./TestReports/basic_xunit.xml"
