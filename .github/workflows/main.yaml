@@ -11,7 +11,7 @@ permissions:
   
 jobs:
   build-sut:
-    runs-on: vtt
+    runs-on: vtt-staging
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -63,7 +63,7 @@ jobs:
           
   compile-simulation:
     needs: [build-sut]
-    runs-on: canoe
+    runs-on: canoe-staging
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -92,7 +92,7 @@ jobs:
  
   run-tests-simulation:
     needs: compile-simulation
-    runs-on: canoe
+    runs-on: canoe-staging
     strategy:
       matrix:
         TESTNAME: [auto, basic]
@@ -146,7 +146,7 @@ jobs:
   display-test-report:
     if: ${{ needs.run-tests-simulation.result != 'skipped' && !cancelled() }}
     needs: run-tests-simulation
-    runs-on: canoe
+    runs-on: canoe-staging
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -167,9 +167,9 @@ jobs:
       - name: Convert Test Report to XUnit basic
         if: ${{ !cancelled() }}
         uses: ./.github/actions/convert-vtestreport-to-xunit
-        with:
-          vTestReportInputFile: "./TestReports/basic.vtestreport"
-          xUnitOutputFile: "./TestReports/basic_xunit.xml"
+        run: |
+          write-host "Converting ./TestReports/basic.vtestreport to ./TestReports/basic_xunit.xml"
+          ReportViewerCli -r "./TestReports/basic.vtestreport" -xu "./TestReports/basic_xunit.xml"
       
       - name: Convert Test Report to XUnit auto
         if: ${{ !cancelled() }}
