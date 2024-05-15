@@ -67,6 +67,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Fetch SUT Artifact
         uses: actions/download-artifact@v4
         with:
@@ -103,14 +104,16 @@ jobs:
         with:
           name: SUT
           path: ECU/SUT
+
       - name: Fetch compiled-environment-and-tests artifact
         uses: actions/download-artifact@v4
         with:
           name: compiled-environment-and-tests
           path: compiled-environment-and-tests
+
       - name: Run CANoe4SW Server Edition
         id: canoe4swse
-	        run : |
+        run: |
           & canoe4sw-se ./compiled-environment-and-tests/Default.venvironment -d ./simulation --win32 --port-rtk-api none --test-unit ./compiled-environment-and-tests/${{ matrix.TESTNAME }}.vtestunit;
           Write-Host "CANoe4SW Server Edition returned exit code $LASTEXITCODE"
 
@@ -122,6 +125,7 @@ jobs:
           path: |
             ./simulation/TestReports/
           retention-days: 7
+
       - name: Upload Log Files
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
@@ -137,11 +141,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Fetch testreport auto artifact
         uses: actions/download-artifact@v4
         with:
           name: Test Reports auto
           path: ./simulation/TestReports/
+
       - name: Fetch testreport basic artifact
         uses: actions/download-artifact@v4
         with:
@@ -168,4 +174,3 @@ jobs:
           name: Test results                             # Name of the check run which will be created
           path: "./simulation/TestReports/*_xunit.xml"   # Path to test results
           reporter: java-junit                           # Format of test results
-
