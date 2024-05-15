@@ -68,7 +68,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Fetch SUT Artifact
+      - name: Fetch SUT artifact
         uses: actions/download-artifact@v4
         with:
           name: SUT
@@ -81,6 +81,7 @@ jobs:
       - name: Make test units
         run: |
             test-unit-make -e ./compiled-environment-and-tests/Default.venvironment -o ./compiled-environment-and-tests/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
+
       - name: Export compiled-environment-and-tests
         uses: actions/upload-artifact@v4
         with:
@@ -99,7 +100,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Fetch SUT Artifact
+
+      - name: Fetch SUT artifact
         uses: actions/download-artifact@v4
         with:
           name: SUT
@@ -117,7 +119,7 @@ jobs:
           & canoe4sw-se ./compiled-environment-and-tests/Default.venvironment -d ./simulation --win32 --port-rtk-api none --test-unit ./compiled-environment-and-tests/${{ matrix.TESTNAME }}.vtestunit;
           Write-Host "CANoe4SW Server Edition returned exit code $LASTEXITCODE"
 
-      - name: Export Test Reports
+      - name: Export test reports
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
@@ -126,7 +128,7 @@ jobs:
             ./simulation/TestReports/
           retention-days: 7
 
-      - name: Upload Log Files
+      - name: Upload log files
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
