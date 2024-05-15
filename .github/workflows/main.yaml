@@ -51,9 +51,6 @@ jobs:
 
       - name: Export ECU/SUT
         uses: actions/upload-artifact@v4
-        env:
-          http_proxy: ""
-          https_proxy: ""
         with:
           name: SUT
           path: ./ECU/SUT
@@ -72,9 +69,6 @@ jobs:
         with:
           name: SUT
           path: ECU/SUT
-        env:
-          http_proxy: ""
-          https_proxy: ""
 
       - name: Compile environment
         run: |
@@ -84,9 +78,6 @@ jobs:
             test-unit-make -e ./compiled-environment-and-tests/Default.venvironment -o ./compiled-environment-and-tests/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
       - name: compiled-environment-and-tests
         uses: actions/upload-artifact@v4
-        env:
-          http_proxy: ""
-          https_proxy: ""
         with:
           name: compiled-environment-and-tests
           path: ./compiled-environment-and-tests/
@@ -107,17 +98,11 @@ jobs:
         with:
           name: SUT
           path: ECU/SUT
-        env:
-          http_proxy: ""
-          https_proxy: ""
       - name: Fetch venvironment artifact
         uses: actions/download-artifact@v4
         with:
           name: compiled-environment-and-tests
           path: compiled-environment-and-tests
-        env:
-          http_proxy: ""
-          https_proxy: ""
       - name: run_canoe
         id: canoe
         run : |
@@ -127,9 +112,6 @@ jobs:
       - name: Export Test Reports
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
-        env:
-          http_proxy: ""
-          https_proxy: ""
         with:
           name: Test Reports ${{ matrix.TESTNAME }}
           path: |
@@ -138,10 +120,6 @@ jobs:
       - name: Upload wlog Text Files
         if: ${{ !cancelled() && steps.convertLogFiles.outcome == 'success' }}
         uses: actions/upload-artifact@v4
-        env:
-          # Explicitly disable the Proxy, as NODE seems to ignore no_proxy
-          http_proxy: ""
-          https_proxy: ""
         with:
           name: Wlog Files ${{ matrix.TESTNAME }}
           path: ./testresult-${{ matrix.TESTNAME }}.vtestunit\*.txt
@@ -163,9 +141,6 @@ jobs:
         with:
           name: Test Reports basic
           path: ./TestReportsBasic/
-        env:
-          http_proxy: ""
-          https_proxy: ""
 
       - name: Convert Test Report to XUnit basic
         if: ${{ !cancelled() }}
@@ -198,8 +173,3 @@ jobs:
           name: CANoe4SW_SE Tests                   # Name of the check run which will be created
           path: "TestReports/*_xunit.xml"  # Path to test results
           reporter: java-junit                      # Format of test results
-        env:
-          # Explicitly disable the Proxy, as NODE seems to ignore no_proxy
-          http_proxy: ""
-          https_proxy: ""
-
