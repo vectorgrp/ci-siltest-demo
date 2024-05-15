@@ -107,7 +107,7 @@ jobs:
         id: canoe
         run : |
           & canoe4sw-se ./compiled-environment-and-tests/Default.venvironment -d ./simulation-${{ matrix.TESTNAME }}.vtestunit --win32 --port-rtk-api none --test-unit ./compiled-environment-and-tests/${{ matrix.TESTNAME }}.vtestunit;
-          Write-Host "canoe4sw-se returned exit code $LASTEXITCODE"
+          Write-Host "CANoe4SW Server Edition returned exit code $LASTEXITCODE"
 
       - name: Export Test Reports
         if: ${{ !cancelled() }}
