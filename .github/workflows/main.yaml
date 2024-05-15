@@ -8,14 +8,14 @@ on:
 permissions:
   checks: write
   contents: read
-  
+
 jobs:
   build-sut:
     runs-on: vtt-staging
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Cache SUT
         id: cache-sut
         uses: actions/cache@v4
@@ -32,7 +32,7 @@ jobs:
             ./ECU/Appl/GenDataVTT
           key: ${{ hashFiles('./ECU/LightControl.dpa','./ECU/Config') }}
 
-      - name: Run DaVinci & VTT
+      - name: Run DaVinci & vVIRTUALtarget
         if: steps.cache-sut.outputs.cache-hit != 'true'
         env:
           cacheBSW: ${{ steps.cache-bsw.outputs.cache-hit }}
@@ -41,27 +41,27 @@ jobs:
             VttMake make ./ECU/LightControl.vttmake;
           }
           else {
-            VttMake make ./ECU/LightControl.vttmake --excludeDVCfgCmd; 
+            VttMake make ./ECU/LightControl.vttmake --excludeDVCfgCmd;
           }
           if(-Not $?)
           {
             Write-Host "VttMake step failed." -ForegroundColor red
             Exit -1
-          }       
+          }
 
       - name: Export ECU/SUT
         uses: actions/upload-artifact@v4
-        env: 
+        env:
           http_proxy: ""
-          https_proxy: "" 
+          https_proxy: ""
         with:
           name: SUT
           path: ./ECU/SUT
           retention-days: 7
-      - name: Check dll 
+      - name: Check dll
         run : ls ECU/SUT/
-          
-  compile-simulation:
+
+  compile-environment-and-test-units:
     needs: [build-sut]
     runs-on: canoe-staging
     steps:
@@ -71,27 +71,29 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: SUT
-          path: ECU/SUT     
+          path: ECU/SUT
         env:
           http_proxy: ""
           https_proxy: ""
-      
-      - name: Compile simulation
+
+      - name: Compile environment
         run: |
-            environment-make -o ./build -A Win32 ./environment-make/venvironment.yaml;
-            test-unit-make -e ./build/Default.venvironment -o ./build/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
-      - name: Export build outputs
+            environment-make -o ./compiled-environment-and-tests -A Win32 ./environment-make/venvironment.yaml;
+      - name: Compile test units
+        run: |
+            test-unit-make -e ./compiled-environment-and-tests/Default.venvironment -o ./compiled-environment-and-tests/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
+      - name: compiled-environment-and-tests
         uses: actions/upload-artifact@v4
-        env: 
+        env:
           http_proxy: ""
-          https_proxy: "" 
+          https_proxy: ""
         with:
-          name: build-outputs
-          path: ./build/
+          name: compiled-environment-and-tests
+          path: ./compiled-environment-and-tests/
           retention-days: 7
- 
+
   run-tests-simulation:
-    needs: compile-simulation
+    needs: compile-environment-and-test-units
     runs-on: canoe-staging
     strategy:
       matrix:
@@ -103,30 +105,30 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: SUT
-          path: ECU/SUT        
+          path: ECU/SUT
         env:
           http_proxy: ""
           https_proxy: ""
       - name: Fetch venvironment artifact
         uses: actions/download-artifact@v4
         with:
-          name: build-outputs
-          path: build       
+          name: compiled-environment-and-tests
+          path: compiled-environment-and-tests
         env:
           http_proxy: ""
           https_proxy: ""
       - name: run_canoe
         id: canoe
         run : |
-          canoe4sw-se ./build/Default.venvironment -d ./testresult-${{ matrix.TESTNAME }}.vtestunit --win32 --port-rtk-api none --test-unit ./build/${{ matrix.TESTNAME }}.vtestunit;
+          canoe4sw-se ./compiled-environment-and-tests/Default.venvironment -d ./testresult-${{ matrix.TESTNAME }}.vtestunit --win32 --port-rtk-api none --test-unit ./compiled-environment-and-tests/${{ matrix.TESTNAME }}.vtestunit;
           echo "The last exit code is  $LASTEXITCODE"
 
       - name: Export Test Reports
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
-        env: 
+        env:
           http_proxy: ""
-          https_proxy: "" 
+          https_proxy: ""
         with:
           name: Test Reports ${{ matrix.TESTNAME }}
           path: |
@@ -154,22 +156,22 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: Test Reports auto
-          path: ./TestReportsAuto/    
+          path: ./TestReportsAuto/
       - name: Fetch testreport basic artifact
         uses: actions/download-artifact@v4
         with:
           name: Test Reports basic
-          path: ./TestReportsBasic/     
+          path: ./TestReportsBasic/
         env:
           http_proxy: ""
-          https_proxy: "" 
-      
+          https_proxy: ""
+
       - name: Convert Test Report to XUnit basic
         if: ${{ !cancelled() }}
         run: |
           write-host "Converting ./TestReports/basic.vtestreport to ./TestReports/basic_xunit.xml"
           ReportViewerCli -r "./TestReports/basic.vtestreport" -xu "./TestReports/basic_xunit.xml"
-      
+
       - name: Convert Test Report to XUnit auto
         if: ${{ !cancelled() }}
         uses: ./.github/actions/convert-vtestreport-to-xunit
