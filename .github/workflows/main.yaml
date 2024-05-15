@@ -58,7 +58,7 @@ jobs:
       - name: Check dll
         run : ls ECU/SUT/
 
-  compile-environment-and-test-units:
+  make-environment-and-test-units:
     needs: [build-sut]
     runs-on: canoe-staging
     steps:
@@ -70,10 +70,11 @@ jobs:
           name: SUT
           path: ECU/SUT
 
-      - name: Compile environment
+      - name: Make environment
         run: |
             environment-make -o ./compiled-environment-and-tests -A Win32 ./environment-make/venvironment.yaml;
-      - name: Compile test units
+
+      - name: Make test units
         run: |
             test-unit-make -e ./compiled-environment-and-tests/Default.venvironment -o ./compiled-environment-and-tests/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
       - name: Export compiled-environment-and-tests
@@ -84,7 +85,7 @@ jobs:
           retention-days: 7
 
   run-tests-simulation:
-    needs: compile-environment-and-test-units
+    needs: make-environment-and-test-units
     runs-on: canoe-staging
     strategy:
       matrix:
@@ -167,7 +168,7 @@ jobs:
               Copy-Item -Path $_.FullName -Destination $targetDir
             }
           }
-      - uses: dorny/test-reporter@v1
+      - uses: dorny/test-reporter@v1.9.1
         with:
           fail-on-error: "false"
           name: CANoe4SW_SE Tests                   # Name of the check run which will be created
