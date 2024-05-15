@@ -106,8 +106,8 @@ jobs:
       - name: run_canoe
         id: canoe
         run : |
-          canoe4sw-se ./compiled-environment-and-tests/Default.venvironment -d ./testresult-${{ matrix.TESTNAME }}.vtestunit --win32 --port-rtk-api none --test-unit ./compiled-environment-and-tests/${{ matrix.TESTNAME }}.vtestunit;
-          echo "canoe4sw-se returned exit code $LASTEXITCODE"
+          & canoe4sw-se ./compiled-environment-and-tests/Default.venvironment -d ./testresult-${{ matrix.TESTNAME }}.vtestunit --win32 --port-rtk-api none --test-unit ./compiled-environment-and-tests/${{ matrix.TESTNAME }}.vtestunit;
+          Write-Host "canoe4sw-se returned exit code $LASTEXITCODE"
 
       - name: Export Test Reports
         if: ${{ !cancelled() }}
