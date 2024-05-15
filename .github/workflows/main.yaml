@@ -76,7 +76,7 @@ jobs:
       - name: Compile test units
         run: |
             test-unit-make -e ./compiled-environment-and-tests/Default.venvironment -o ./compiled-environment-and-tests/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
-      - name: compiled-environment-and-tests
+      - name: Export compiled-environment-and-tests
         uses: actions/upload-artifact@v4
         with:
           name: compiled-environment-and-tests
