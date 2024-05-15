@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   build-sut:
+    name: Build SUT
     runs-on: vtt
     steps:
       - name: Checkout repository
@@ -55,10 +56,12 @@ jobs:
           name: SUT
           path: ./ECU/SUT
           retention-days: 7
-      - name: Check dll
+
+      - name: Check DLL
         run : ls ECU/SUT/
 
-  make-environment-and-test-units:
+  build-simulation:
+    name: Build simulation
     needs: [build-sut]
     runs-on: canoe
     steps:
@@ -85,7 +88,8 @@ jobs:
           retention-days: 7
 
   run-tests-simulation:
-    needs: make-environment-and-test-units
+    name: Run simulation
+    needs: build-simulation
     runs-on: canoe
     strategy:
       matrix:
@@ -104,10 +108,10 @@ jobs:
         with:
           name: compiled-environment-and-tests
           path: compiled-environment-and-tests
-      - name: run_canoe
-        id: canoe
-        run : |
-          & canoe4sw-se ./compiled-environment-and-tests/Default.venvironment -d ./simulation-${{ matrix.TESTNAME }}.vtestunit --win32 --port-rtk-api none --test-unit ./compiled-environment-and-tests/${{ matrix.TESTNAME }}.vtestunit;
+      - name: Run CANoe4SW Server Edition
+        id: canoe4swse
+	        run : |
+          & canoe4sw-se ./compiled-environment-and-tests/Default.venvironment -d ./simulation --win32 --port-rtk-api none --test-unit ./compiled-environment-and-tests/${{ matrix.TESTNAME }}.vtestunit;
           Write-Host "CANoe4SW Server Edition returned exit code $LASTEXITCODE"
 
       - name: Export Test Reports
@@ -116,17 +120,18 @@ jobs:
         with:
           name: Test Reports ${{ matrix.TESTNAME }}
           path: |
-            ./simulation-${{ matrix.TESTNAME }}.vtestunit/TestReports/
+            ./simulation/TestReports/
           retention-days: 7
       - name: Upload Log Files
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: Log Files ${{ matrix.TESTNAME }}
-          path: ./simulation-${{ matrix.TESTNAME }}.vtestunit\*.txt
+          path: ./simulation/*.txt
 
   display-test-report:
-    if: ${{ needs.run-tests-simulation.result != 'skipped' && !cancelled() }}
+    name: Display test report
+    if: ${{ !cancelled() }}
     needs: run-tests-simulation
     runs-on: canoe
     steps:
@@ -136,43 +141,31 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: Test Reports auto
-          path: ./TestReportsAuto/
+          path: ./simulation/TestReports/
       - name: Fetch testreport basic artifact
         uses: actions/download-artifact@v4
         with:
           name: Test Reports basic
-          path: ./TestReportsBasic/
+          path: ./simulation/TestReports/
+        env:
+          http_proxy: ""
+          https_proxy: ""
 
-      - name: Convert Test Report to XUnit basic
-        if: ${{ !cancelled() }}
+      - name: Convert all test reports to XUnit format
+        working-directory: ./simulation/TestReports/
         run: |
-          write-host "Converting ./TestReports/basic.vtestreport to ./TestReports/basic_xunit.xml"
-          ReportViewerCli -r "./TestReports/basic.vtestreport" -xu "./TestReports/basic_xunit.xml"
+          get-childitem . -Filter *.vtestreport | foreach {
+            $vtestreportfile = $_.Name
+            $xunitfile = "$($_.basename).xml"
+            write-host "Converting $vtestreportfile to $xunitfile"
+            ReportViewerCli -r $vtestreportfile -xu $xunitfile
+          }
 
-      - name: Convert Test Report to XUnit auto
-        if: ${{ !cancelled() }}
-        uses: ./.github/actions/convert-vtestreport-to-xunit
-        with:
-          vTestReportInputFile: "./TestReports/auto.vtestreport"
-          xUnitOutputFile: "./TestReports/auto_xunit.xml"
-      - name: Merge Test Reports
-        shell: pwsh
-        run: |
-          $targetDir = "./TestReports"
-          if (-not (Test-Path $targetDir)) {
-            New-Item -ItemType Directory -Path $targetDir
-          }
-          $sourceDirs = @("./TestReportsAuto/TestReports", "./TestReportsBasic/TestReports")
-          foreach ($dir in $sourceDirs) {
-            Get-ChildItem -Path $dir -Filter "*_xunit.xml" -Recurse | ForEach-Object {
-              Copy-Item -Path $_.FullName -Destination $targetDir
-            }
-          }
-      - uses: dorny/test-reporter@v1.9.1
+      - name: Display test results
+        uses: dorny/test-reporter@v1.9.1
         with:
           fail-on-error: "false"
-          name: CANoe4SW_SE Tests                   # Name of the check run which will be created
-          path: "TestReports/*_xunit.xml"           # Path to test results
-          reporter: java-junit                      # Format of test results
-
+          name: Test results                             # Name of the check run which will be created
+          path: "./simulation/TestReports/*_xunit.xml"   # Path to test results
+          reporter: java-junit                           # Format of test results
 
