@@ -98,7 +98,7 @@ jobs:
         with:
           name: SUT
           path: ECU/SUT
-      - name: Fetch venvironment artifact
+      - name: Fetch compiled-environment-and-tests artifact
         uses: actions/download-artifact@v4
         with:
           name: compiled-environment-and-tests
@@ -107,7 +107,7 @@ jobs:
         id: canoe
         run : |
           canoe4sw-se ./compiled-environment-and-tests/Default.venvironment -d ./testresult-${{ matrix.TESTNAME }}.vtestunit --win32 --port-rtk-api none --test-unit ./compiled-environment-and-tests/${{ matrix.TESTNAME }}.vtestunit;
-          echo "The last exit code is  $LASTEXITCODE"
+          echo "canoe4sw-se returned exit code $LASTEXITCODE"
 
       - name: Export Test Reports
         if: ${{ !cancelled() }}
@@ -117,11 +117,11 @@ jobs:
           path: |
             ./testresult-${{ matrix.TESTNAME }}.vtestunit/TestReports/
           retention-days: 7
-      - name: Upload wlog Text Files
-        if: ${{ !cancelled() && steps.convertLogFiles.outcome == 'success' }}
+      - name: Upload Log Files
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
-          name: Wlog Files ${{ matrix.TESTNAME }}
+          name: Log Files ${{ matrix.TESTNAME }}
           path: ./testresult-${{ matrix.TESTNAME }}.vtestunit\*.txt
 
   display-test-report:
@@ -171,5 +171,7 @@ jobs:
         with:
           fail-on-error: "false"
           name: CANoe4SW_SE Tests                   # Name of the check run which will be created
-          path: "TestReports/*_xunit.xml"  # Path to test results
+          path: "TestReports/*_xunit.xml"           # Path to test results
           reporter: java-junit                      # Format of test results
+
+
