@@ -8,7 +8,7 @@ on:
 permissions:
   checks: write
   contents: read
-  
+
 jobs:
   build-sut:
     runs-on: vtt
@@ -41,26 +41,26 @@ jobs:
             VttMake make ./ECU/LightControl.vttmake;
           }
           else {
-            VttMake make ./ECU/LightControl.vttmake --excludeDVCfgCmd; 
+            VttMake make ./ECU/LightControl.vttmake --excludeDVCfgCmd;
           }
           if(-Not $?)
           {
             Write-Host "VttMake step failed." -ForegroundColor red
             Exit -1
-          }       
+          }
 
       - name: Export ECU/SUT
         uses: actions/upload-artifact@v4
-        env: 
+        env:
           http_proxy: ""
-          https_proxy: "" 
+          https_proxy: ""
         with:
           name: SUT
           path: ./ECU/SUT
           retention-days: 7
-      - name: Check dll 
+      - name: Check dll
         run : ls ECU/SUT/
-          
+
   compile-simulation:
     if: ${{ !cancelled() }}
     needs: [build-sut]
@@ -72,7 +72,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: SUT
-          path: ECU/SUT     
+          path: ECU/SUT
         env:
           http_proxy: ""
           https_proxy: ""
@@ -82,14 +82,14 @@ jobs:
             test-unit-make -e ./environment-make/Default.venvironment -o ./environment-make/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
       - name: Export environment-make
         uses: actions/upload-artifact@v4
-        env: 
+        env:
           http_proxy: ""
-          https_proxy: "" 
+          https_proxy: ""
         with:
           name: environment-make
           path: ./environment-make/
           retention-days: 7
- 
+
   run-tests-simulation:
     if: ${{ !cancelled() }}
     needs: compile-simulation
@@ -105,7 +105,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: SUT
-          path: ECU/SUT        
+          path: ECU/SUT
         env:
           http_proxy: ""
           https_proxy: ""
@@ -113,7 +113,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: environment-make
-          path: environment-make        
+          path: environment-make
         env:
           http_proxy: ""
           https_proxy: ""
@@ -128,7 +128,7 @@ jobs:
           Copy-Item -Path "./test-${{ matrix.TESTNAME }}.vtestunit/TestReports/" -Destination "./TestReports/" -Recurse ;
           New-Item -ItemType "directory" "./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files" ; Move-Item -Path "./test-${{ matrix.TESTNAME }}.vtestunit/*.wlog","./test-${{ matrix.TESTNAME }}.vtestunit/*.wlog.txt" -Destination "./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files/";
           Write-Host "exporting wlog binary log files to readable format ...";
-          Get-ChildItem ./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files/ -Filter *.wlog | 
+          Get-ChildItem ./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files/ -Filter *.wlog |
           Foreach-Object {
             $fullName = $_.FullName
             Write-Host "  - exporting $fullName to readable asci text ...";
@@ -158,9 +158,9 @@ jobs:
       - name: Export Test Reports
         if: ${{ !cancelled() && steps.convertTestReport.outcome == 'success' }}
         uses: actions/upload-artifact@v4
-        env: 
+        env:
           http_proxy: ""
-          https_proxy: "" 
+          https_proxy: ""
         with:
           name: Test Reports ${{ matrix.TESTNAME }}
           path: |
@@ -189,15 +189,15 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: Test Reports auto
-          path: ./TestReportsAuto/    
+          path: ./TestReportsAuto/
       - name: Fetch testreport basic artifact
         uses: actions/download-artifact@v4
         with:
           name: Test Reports basic
-          path: ./TestReportsBasic/     
+          path: ./TestReportsBasic/
         env:
           http_proxy: ""
-          https_proxy: "" 
+          https_proxy: ""
       - name: Merge Test Reports
         shell: pwsh
         run: |
