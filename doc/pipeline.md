@@ -6,9 +6,9 @@ The pipeline is split into 3 stages: Build, test and convert. The Build stage is
 Each of these stages are further split into Jobs.
 
 ### Build Stage
-This stage consists of 3 jobs: `build-sut` and `compile-simulation`. The results of this stage are the SUT and compiled environment ready for simulation.
+This stage consists of 3 jobs: `build-sut` and `build-simulation`. The results of this stage are the SUT and compiled environment ready for simulation.
 - build-sut: **DaVinci Configurator** is used to build Basic Software. The Microsar-SIP for this demo is embedded into the GitHub runner. Then, **VTT** is used to build SUT using Visual Studio Build Tools
-- compile-simulation: In this job, **environment-make** is used to create an environment for a SUT from the `venvironment.yaml` and builds all required binary artifacts for the environment. Then **test-unit-make** is used to compile test units given in the yaml format as inputs. Test units can then be executed via the command line tool canoe4sw-se. </br>
+- build-simulation: In this job, **environment-make** is used to create an environment for a SUT from the `venvironment.yaml` and builds all required binary artifacts for the environment. Then **test-unit-make** is used to compile test units given in the yaml format as inputs. Test units can then be executed via the command line tool canoe4sw-se. </br>
 
 The approach of using a `venvironment.yaml` file instead of `.rtcfg` files simplifies separation of test units which in turn enables further parallelization. Using the environment approach, it is possible to created multiple environments and compile test units in parallel.
 
