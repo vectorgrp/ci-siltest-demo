@@ -163,10 +163,7 @@ jobs:
         working-directory: ./simulation/TestReports/
         run: |
           get-childitem . -Filter *.vtestreport | foreach {
-            $vtestreportfile = $_.Name
-            $xunitfile = "$($_.basename).xml"
-            write-host "Converting $vtestreportfile to $xunitfile"
-            ReportViewerCli -r $vtestreportfile -xu $xunitfile
+            ReportViewerCli -r $_ -xu
           }
 
       - name: Display test results
