@@ -3,7 +3,7 @@
     <General>
         <Name>LightControl</Name>
         <Version>1.0</Version>
-        <Author>viswge</Author>
+        <Author>viswge</Author> 
     </General>
     <Environment>
         <Platform>Canoeemu</Platform>
