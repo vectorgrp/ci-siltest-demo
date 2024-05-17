@@ -14,4 +14,4 @@ ECU/Log/
 ECU/Solution/
 ECU/*_workingCopy.*
 ECU/MakeParameters.xml
-.vector/*
+*.vector
