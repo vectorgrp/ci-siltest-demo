@@ -209,7 +209,7 @@ The second one is to use the git command-line tool. For this option, follow the 
 
 To trigger the pipeline, using the web editor, do the following steps:
 
-1. Go to the file you want to edit. For example [this file](/ECU/Appl/Source/LightCtrl.c)
+1. Go to the file you want to edit. For example [this file](/ECU/Appl/Simulink/LightCtrl_Model_autosar_rtw/LightCtrl_SWC.c)
 
 2. On the top right, there is a button called `Edit this file`. Press it to be able to edit the file.
 

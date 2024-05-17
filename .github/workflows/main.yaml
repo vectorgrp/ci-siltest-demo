@@ -1,21 +1,23 @@
 name: call-workflow
 
 on:
-  push:
   pull_request:
-  workflow_dispatch:
 
 permissions:
   checks: write
   contents: read
 
 jobs:
+  # Job to build the System Under Test (SUT)
   build-sut:
+    name: Build SUT
     runs-on: vtt
     steps:
+      # check out the repository containing the codebase
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # cache the SUT directory to speed up subsequent builds
       - name: Cache SUT
         id: cache-sut
         uses: actions/cache@v4
@@ -24,6 +26,7 @@ jobs:
             ./ECU/SUT
           key: ${{ hashFiles('./ECU/**') }}
 
+      # cache the BSW directory to speed up subsequent builds
       - name: Cache BSW
         id: cache-bsw
         uses: actions/cache@v4
@@ -32,7 +35,8 @@ jobs:
             ./ECU/Appl/GenDataVTT
           key: ${{ hashFiles('./ECU/LightControl.dpa','./ECU/Config') }}
 
-      - name: Run DaVinci & VTT
+      # run DaVinci & vVIRTUALtarget if no cache build is available
+      - name: Run DaVinci & vVIRTUALtarget
         if: steps.cache-sut.outputs.cache-hit != 'true'
         env:
           cacheBSW: ${{ steps.cache-bsw.outputs.cache-hit }}
@@ -49,176 +53,147 @@ jobs:
             Exit -1
           }
 
+      # upload the SUT directory as an artifact for use in other jobs
       - name: Export ECU/SUT
         uses: actions/upload-artifact@v4
-        env:
-          http_proxy: ""
-          https_proxy: ""
         with:
           name: SUT
           path: ./ECU/SUT
           retention-days: 7
-      - name: Check dll
+
+      # list the contents of the SUT directory to verify the build
+      - name: Check DLL
         run : ls ECU/SUT/
 
-  compile-simulation:
-    if: ${{ !cancelled() }}
+  # Job to build the simulation environment and compile test units
+  build-simulation:
+    name: Build simulation
     needs: [build-sut]
     runs-on: canoe
     steps:
+      # check out the repository containing the codebase
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Fetch SUT Artifact
+
+      # download the SUT artifact produced by the build-sut job
+      - name: Fetch SUT artifact
         uses: actions/download-artifact@v4
         with:
           name: SUT
           path: ECU/SUT
-        env:
-          http_proxy: ""
-          https_proxy: ""
-      - name: Compile simulation
+
+      # create the simulation environment from the venvironment.yaml file
+      - name: Make environment
         run: |
-            environment-make -o ./environment-make -A Win32 ./environment-make/venvironment.yaml;
-            test-unit-make -e ./environment-make/Default.venvironment -o ./environment-make/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
-      - name: Export environment-make
+            environment-make -o ./compiled-environment-and-tests -A Win32 ./environment-make/venvironment.yaml;
+
+      # compile the test units for the environment
+      - name: Make test units
+        run: |
+            test-unit-make -e ./compiled-environment-and-tests/Default.venvironment -o ./compiled-environment-and-tests/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
+
+      # upload the compiled environment and test units as an artifact
+      - name: Export compiled-environment-and-tests
         uses: actions/upload-artifact@v4
-        env:
-          http_proxy: ""
-          https_proxy: ""
         with:
-          name: environment-make
-          path: ./environment-make/
+          name: compiled-environment-and-tests
+          path: ./compiled-environment-and-tests/
           retention-days: 7
 
+  # Job to run the simulation tests
   run-tests-simulation:
-    if: ${{ !cancelled() }}
-    needs: compile-simulation
+    name: Run simulation
+    needs: build-simulation
     runs-on: canoe
     strategy:
       matrix:
         TESTNAME: [auto, basic]
-      fail-fast: false  
+      fail-fast: false
     steps:
+      # check out the repository containing the codebase
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Fetch SUT Artifact
+
+      # download the SUT artifact produced by the build-sut job
+      - name: Fetch SUT artifact
         uses: actions/download-artifact@v4
         with:
           name: SUT
           path: ECU/SUT
-        env:
-          http_proxy: ""
-          https_proxy: ""
-      - name: Fetch venvironment artifact
+          
+      # download the compiled environment and tests artifact produced by the build-simulation job
+      - name: Fetch compiled-environment-and-tests artifact
         uses: actions/download-artifact@v4
         with:
-          name: environment-make
-          path: environment-make
-        env:
-          http_proxy: ""
-          https_proxy: ""
-      - name: run_canoe
-        id: canoe
-        run : |
-          canoe4sw-se ./environment-make/Default.venvironment -d ./test-${{ matrix.TESTNAME }}.vtestunit --win32 --port-rtk-api none --test-unit ./environment-make/${{ matrix.TESTNAME }}.vtestunit;
-          echo "The last exit code is  $LASTEXITCODE"
-      - name: Copy Test Results
-        if: ${{ !cancelled() }}
-        run : |
-          Copy-Item -Path "./test-${{ matrix.TESTNAME }}.vtestunit/TestReports/" -Destination "./TestReports/" -Recurse ;
-          New-Item -ItemType "directory" "./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files" ; Move-Item -Path "./test-${{ matrix.TESTNAME }}.vtestunit/*.wlog","./test-${{ matrix.TESTNAME }}.vtestunit/*.wlog.txt" -Destination "./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files/";
-          Write-Host "exporting wlog binary log files to readable format ...";
-          Get-ChildItem ./test-${{ matrix.TESTNAME }}.vtestunit/wlog-files/ -Filter *.wlog |
-          Foreach-Object {
-            $fullName = $_.FullName
-            Write-Host "  - exporting $fullName to readable asci text ...";
-            $content = wlogdump.exe $fullName
-            $content | Set-Content ($fullName + '.txt')
-          }
-      - name: Convert Wlog Files to Text
-        if: ${{ !cancelled() }}
-        id: convertLogFiles
-        shell: powershell
+          name: compiled-environment-and-tests
+          path: compiled-environment-and-tests
+
+      # run the CANoe4SW Server Edition with the specified test unit
+      - name: Run CANoe4SW Server Edition
+        id: canoe4swse
         run: |
-          $wlogFilesPath = "./test-${{ matrix.TESTNAME }}.vtestunit"
-          Get-ChildItem -Path $wlogFilesPath -Filter *.wlog | ForEach-Object {
-            $fullName = $_.FullName
-            Write-Host "  - exporting $fullName to readable asci text ...";
-            $content = & wlogdump.exe $fullName
-            $content | Set-Content ($fullName + '.txt')
-          }
-          ls $wlogFilesPath
-      - name: Convert Test Report to XUnit
-        id: convertTestReport
+          & canoe4sw-se ./compiled-environment-and-tests/Default.venvironment -d ./simulation --win32 --port-rtk-api none --test-unit ./compiled-environment-and-tests/${{ matrix.TESTNAME }}.vtestunit;
+          Write-Host "CANoe4SW Server Edition returned exit code $LASTEXITCODE"
+
+      # upload the test reports generated by the simulation
+      - name: Export test reports
         if: ${{ !cancelled() }}
-        uses: ./.github/actions/convert-vtestreport-to-xunit
-        with:
-          vTestReportInputFile: "./TestReports/${{ matrix.TESTNAME }}.vtestreport"
-          xUnitOutputFile: "./TestReports/${{ matrix.TESTNAME }}_xunit.xml"
-      - name: Export Test Reports
-        if: ${{ !cancelled() && steps.convertTestReport.outcome == 'success' }}
         uses: actions/upload-artifact@v4
-        env:
-          http_proxy: ""
-          https_proxy: ""
         with:
           name: Test Reports ${{ matrix.TESTNAME }}
           path: |
-            ./TestReports/
-            ./test-${{ matrix.TESTNAME }}/wlog-files
+            ./simulation/TestReports/
           retention-days: 7
-      - name: Upload wlog Text Files
-        if: ${{ !cancelled() && steps.convertLogFiles.outcome == 'success' }}
-        uses: actions/upload-artifact@v4
-        env:
-          # Explicitly disable the Proxy, as NODE seems to ignore no_proxy
-          http_proxy: ""
-          https_proxy: ""
-        with:
-          name: Wlog Files ${{ matrix.TESTNAME }}
-          path: ./test-${{ matrix.TESTNAME }}.vtestunit\*.txt
 
+      # upload the log files generated by the simulation
+      - name: Upload log files
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Log Files ${{ matrix.TESTNAME }}
+          path: ./simulation/*.txt
+
+  # Job to display the test report
   display-test-report:
+    name: Display test report
     if: ${{ !cancelled() }}
     needs: run-tests-simulation
     runs-on: canoe
     steps:
+      # check out the repository containing the codebase
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      # download the test report artifact for the 'auto' test
       - name: Fetch testreport auto artifact
         uses: actions/download-artifact@v4
         with:
           name: Test Reports auto
-          path: ./TestReportsAuto/
+          path: ./simulation/TestReports/
+
+      # download the test report artifact for the 'basic' test
       - name: Fetch testreport basic artifact
         uses: actions/download-artifact@v4
         with:
           name: Test Reports basic
-          path: ./TestReportsBasic/
+          path: ./simulation/TestReports/
         env:
-          http_proxy: ""
-          https_proxy: ""
-      - name: Merge Test Reports
-        shell: pwsh
-        run: |
-          $targetDir = "./TestReports"
-          if (-not (Test-Path $targetDir)) {
-            New-Item -ItemType Directory -Path $targetDir
-          }
-          $sourceDirs = @("./TestReportsAuto/TestReports", "./TestReportsBasic/TestReports")
-          foreach ($dir in $sourceDirs) {
-            Get-ChildItem -Path $dir -Filter "*_xunit.xml" -Recurse | ForEach-Object {
-              Copy-Item -Path $_.FullName -Destination $targetDir
-            }
-          }
-      - uses: dorny/test-reporter@v1
-        with:
-          fail-on-error: "false"
-          name: CANoe4SW_SE Tests                   # Name of the check run which will be created
-          path: "TestReports/*_xunit.xml"  # Path to test results
-          reporter: java-junit                      # Format of test results
-        env:
-          # Explicitly disable the Proxy, as NODE seems to ignore no_proxy
           http_proxy: ""
           https_proxy: ""
 
+      # convert all test reports to XUnit format
+      - name: Convert all test reports to XUnit format
+        working-directory: ./simulation/TestReports/
+        run: |
+          get-childitem . -Filter *.vtestreport | foreach {
+            ReportViewerCli -r $_ -xu
+          }
+
+      # display the test results using the dorny/test-reporter action
+      - name: Display test results
+        uses: dorny/test-reporter@v1.9.1
+        with:
+          fail-on-error: "false"
+          name: Test results                             # Name of the check run which will be created
+          path: "./simulation/TestReports/*_xunit.xml"   # Path to test results
+          reporter: java-junit                           # Format of test results
