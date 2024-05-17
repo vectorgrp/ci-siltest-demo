@@ -3,9 +3,6 @@ name: call-workflow
 on:
   push:
   pull_request:
-  schedule:
-    # Runs every 30 minutes
-    - cron: '*/30 * * * *'
 
 permissions:
   checks: write
