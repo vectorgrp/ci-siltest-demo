@@ -1,0 +1,8 @@
+/*@!Encoding:1252*/
+variables
+{
+  //enum implementation_types implementation = CAPL;
+  //enum implementation_types implementation = SL;
+  enum implementation_types implementation = VTT_DLL;
+  //enum implementation_types implementation = VTT_Ext;
+}

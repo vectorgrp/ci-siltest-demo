@@ -1,0 +1,35 @@
+
+version: 3.0.0
+
+system-variables:
+  - file-path: SysVar/interface.vsysvar
+
+databases:
+  - name: CANDB
+    file-path: Database/CAN.dbc
+
+can-networks:
+  - name: CAN00 # must match the name of the network as configured in vTestStudio
+    database: CANDB
+
+simulation-nodes:
+  - name: LSW
+    file-path: CAPL/lsw_capl.can
+    network-assignments:
+      - network: CAN00
+    modeling-libraries:
+      - CANoeILNLVector.vmodule
+# ECU/SUT or SUT
+  - name: BFC
+    file-path: CAPL/bfc_capl.can
+    network-assignments:
+      - network: CAN00
+    modeling-libraries:
+      - ../ECU/SUT/BFC.vmodule
+
+  - name: HLC
+    file-path: CAPL/hlc_capl.can
+    network-assignments:
+      - network: CAN00
+    modeling-libraries:
+      - CANoeILNLVector.vmodule

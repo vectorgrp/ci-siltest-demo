@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DCF ARSCHEMA="412_DEV">
+	<Version>1.0</Version>
+	<NAME>LightControl</NAME>
+	<PROFILESETTINGS>ProfileSettings.xml</PROFILESETTINGS>
+	<PROJECTASSISTANT>..\..\LightControl.dpa</PROJECTASSISTANT>
+	<FILEREF>
+		<ARXML ROOTITEM="COMPONENTTYPE" TYPE="">ComponentTypes\BSW_Handler.arxml</ARXML>
+		<DVG>ComponentTypes\BSW_Handler.dvg</DVG>
+	</FILEREF>
+	<FILEREF>
+		<ARXML ROOTITEM="COMPONENTTYPE" TYPE="">ComponentTypes\IoHwAb_MICROSAR_SWCS_DEVIoHwAb_swcComponentTypes.arxml</ARXML>
+		<DVG>ComponentTypes\IoHwAb_MICROSAR_SWCS_DEVIoHwAb_swcComponentTypes.dvg</DVG>
+	</FILEREF>
+	<FILEREF>
+		<ARXML ROOTITEM="COMPONENTTYPE" TYPE="">ComponentTypes\LightCtrl.arxml</ARXML>
+		<DVG>ComponentTypes\LightCtrl.dvg</DVG>
+	</FILEREF>
+	<FILEREF>
+		<ARXML ROOTITEM="DATATYPE" TYPE="">DataTypes.arxml</ARXML>
+	</FILEREF>
+	<FILEREF>
+		<ARXML ROOTITEM="ECUPROJECT" TYPE="LOCAL">ECUProjects\LightControl.arxml</ARXML>
+		<DVG>ECUProjects\LightControl.dvg</DVG>
+	</FILEREF>
+	<FILEREF>
+		<ARXML ROOTITEM="PACKAGE" TYPE="">Packages.arxml</ARXML>
+	</FILEREF>
+	<FILEREF>
+		<ARXML ROOTITEM="PORTINTERFACE" TYPE="">PortInterfaces.arxml</ARXML>
+	</FILEREF>
+</DCF>
