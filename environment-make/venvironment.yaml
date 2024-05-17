@@ -1,5 +1,5 @@
 
-version: 1.1.0
+version: 3.0.0
 
 system-variables:
   - file-path: SysVar/interface.vsysvar
@@ -10,17 +10,13 @@ databases:
 
 can-networks:
   - name: CAN00 # must match the name of the network as configured in vTestStudio
-    databases:
-      - CANDB
+    database: CANDB
 
 simulation-nodes:
   - name: LSW
     file-path: CAPL/lsw_capl.can
     network-assignments:
       - network: CAN00
-        database-node:
-          database: CANDB
-          node: LSW
     modeling-libraries:
       - CANoeILNLVector.vmodule
 # ECU/SUT or SUT
@@ -28,9 +24,6 @@ simulation-nodes:
     file-path: CAPL/bfc_capl.can
     network-assignments:
       - network: CAN00
-        database-node:
-          database: CANDB
-          node: BFC
     modeling-libraries:
       - ../ECU/SUT/BFC.vmodule
 
@@ -38,8 +31,5 @@ simulation-nodes:
     file-path: CAPL/hlc_capl.can
     network-assignments:
       - network: CAN00
-        database-node:
-          database: CANDB
-          node: HLC
     modeling-libraries:
       - CANoeILNLVector.vmodule

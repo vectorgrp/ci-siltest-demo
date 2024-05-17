@@ -120,7 +120,7 @@ jobs:
         with:
           name: SUT
           path: ECU/SUT
-
+          
       # download the compiled environment and tests artifact produced by the build-simulation job
       - name: Fetch compiled-environment-and-tests artifact
         uses: actions/download-artifact@v4
