@@ -3,7 +3,7 @@ name: call-workflow
 on:
   pull_request:
 
-permissions:
+permissions: 
   checks: write
   contents: read
 
