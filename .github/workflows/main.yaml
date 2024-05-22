@@ -8,7 +8,7 @@ on:
 permissions: 
   checks: write 
   contents: read
-       
+        
 jobs:
   # Job to build the System Under Test (SUT)
   build-sut:
