@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions: 
-  checks: write
+  checks: write 
   contents: read
 
 jobs:
