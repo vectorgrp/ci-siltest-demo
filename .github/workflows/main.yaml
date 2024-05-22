@@ -12,7 +12,7 @@ jobs:
   build-sut:
     name: Build SUT
     runs-on: vtt
-    steps:
+    steps: 
       # check out the repository containing the codebase
       - name: Checkout repository
         uses: actions/checkout@v4
