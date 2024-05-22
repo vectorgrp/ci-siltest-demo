@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
 
       # cache the SUT directory to speed up subsequent builds
-      - name: Cache SUT
+      - name: Cache SUT 
         id: cache-sut
         uses: actions/cache@v4
         with:
