@@ -6,7 +6,7 @@ on:
     # Runs at midnight UTC every day
     - cron: '0 0 * * *'
 
-jobs:
+jobs: 
   cleanup:
     runs-on: ubuntu-latest
     permissions:
