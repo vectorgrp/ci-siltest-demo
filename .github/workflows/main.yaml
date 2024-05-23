@@ -17,7 +17,7 @@ jobs:
     steps: 
       # check out the repository containing the codebase
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 
 
       # cache the SUT directory to speed up subsequent builds
       - name: Cache SUT 
