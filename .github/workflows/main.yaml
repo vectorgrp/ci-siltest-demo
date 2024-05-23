@@ -156,7 +156,7 @@ jobs:
   # Job to display the test report
   display-test-report:
     name: Display test report
-    if: ${{ !cancelled() }}
+    if: ${{ needs.run-tests-simulation.result != 'cancelled' }}
     needs: run-tests-simulation
     runs-on: canoe
     steps:
@@ -177,9 +177,6 @@ jobs:
         with:
           name: Test Reports basic
           path: ./simulation/TestReports/
-        env:
-          http_proxy: ""
-          https_proxy: ""
 
       # convert all test reports to XUnit format
       - name: Convert all test reports to XUnit format
