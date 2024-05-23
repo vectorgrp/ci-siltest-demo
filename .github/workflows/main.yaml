@@ -13,7 +13,7 @@ jobs:
   # Job to build the System Under Test (SUT)
   build-sut:
     name: Build SUT 
-    runs-on: vtt
+    runs-on: vtt 
     steps: 
       # check out the repository containing the codebase
       - name: Checkout repository
