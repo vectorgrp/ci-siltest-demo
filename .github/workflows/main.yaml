@@ -156,7 +156,7 @@ jobs:
   # Job to display the test report
   display-test-report:
     name: Display test report
-    if: ${{ needs.run-tests-simulation.result != 'cancelled' }}
+    if: ${{ !cancelled() }}
     needs: run-tests-simulation
     runs-on: canoe-small
     steps:
