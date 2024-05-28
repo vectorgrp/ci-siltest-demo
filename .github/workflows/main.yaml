@@ -190,7 +190,6 @@ jobs:
       - name: Display test results
         uses: dorny/test-reporter@v1.9.1
         with:
-          fail-on-error: "false"
           name: Test results                             # Name of the check run which will be created
           path: "./simulation/TestReports/*_xunit.xml"   # Path to test results
           reporter: java-junit                           # Format of test results
