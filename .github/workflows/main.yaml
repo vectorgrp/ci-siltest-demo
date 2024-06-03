@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build-sut:
-    runs-on: vtt
+    runs-on: vtt-staging
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -45,7 +45,6 @@ jobs:
         run : ls ECU/SUT/
 
   compile-simulation:
-    if: ${{ !cancelled() }}
     needs: [build-sut]
     runs-on: canoe
     steps:
@@ -74,7 +73,6 @@ jobs:
           retention-days: 7
 
   run-tests-simulation:
-    if: ${{ !cancelled() }}
     needs: compile-simulation
     runs-on: canoe
     strategy:
