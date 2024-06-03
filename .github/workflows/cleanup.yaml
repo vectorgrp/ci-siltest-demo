@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     # Runs at midnight UTC every day
-    - cron: '0 * * * *'
+    - cron: '0 0 * * *'
 
 jobs:
   cleanup:
