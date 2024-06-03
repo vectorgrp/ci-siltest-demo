@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build-sut:
-    runs-on: vtt-staging
+    runs-on: vtt
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
 
   compile-simulation:
     needs: [build-sut]
-    runs-on: canoe-staging-small
+    runs-on: canoe-small
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -74,7 +74,7 @@ jobs:
 
   run-tests-simulation:
     needs: compile-simulation
-    runs-on: canoe-staging-large
+    runs-on: canoe-large
     strategy:
       matrix:
         TESTNAME: [auto, basic]
@@ -162,7 +162,7 @@ jobs:
   display-test-report:
     if: ${{ !cancelled() }}
     needs: run-tests-simulation
-    runs-on: canoe-staging-small
+    runs-on: canoe-small
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
