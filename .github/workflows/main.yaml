@@ -46,7 +46,7 @@ jobs:
 
   compile-simulation:
     needs: [build-sut]
-    runs-on: canoe
+    runs-on: canoe-small-staging
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -74,7 +74,7 @@ jobs:
 
   run-tests-simulation:
     needs: compile-simulation
-    runs-on: canoe
+    runs-on: canoe-large-staging
     strategy:
       matrix:
         TESTNAME: [auto, basic]
@@ -162,7 +162,7 @@ jobs:
   display-test-report:
     if: ${{ !cancelled() }}
     needs: run-tests-simulation
-    runs-on: canoe
+    runs-on: canoe-small-staging
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
