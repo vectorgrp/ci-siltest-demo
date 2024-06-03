@@ -1,6 +1,6 @@
 # Vector CANoe CLI Toolchain & Continuous Testing Sample
 
-This project shows an example how to implement an automated Software-in-the-Loop test workflow (SIL Test) for the development of an automotive ECU using the Vector toolchain, consisting of MICROSAR Classic, DaVinci Configurator, [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/) and [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/)(canoe4sw-se).
+This project shows an example how to implement an automated Software-in-the-Loop test workflow (SIL Test) for the development of an automotive ECU using the Vector toolchain, consisting of MICROSAR Classic, [DaVinci Configurator](https://www.vector.com/int/en/products/products-a-z/software/davinci-configurator-classic/), [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/) and [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) (canoe4sw-se).
 
 The core part of the automated SIL test approach is the use of text-based specification formats for simulation environments, allowing simulation environments to be constructed on a per-commit basis, thus supporting a branch/merge workflow with fast testing and change feedback of SIL-based system tests.
 Furthermore, the on-demand construction of simulation setups also allows test execution to scale with the amount of available compute resources, rather than being limited by the availability of human operators for integrating new versions of the System Under Test (SUT) into a simulation.
@@ -44,7 +44,7 @@ The "LightControl" ECU in this example implements an automatic control of the lo
 It is implemented as an AUTOSAR SWC running on top of Vector MICROSAR Classic.
 
 To facilitate the development of this ECU, the development organization performs large parts of their system testing as SIL tests using a virtual ECU.
-The virtual ECU is built using Vector [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/).
+The virtual ECU is built using Vector `vVIRTUALtarget`.
 The ECU is integrated in a CANoe4SW Server Edition simulation environment with remaining bus simulation.
 In this simulation environment the system test cases are implemented using CAPL and organized in YAML-based format.
 These test cases can be efficiently created and managed through our [`Vector Test Unit` Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=VectorGroup.test-unit).
@@ -65,7 +65,7 @@ We will explain the individual steps of the test workflow in more detail in subs
 
 ## Repository Layout
 
-- [environment-make folder](/environment-make/) contains all files to run environment-make. Most importantly the `venvironment.yaml` file, which describes the [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) setup.
+- [environment-make folder](/environment-make/) contains all files to run environment-make. Most importantly the `venvironment.yaml` file, which describes the `CANoe4SW Server Edition` setup.
 - [doc folder](/doc/) contains documentation and additional infos.
 - [ECU folder](/ECU/) contains the source code for the virtual ECU, which gets tested in this demo pipeline.
 - [test folder](/test) contains the CAPL test cases along with their yaml format test that defines them
@@ -110,12 +110,12 @@ Here's the main elements of the following workflow [GitHub Action Workflow](.git
 <img src="doc/resources/images/Build_SUT.PNG" alt="drawing">
 
 The first step in the test workflow is to build the ECU SWC source code and ECU BSW/RTE configuration into a virutal ECU.
-This is done using the `VttMake.exe` CLI executable of [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/).
+This is done using the `VttMake.exe` CLI executable of `vVIRTUALtarget`.
 `VttMake.exe` takes as input an XML file [`LightControl.vttmake`](ECU/LightControl.vttmake).
 While being an XML file, the syntax of the `.vttmake` file format is designed to be so simple that it can be edited with any text editor.
-The `.vttmake` file tells [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/) where to find the ECU project with the BSW configuration (Line 5) and points to the SWC implementation files (Lines 12-24).
-Furthermore, it tells [vVIRTUALtarget](https://www.vector.com/int/en/products/products-a-z/software/vvirtualtarget/) which compiler is used for building the ECU, so that the glue code between the BSW and the simulation tool and the build configuration can be generated accordingly.
-`VttMake.exe` can also launch [DaVinci Configurator](https://www.vector.com/int/en/products/products-a-z/software/davinci-configurator-classic/) to generate the BSW and RTE source code. That also calls the configured compiler to compile the virtual ECU.
+The `.vttmake` file tells `vVIRTUALtarget` where to find the ECU project with the BSW configuration (Line 5) and points to the SWC implementation files (Lines 12-24).
+Furthermore, it tells `vVIRTUALtarget` which compiler is used for building the ECU, so that the glue code between the BSW and the simulation tool and the build configuration can be generated accordingly.
+`VttMake.exe` can also launch `DaVinci Configurator` to generate the BSW and RTE source code. That also calls the configured compiler to compile the virtual ECU.
 
 You can find all input artifacts for this job in the [`ECU` folder](ECU/).
 The most notable output artifacts are the `ECU.dll`, the DLL containing the executable code for the virtual ECU, along with several files containing metadata for the DLL, all of which will be later loaded into the CANoe simulation.
@@ -142,7 +142,7 @@ The only input artifact that is not static is the virtual ECU.
 It is collected from the [`Virtual ECU Generation` step](#virutal-ecu-generation) using the artifact handling capabilities of GitHub.
 The output artifact of this step is the simulation environment folder `environment-make/Default.venvironment`.
 
-Next, the tests for execution in [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) are implemented as test units in Visual Studio Code using Vector provided plugins, they can be defined in yaml format, for example as in [auto.vtestunit.yaml](test/auto/auto.vtestunit.yaml).
+Next, the tests for execution in `CANoe4SW Server Edition` are implemented as test units in Visual Studio Code using Vector provided plugins, they can be defined in yaml format, for example as in [auto.vtestunit.yaml](test/auto/auto.vtestunit.yaml).
 Once the tests are prepared, the compilation of the test is done by running the `test-unit-make` tool, providing it with the location of the simulation environment as well as the location of the `.vtestunit.yaml` files created previously.
 `test-unit-make` does not have a control file, it takes all of its configuration as command line parameters.
 
@@ -152,17 +152,17 @@ The output artifacts of the compiled tests are generated as `.vtestunit` files a
 
 <img src="doc/resources/images/Run-Simulation.svg" alt="drawing">
 
-Once all parts of the simulation and the test units are prepared, [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) is run to execute the simulation.
-[CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) simply reads the simulation environment and the test cases to execute in that environment from the command line.
-[CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) will start the simulation automatically after is launch. It also automatically starts executing all test units that were specified by command line.
+Once all parts of the simulation and the test units are prepared, `CANoe4SW Server Edition` is run to execute the simulation.
+`CANoe4SW Server Edition` simply reads the simulation environment and the test cases to execute in that environment from the command line.
+`CANoe4SW Server Edition` will start the simulation automatically after is launch. It also automatically starts executing all test units that were specified by command line.
 When test execution has finished, the simulation is stopped.
 A brief information on the test results is given as part of the command line output.
-The exit code of the [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) executable also indicates a test success or test failure.
+The exit code of the `CANoe4SW Server Edition` executable also indicates a test success or test failure.
 For more detailed information, a standard `.vtestreport` file is produced for every test unit that was executed.
 The `.vtestreport` can be stored as a build artifact for later review.
 
-Note that not all test units for a given simulation environment have to be given to [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) at once.
-Test units can be split across multiple parallel [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) executions, allowing for parallel execution on multiple runner instances of an automated test system.
+Note that not all test units for a given simulation environment have to be given to `CANoe4SW Server Edition` at once.
+Test units can be split across multiple parallel `CANoe4SW Server Edition` executions, allowing for parallel execution on multiple runner instances of an automated test system.
 This project makes use of the feature of Matrix Jobs to spawn independent simulation runs for every single test unit, thus parallelizing test execution, so long as there are sufficient compute resources available.
 
 Input artifacts to this step are the `Default.venvironment` folder as well as the respective test units folder.
@@ -173,13 +173,13 @@ Each `.vtestreport` file is named after the corresponding test unit.
 
 <img src="doc/resources/images/ReportViewer.png" alt="drawing">
 
-The output of [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) can be used to give an overall idea of test success/test failure of the provided state of the repository.
+The output of `CANoe4SW Server Edition` can be used to give an overall idea of test success/test failure of the provided state of the repository.
 However, in many cases it is necessary to have more in-depth information on which test cases passed or failed, e.g. to compute statistics on test success or to identify tests that are currently accepted to fail and should thus not impact the test verdict.
 
 To this end, Vector Test Report Viewer provides the commandline tool `ReportViewerCLI` which can be used to export each `.vtestreport` file to XUnit format that can be conmsumed by other tools.
 As part of this sample, the XUnit result is displayed in the Web UI.
 
-The input artifacts to this step are the `.vtestreport` files produced by the [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) simulation runs.
+The input artifacts to this step are the `.vtestreport` files produced by the `CANoe4SW Server Edition` simulation runs.
 The output artifacts are `_xunit.xml` files.
 
 Note that `.vtestreport` files can be processed independently of one another.
@@ -190,7 +190,7 @@ Thus, this step can also be parallelized if the need arises.
 ### Vector Tools Execution in Containers
 
 - **Containerized Execution**: Vector tools run within Docker containers, ensuring consistent, isolated environments for each test run, facilitating replicable tests and simulations.
-- **Dockerfiles Location**: Required Dockerfiles for setting up these containers are located under a default installation path, like `C:\Users\Public\Documents\Vector\CANoe4SW Server Edition\17 (x64)\Samples\` when [CANoe4SW Server Edition](https://www.vector.com/int/en/products/products-a-z/software/canoe4sw-server-edition/) is installed. These files configure the necessary environments for Vector tools.
+- **Dockerfiles Location**: Required Dockerfiles for setting up these containers are located under a default installation path, like `C:\Users\Public\Documents\Vector\CANoe4SW Server Edition\17 (x64)\Samples\` when `CANoe4SW Server Edition` is installed. These files configure the necessary environments for Vector tools.
 
 ### Caching Implementation
 
@@ -215,7 +215,7 @@ To trigger the pipeline, using the web editor, do the following steps:
 
 3. Do the changes and additions to the file you like.
     E.g.:
-    Uncomment line 59 (“//rtb_LightIntensity_LightIntensi = 0;”) in the source code "/ECU/Appl/Simulink/LightCtrl_Model_autosar_rtw/LightCtrl_SWC.c" to cause test fails.  
+    Uncomment line 59 (“//rtb_LightIntensity_LightIntensi = 0;”) in the source code "/ECU/Appl/Simulink/LightCtrl_Model_autosar_rtw/LightCtrl_SWC.c" to cause test fails.
     Info: Some tests will set the light intensity value and expect a changed head light result. Because the light intensity is now statically set to value zero, some tests will fail.
 
 4. On the top right of the page, is an entry box, to commit the changes `Commit changes...`. It will prompt you to give a commit message as well as an option to create a separate branch out of your commit. Select Creating a new branch and write in text there as you like, and afterwards click the `Propose changes` button.
@@ -227,7 +227,7 @@ To trigger the pipeline, using the web editor, do the following steps:
 To see the pipeline working and the CANoe4SW Server Edition Test Report:
 
 ```text
- Click "Actions" on the top. -> 
+ Click "Actions" on the top. ->
  Choose the most recent workflow run "passed" or "failed". ->
  Click on the last job "CANoe4SW_SE Tests" listed on the left side bar. ->
  View the test results.
