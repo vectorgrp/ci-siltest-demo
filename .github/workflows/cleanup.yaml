@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     # Runs at midnight UTC every day
-    - cron: '0 0 * * *'
+    - cron: '0 * * * *'
 
 jobs:
   cleanup:
@@ -31,8 +31,9 @@ jobs:
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
-          retain_days: 7
-          keep_minimum_runs: 0
+          retain_days: 1
+          keep_minimum_runs: 1
+          delete_workflow_by_state_pattern: 'active,deleted,disabled_fork,disabled_manually'  # Exclude 'disabled_inactivity'
           check_branch_existence: true
 
       - name: Delete old branches
