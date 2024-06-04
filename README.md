@@ -117,7 +117,7 @@ The `.vttmake` file tells `vVIRTUALtarget` where to find the ECU project with th
 Furthermore, it tells `vVIRTUALtarget` which compiler is used for building the ECU, so that the glue code between the BSW and the simulation tool and the build configuration can be generated accordingly.
 `VttMake.exe` can also launch `DaVinci Configurator` to generate the BSW and RTE source code. That also calls the configured compiler to compile the virtual ECU.
 
-You can find all input artifacts for this job in the [`ECU` folder](ECU/).
+You can find all input artifacts for this job in the [ECU folder](ECU/).
 The most notable output artifacts are the `ECU.dll`, the DLL containing the executable code for the virtual ECU, along with several files containing metadata for the DLL, all of which will be later loaded into the CANoe simulation.
 
 ### Simulation Enviromment & Test Unit Compilation
