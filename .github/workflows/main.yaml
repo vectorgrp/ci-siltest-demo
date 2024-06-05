@@ -1,4 +1,4 @@
-name: call-workflow
+name: Sil-Test
 
 on:
   pull_request:

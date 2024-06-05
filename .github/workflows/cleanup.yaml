@@ -33,8 +33,8 @@ jobs:
           repository: ${{ github.repository }}
           retain_days: 1
           keep_minimum_runs: 1
-          delete_workflow_by_state_pattern: 'active,deleted,disabled_fork,disabled_manually'  # Exclude 'disabled_inactivity'
           check_branch_existence: true
+          delete_workflow_pattern: 'Clean Up Repository,Sil-Test'  # Target specific workflows
 
       - name: Delete old branches
         uses: beatlabs/delete-old-branches-action@v0.0.10
