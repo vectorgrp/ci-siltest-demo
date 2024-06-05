@@ -12,13 +12,12 @@
             <SourceFiles>
                 <!-- Define source files with glob patterns -->
                 <File>Appl\Source\Main.c</File>
-                <File>Appl\Simulink\LightCtrl_Model_autosar_rtw\LightCtrl_SWC*.c</File>
+                <File>Appl\Source\LightCtrl_SWC*.c</File>
                 <File>Appl\*\BSW_Handler.c</File>
                 <File>Appl\Source\IoHwAb.c</File>
             </SourceFiles>
 
             <IncludeFolders>
-                <IncludeFolder>Appl\Simulink\slprj\autosar\_sharedutils</IncludeFolder>
                 <IncludeFolder>Appl\Include</IncludeFolder>
                 <IncludeFolder>Appl\GenDataVtt</IncludeFolder>
             </IncludeFolders>
