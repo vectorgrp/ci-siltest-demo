@@ -1,4 +1,4 @@
-name: Sil-Test
+name: Sil-Testing
 
 on:
   pull_request:
