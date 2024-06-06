@@ -215,7 +215,7 @@ To trigger the pipeline, using the web editor, do the following steps:
 
 3. Do the changes and additions to the file you like.
     E.g.:
-    Uncomment line 59 (*//rtb_LightIntensity_LightIntensi = 0;*) in the source code [LightCtrl_SWC.c](/ECU/Appl/Source/LightCtrl_SWC.c) to cause test fails.
+    Uncomment line 59 (`//rtb_LightIntensity_LightIntensi = 0;`) in the source code [LightCtrl_SWC.c](/ECU/Appl/Source/LightCtrl_SWC.c) to cause test fails.
     Info: Some tests will set the light intensity value and expect a changed head light result. Because the light intensity is now statically set to value zero, some tests will fail.
 
 4. On the top right of the page, is an entry box, to commit the changes `Commit changes...`. It will prompt you to give a commit message as well as an option to create a separate branch out of your commit. Select Creating a new branch and write in text there as you like, and afterwards click the `Propose changes` button.
