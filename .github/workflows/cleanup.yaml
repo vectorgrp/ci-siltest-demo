@@ -42,7 +42,7 @@ jobs:
           repository: ${{ github.repository }}
           retain_days: 1
           keep_minimum_runs: 1
-          delete_workflow_pattern: 'call-workflow'  # Target specific workflows
+          delete_workflow_pattern: 'Sil-Testing'  # Target specific workflows
 
       - name: Delete old branches
         uses: beatlabs/delete-old-branches-action@v0.0.10
