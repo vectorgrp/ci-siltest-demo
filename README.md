@@ -47,7 +47,7 @@ To facilitate the development of this ECU, the development organization performs
 The virtual ECU is built using Vector `vVIRTUALtarget`.
 The ECU is integrated in a CANoe4SW Server Edition simulation environment with remaining bus simulation.
 In this simulation environment the system test cases are implemented using CAPL and organized in YAML-based format.
-These test cases can be efficiently created and managed through our [`Vector Test Unit` Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=VectorGroup.test-unit).
+These test cases can be efficiently created and managed through our ['Vector Test Unit' Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=VectorGroup.test-unit).
 
 For an ideal integration into the development workflow, the test workflow as depicted below is set up to run automatically whenever a pull request is opened on the repository.
 Pull requests may contain changes to the ECU source code, the ECU BSW configuration, the test cases, and the simulation setup.
@@ -137,9 +137,9 @@ The simulation definition in `venvironment.yaml` is designed to be written by ha
 It is then read by the `environment-make` tool.
 `environment-make` gathers all input artifacts parts of the simulation (network databases, CAPL code, virtual ECUs) and compiles them into a simulation environment, suitable for execution by CANoe4SW Server Edition.
 
-Static input artifacts to creating the simulation environment are stored in [`environment-make` folder](/environment-make/).
+Static input artifacts to creating the simulation environment are stored in [environment-make folder](/environment-make/).
 The only input artifact that is not static is the virtual ECU.
-It is collected from the [`Virtual ECU Generation` step](#virutal-ecu-generation) using the artifact handling capabilities of GitHub.
+It is collected from the ['Virtual ECU Generation' step](#virutal-ecu-generation) using the artifact handling capabilities of GitHub.
 The output artifact of this step is the simulation environment folder `environment-make/Default.venvironment`.
 
 Next, the tests for execution in `CANoe4SW Server Edition` are implemented as test units in Visual Studio Code using Vector provided plugins, they can be defined in yaml format, for example as in [auto.vtestunit.yaml](test/auto/auto.vtestunit.yaml).
