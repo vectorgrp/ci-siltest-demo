@@ -32,8 +32,17 @@ jobs:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
           retain_days: 1
+          keep_minimum_runs: 0
+          delete_workflow_pattern: 'Clean Up Repository'  # Target specific workflows
+
+      - name: Delete old workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 1
           keep_minimum_runs: 1
-          delete_workflow_pattern: 'Clean Up Repository', 'Sil-Testing'  # Target specific workflows
+          delete_workflow_pattern: 'Sil-Testing'  # Target specific workflows
 
       - name: Delete old branches
         uses: beatlabs/delete-old-branches-action@v0.0.10
