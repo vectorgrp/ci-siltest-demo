@@ -26,7 +26,7 @@ jobs:
           stale-pr-message: 'This pull request has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs.'
           delete-branch: false # This deletes the branch that the PR was created from
 
-      - name: Delete old workflow runs
+      - name: Delete old Clean Up workflows
         uses: Mattraks/delete-workflow-runs@v2
         with:
           token: ${{ github.token }}
@@ -35,14 +35,14 @@ jobs:
           keep_minimum_runs: 0
           delete_workflow_pattern: 'Clean Up Repository'  # Target specific workflows
 
-      - name: Delete old workflow runs
+      - name: Delete old Sil-Testing workflows
         uses: Mattraks/delete-workflow-runs@v2
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
           retain_days: 1
           keep_minimum_runs: 1
-          delete_workflow_pattern: 'Sil-Testing'  # Target specific workflows
+          delete_workflow_pattern: 'call-workflow'  # Target specific workflows
 
       - name: Delete old branches
         uses: beatlabs/delete-old-branches-action@v0.0.10
