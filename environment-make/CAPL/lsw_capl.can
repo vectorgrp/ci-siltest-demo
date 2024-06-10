@@ -1,0 +1,18 @@
+/*@!Encoding:1252*/
+includes
+{
+  #include "capl.cin"
+  #include "lsw_impl.cin"
+}
+
+variables
+{
+}
+
+on sysvar Interface::LightSwitch
+{
+  if ( implementation == CAPL )
+  {
+    $LightSwitch = @this;
+  }
+}

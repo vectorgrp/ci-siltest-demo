@@ -1,0 +1,18 @@
+/*@!Encoding:1252*/
+includes
+{
+  #include "capl.cin"
+  #include "hlc_impl.cin"
+}
+
+variables
+{
+}
+
+on signal HeadLight
+{
+  if ( implementation == CAPL )
+  {
+    @Interface::HeadLight = this;
+  }
+}

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<systemvariables version="4">
+  <namespace name="" comment="">
+    <namespace name="Interface" comment="">
+      <variable anlyzLocal="2" readOnly="false" valueSequence="false" unit="" name="LightIntensity" comment="" bitcount="64" isSigned="true" encoding="65001" type="float" startValue="0" minValue="0" maxValue="100" />
+      <variable anlyzLocal="2" readOnly="false" valueSequence="false" unit="" name="HeadLight" comment="" bitcount="32" isSigned="true" encoding="65001" type="int" startValue="0" minValue="0" minValuePhys="0" maxValue="2" maxValuePhys="2">
+        <valuetable definesMinMax="true">
+          <valuetableentry value="0" description="Off" />
+          <valuetableentry value="1" description="On" />
+          <valuetableentry value="2" description="Invalid" />
+        </valuetable>
+      </variable>
+      <variable anlyzLocal="2" readOnly="false" valueSequence="false" unit="" name="LightSwitch" comment="" bitcount="32" isSigned="true" encoding="65001" type="int" startValue="0" minValue="0" minValuePhys="0" maxValue="3" maxValuePhys="3">
+        <valuetable definesMinMax="true">
+          <valuetableentry value="0" description="Off" />
+          <valuetableentry value="1" description="On" />
+          <valuetableentry value="2" description="Auto" />
+          <valuetableentry value="3" description="Invalid" />
+        </valuetable>
+      </variable>
+    </namespace>
+  </namespace>
+</systemvariables>
