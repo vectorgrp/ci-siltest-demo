@@ -17,36 +17,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # cache the SUT directory to speed up subsequent builds
-      - name: Cache SUT
-        id: cache-sut
-        uses: actions/cache@v4
-        with:
-          path: |
-            ./ECU/SUT
-          key: ${{ hashFiles('./ECU/**') }}
-
-      # cache the BSW directory to speed up subsequent builds
-      - name: Cache BSW
-        id: cache-bsw
-        uses: actions/cache@v4
-        with:
-          path: |
-            ./ECU/Appl/GenDataVTT
-          key: ${{ hashFiles('./ECU/LightControl.dpa','./ECU/Config') }}
-
       # run DaVinci & vVIRTUALtarget if no cache build is available
       - name: Run DaVinci & vVIRTUALtarget
-        if: steps.cache-sut.outputs.cache-hit != 'true'
-        env:
-          cacheBSW: ${{ steps.cache-bsw.outputs.cache-hit }}
         run: |
-          if ($env:cacheBSW -ne 'true'){
-            VttMake make ./ECU/LightControl.vttmake;
-          }
-          else {
-            VttMake make ./ECU/LightControl.vttmake --excludeDVCfgCmd;
-          }
+          VttMake make ./ECU/LightControl.vttmake;
           if(-Not $?)
           {
             Write-Host "VttMake step failed." -ForegroundColor red
@@ -120,7 +94,7 @@ jobs:
         with:
           name: SUT
           path: ECU/SUT
-          
+
       # download the compiled environment and tests artifact produced by the build-simulation job
       - name: Fetch compiled-environment-and-tests artifact
         uses: actions/download-artifact@v4
