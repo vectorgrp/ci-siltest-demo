@@ -7,10 +7,11 @@ The output is the head light of the car and should turn on if
 - the light switch is set to the value ‘ON’ or
 - the light switch is set to the value ‘Auto’ and the environment light intensity falls below a limit.
 
-<div style="display: flex; justify-content: center;">
-    <img src="../doc/resources/images/car-image.png" alt="Car Image" style="width: 50%; height: auto;">
-    <img src="../doc/resources/images/car-switch.png" alt="Car Switch" style="width: 50%; height: auto;">
-</div>
+<p align="center">
+  <img src="../doc/resources/images/car-image.png" alt="Car Image" width="48%" />
+  <img src="../doc/resources/images/car-switch.png" alt="Car Switch" width="48%" />
+</p>
+
 
 
 The ECU consists of three SWCs to implement the light control (see picture below):
