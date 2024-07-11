@@ -1,7 +1,26 @@
 version: 2.0.0
 test-tree:
-    - capl-test-case: CheckPreReq
     - capl-test-case: CheckInstantAutoOnAfterOff
+      title: TC CheckInstantAutoOnAfterOff
+      description: Check automatically turning immediatly on when dark and switching to Auto
+      id: CheckInstantAutoOnAfterOff
+
+    - capl-test-case: CheckInstantAutoOffAfterOn
+      title: TC CheckInstantAutoOffAfterOn
+      description: Check automatically turning immediatly on when bright and switching to Auto
+      id: CheckInstantAutoOffAfterOn
+
     - capl-test-case: CheckStayAutoOffAfterOff
+      title: TC CheckStayAutoOffAfterOff
+      description: Check automatic stays off when not dark and switching to Auto
+      id: CheckStayAutoOffAfterOff
+
     - capl-test-case: CheckAutoOffAmbLightOn
+      title: TC CheckAutoOffAmbLightOn
+      description: Check automatically turning off when ambient light turns on
+      id: CheckAutoOffAmbLightOn
+
     - capl-test-case: CheckAutoOnAmbLightOff
+      title: TC CheckAutoOnAmbLightOff
+      description: Check automatically turning on when ambient light turns off
+      id: CheckAutoOnAmbLightOff

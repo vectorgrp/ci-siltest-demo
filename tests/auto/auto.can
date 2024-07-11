@@ -23,9 +23,6 @@ void SetLightSwitch (int lightswitch)
 void SetLightIntensity (double lightintensity)
 {
   @Interface::LightIntensity = lightintensity;
-  // Given percentage value in the range [0, 100] is transferred
-  // to the voltage in the range [0, 3.3] as expected by the Adc module.
-  //@sysvar::VTT::BFC::Adc::AdcLightIntensity = 3.3 * lightintensity / 100.0;
 }
 
 RangeViolationCallback(dword checkID)
@@ -34,7 +31,7 @@ RangeViolationCallback(dword checkID)
   ChkControl_Stop(checkID);
 }
 
-CheckSignalForValueForTime(int value, signal * sig, long timeout, char passstr[], char failstr[])
+CheckSignalForValueForTime(int value, sysvar * sig, long timeout, char passstr[], char failstr[])
 {
   dword checkID;
   long result;
@@ -51,88 +48,100 @@ CheckSignalForValueForTime(int value, signal * sig, long timeout, char passstr[]
   }
 }
 
-export testcase CheckPreReq()
+void WaitForHeadlightOn(int timeout)
 {
   long result;
 
-  // Toggle SysVars
-  SetLightSwitch(@sysvar::Interface::LightSwitch::On);
-  SetLightIntensity(100);
-  testWaitForTimeout(1000);
-  SetLightSwitch(@sysvar::Interface::LightSwitch::Off);
-  SetLightIntensity(0);
-  testWaitForTimeout(1000);
+  result = TestWaitForSignalMatch(sysvar::Interface::HeadLight, @sysvar::Interface::HeadLight::On, timeout);
 
-  // Check ECU general reaction (CAN msg)
-  testCaseTitle("TC CheckPreReq","Check setting the prerequisites");
-  SetLightSwitch(@sysvar::Interface::LightSwitch::Off);
-  SetLightIntensity(0);
-  result = testWaitForMessage(LightCtrl, 500);
   if ( result < 1 )
   {
-    testStepFail("LightCtrl message Rx timeout");
+    TestStepFail("Headlight did not switch on");
     return;
   }
-  testStepPass("LightCtrl message Rx OK");
+}
 
-  // Check starting conditions
-  result = testWaitForSignalMatch(HeadLight,0,500);
+void WaitForHeadlightOff(int timeout)
+{
+  long result;
+
+  result = TestWaitForSignalMatch(sysvar::Interface::HeadLight, @sysvar::Interface::HeadLight::Off, timeout);
+
   if ( result < 1 )
   {
-    testStepFail("Headlight did not switch off");
+    TestStepFail("Headlight did not switch off");
     return;
   }
-  testStepPass("Headlight is off");
-  testWaitForTimeout(500);
 }
 
 export testcase CheckInstantAutoOnAfterOff()
 {
   long result;
-  
-  testCaseTitle("TC CheckInstantAutoOnAfterOff","Check automatically turning immediatly on when dark and switching to Auto");
+
   // Init Testcase
   SetLightSwitch(@sysvar::Interface::LightSwitch::Off);
   SetLightIntensity(0);
-  testWaitForMessage(LightSwitch, 500);
-  testWaitForMessage(LightCtrl, 500);
-  testWaitForMessage(LightCtrl, 500);
-  
+  WaitForHeadlightOff(500);
+  testWaitForTimeout(100);
+
   // Test functionality
   SetLightSwitch(@sysvar::Interface::LightSwitch::Auto);
   testWaitForTimeout(cEpsilon);
-  result = testWaitForSignalMatch(HeadLight,1,cEpsilon);
+  result = testWaitForSignalMatch(sysvar::Interface::HeadLight,1,cEpsilon);
   if ( result != 1 )
   {
     testStepFail("Headlight did not switch on immediatly");
     return;
   }
   testStepPass("Headlight switched on immediatly");
-  
-  CheckSignalForValueForTime(1,HeadLight,_max(cHystOnDelay,cHystOffDelay)
+
+  CheckSignalForValueForTime(1, sysvar::Interface::HeadLight,_max(cHystOnDelay,cHystOffDelay)
   ,"Headlight stayed on after switching hysteresis time"
   ,"Headlight did not stay on after switching hysteresis time");
+  testWaitForTimeout(500);
+}
+
+export testcase CheckInstantAutoOffAfterOn()
+{
+  long result;
+
+  // Init Testcase
+  SetLightSwitch(@sysvar::Interface::LightSwitch::On);
+  SetLightIntensity(100);
+  WaitForHeadlightOn(500);
+  testWaitForTimeout(100);
+
+  // Test functionality
+  SetLightSwitch(@sysvar::Interface::LightSwitch::Auto);
+  testWaitForTimeout(cEpsilon);
+  result = testWaitForSignalMatch(sysvar::Interface::HeadLight,0,cEpsilon);
+  if ( result != 1 )
+  {
+    testStepFail("Headlight did not switch off immediately");
+    return;
+  }
+  testStepPass("Headlight switched off immediatly");
+
+  CheckSignalForValueForTime(0, sysvar::Interface::HeadLight,_max(cHystOnDelay,cHystOffDelay)
+  ,"Headlight stayed off after switching hysteresis time"
+  ,"Headlight did not stay off after switching hysteresis time");
   testWaitForTimeout(500);
 }
 
 export testcase CheckStayAutoOffAfterOff()
 {
   long result;
-    
-  testCaseTitle("TC CheckStayAutoOffAfterOff","Check automatic stays off when not dark and switching to Auto");
+
   // Init Testcase
   SetLightSwitch(@sysvar::Interface::LightSwitch::Off);
   SetLightIntensity(0);
   testWaitForTimeout(cEpsilon);
   SetLightIntensity(90);
-  testWaitForMessage(LightSwitch, 500);
-  testWaitForMessage(LightCtrl, 500);
-  testWaitForMessage(LightCtrl, 500);
-  
+
   // Test functionality
   SetLightSwitch(@sysvar::Interface::LightSwitch::Auto);
   testWaitForTimeout(cEpsilon);
-  result = testWaitForSignalMatch(HeadLight,0,cEpsilon);
+  result = testWaitForSignalMatch(sysvar::Interface::HeadLight,0,cEpsilon);
   if ( result != 1 )
   {
     testStepFail("Headlight did not stay off after switching to Auto");
@@ -140,7 +149,7 @@ export testcase CheckStayAutoOffAfterOff()
   }
   testStepPass("Headlight stayed off after switching to Auto");
 
-  CheckSignalForValueForTime(0,HeadLight,_max(cHystOnDelay,cHystOffDelay)
+  CheckSignalForValueForTime(0,sysvar::Interface::HeadLight,_max(cHystOnDelay,cHystOffDelay)
   ,"Headlight stayed off after switching hysteresis time"
   ,"Headlight did not stay off after switching hysteresis time");
   testWaitForTimeout(500);
@@ -149,8 +158,6 @@ export testcase CheckStayAutoOffAfterOff()
 export testcase CheckAutoOffAmbLightOn()
 {
   long result;
-  
-  testCaseTitle("TC CheckAutoOffAmbLightOn","Check automatically turning off when ambient light turns on");
 
   // Init Testcase
   testWaitForTimeout(cEpsilon);
@@ -159,14 +166,14 @@ export testcase CheckAutoOffAmbLightOn()
   testWaitForTimeout(cEpsilon);
   SetLightSwitch(@sysvar::Interface::LightSwitch::Auto);
   testWaitForTimeout(cEpsilon*2);
-  
+
   // Test functionality
   SetLightIntensity(90);
-  CheckSignalForValueForTime(1,HeadLight,cHystOffDelay - 2*cEpsilon
+  CheckSignalForValueForTime(1,sysvar::Interface::HeadLight,cHystOffDelay - 2*cEpsilon
   ,"Headlight stayed on long enough after light intensity rise"
   ,"Headlight turned off too fast after light intensity rise");
   testWaitForTimeout(cEpsilon);
-  result = testWaitForSignalMatch(HeadLight,0,2*cEpsilon);
+  result = testWaitForSignalMatch(sysvar::Interface::HeadLight,0,2*cEpsilon);
   if ( result != 1 )
   {
     testStepFail("Headlight did not turn off after light intensity rise");
@@ -179,8 +186,6 @@ export testcase CheckAutoOffAmbLightOn()
 export testcase CheckAutoOnAmbLightOff()
 {
   long result;
-  
-  testCaseTitle("TC CheckAutoOnAmbLightOff","Check automatically turning on when ambient light turns off");
 
   // Init Testcase
   SetLightIntensity(100);
@@ -188,14 +193,14 @@ export testcase CheckAutoOnAmbLightOff()
   testWaitForTimeout(cEpsilon);
   SetLightSwitch(@sysvar::Interface::LightSwitch::Auto);
   testWaitForTimeout(cEpsilon*2);
-  
+
   // Test functionality
   SetLightIntensity(cLowerThreshold - 1);
-  CheckSignalForValueForTime(0,HeadLight,cHystOnDelay - 2*cEpsilon
+  CheckSignalForValueForTime(0, sysvar::Interface::HeadLight,cHystOnDelay - 2*cEpsilon
   ,"Headlight stayed off long enough after light intensity drop"
   ,"Headlight turned on too fast after light intensity drop");
   testWaitForTimeout(cEpsilon);
-  result = testWaitForSignalMatch(HeadLight, 1, 2*cEpsilon);
+  result = testWaitForSignalMatch(sysvar::Interface::HeadLight, 1, 2*cEpsilon);
   if ( result != 1 )
   {
     testStepFail("Headlight did not turn on after light intensity drop");

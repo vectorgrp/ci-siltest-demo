@@ -1,5 +1,15 @@
 version: 2.0.0
-
+test-unit-information:
+  description: Basic tests for switching on and off the headlight
+  test-designers:
+    - name: "Souhail Assal"
+      department: "PND"
+    - name: "Peter Koegel"
+      department: "PND"
+  version: v1.0
+  additional-information:
+    - name: Basis tests
+      project: "ci-siltest demo"
 test-unit-implementation:
   - source-file-path: basic.vtesttree.yaml
   - source-file-path: basic.can

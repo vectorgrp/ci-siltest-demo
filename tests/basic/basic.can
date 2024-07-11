@@ -7,63 +7,50 @@ variables
 {
 }
 
-void SetLightSwitch (int lightswitch)
-{
-  @Interface::LightSwitch = lightswitch;
-}
-
-void SetLightIntensity (double lightintensity)
-{
-  @Interface::LightIntensity = lightintensity;
-  // Given percentage value in the range [0, 100] is transferred
-  // to the voltage in the range [0, 3.3] as expected by the Adc module.
-  //@sysvar::VTT::BFC::Adc::AdcLightIntensity = 3.3 * lightintensity / 100.0;
-}
-
-export testcase CheckTurnOn()
+export testcase CheckTurnOn(double lightIntensity)
 {
   long result;
-  
-  TestCaseTitle("TC CheckTurnOn","Check turning on the light");
-  SetLightSwitch(@sysvar::Interface::LightSwitch::Off);
-  result = TestWaitForMessage(LightCtrl, 500);
-  if ( result < 1 )
-  {
-    TestStepFail("LightCtrl message Rx timeout");
-    return;
-  }
-  TestStepPass("LightCtrl message Rx OK");
-  SetLightSwitch(@sysvar::Interface::LightSwitch::On);
-  result = TestWaitForSignalMatch(HeadLight,1,500);
+
+  @sysvar::Interface::LightIntensity = lightIntensity;
+  SwitchOffAndWaitForHeadlight();
+  SwitchOnAndWaitForHeadlight();
+
+  TestStepPass("Headlight switched on");
+}
+
+export testcase CheckTurnOff(double lightIntensity)
+{
+  @sysvar::Interface::LightIntensity = lightIntensity;
+  SwitchOnAndWaitForHeadlight();
+  SwitchOffAndWaitForHeadlight();
+
+  TestStepPass("Headlight switched off");
+}
+
+void SwitchOnAndWaitForHeadlight()
+{
+  long result;
+
+  @Interface::LightSwitch = @sysvar::Interface::LightSwitch::On;
+  result = TestWaitForSignalMatch(sysvar::Interface::HeadLight, @sysvar::Interface::HeadLight::On, 500);
+
   if ( result < 1 )
   {
     TestStepFail("Headlight not switched on");
     return;
   }
-  TestStepPass("Headlight switched on");
-  testWaitForTimeout(500);
 }
 
-export testcase CheckTurnOff()
+void SwitchOffAndWaitForHeadlight()
 {
   long result;
-  
-  TestCaseTitle("TC CheckTurnOff","Check turning off the light");
-  SetLightSwitch(@sysvar::Interface::LightSwitch::On);
-  result = TestWaitForMessage(LightCtrl, 500);
-  if ( result < 1 )
-  {
-    TestStepFail("LightCtrl message Rx timeout");
-    return;
-  }
-  TestStepPass("LightCtrl message Rx OK");
-  SetLightSwitch(@sysvar::Interface::LightSwitch::Off);
-  result = TestWaitForSignalMatch(HeadLight,0,500);
+
+  @Interface::LightSwitch = @sysvar::Interface::LightSwitch::Off;
+  result = TestWaitForSignalMatch(sysvar::Interface::HeadLight, @sysvar::Interface::HeadLight::Off, 500);
+
   if ( result < 1 )
   {
     TestStepFail("Headlight not switched off");
     return;
   }
-  TestStepPass("Headlight switched off");
-  testWaitForTimeout(500);
 }
