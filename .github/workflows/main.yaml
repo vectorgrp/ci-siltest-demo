@@ -90,7 +90,7 @@ jobs:
       # compile the test units for the environment
       - name: Make test units
         run: |
-            test-unit-make -e ./compiled-environment-and-tests/Default.venvironment -o ./compiled-environment-and-tests/ ./test/auto/auto.vtestunit.yaml ./test/basic/basic.vtestunit.yaml;
+            test-unit-make -e ./compiled-environment-and-tests/Default.venvironment -o ./compiled-environment-and-tests/ ./tests/auto/auto.vtestunit.yaml ./tests/basic/basic.vtestunit.yaml;
 
       # upload the compiled environment and test units as an artifact
       - name: Export compiled-environment-and-tests
