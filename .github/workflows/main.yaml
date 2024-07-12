@@ -69,7 +69,7 @@ jobs:
   build-simulation:
     name: Build simulation
     needs: [build-sut]
-    runs-on: canoe-small-staging
+    runs-on: canoe-staging-small
     steps:
       # check out the repository containing the codebase
       - name: Checkout repository
@@ -104,7 +104,7 @@ jobs:
   run-tests-simulation:
     name: Run simulation
     needs: build-simulation
-    runs-on: canoe-large-staging
+    runs-on: canoe-staging-large
     strategy:
       matrix:
         TESTNAME: [auto, basic]
@@ -158,7 +158,7 @@ jobs:
     name: Display test report
     if: ${{ !cancelled() }}
     needs: run-tests-simulation
-    runs-on: canoe-small-staging
+    runs-on: canoe-staging-small
     steps:
       # check out the repository containing the codebase
       - name: Checkout repository
