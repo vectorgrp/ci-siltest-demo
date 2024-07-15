@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PROFILE>
+	<Version>1.0</Version>
+	<SECTION NAME="MISC">
+		<KEYVALPAIR KEY="EnableDataTransformation" VAL="1" />
+	</SECTION>
+</PROFILE>

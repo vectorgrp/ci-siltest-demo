@@ -1,0 +1,15 @@
+version: 2.0.0
+test-unit-information:
+  description: Tests for auto mode of the light control that sets the headlight based on the light level provided by a light sensor
+  test-designers:
+    - name: "Souhail Assal"
+      department: "PND"
+    - name: "Peter Koegel"
+      department: "PND"
+  version: v1.0
+  additional-information:
+    - name: Auto tests
+      project: "ci-siltest demo"
+test-unit-implementation:
+  - source-file-path: auto.vtesttree.yaml
+  - source-file-path: auto.can

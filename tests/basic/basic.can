@@ -1,0 +1,56 @@
+/*@!Encoding:65001*/
+includes
+{
+}
+
+variables
+{
+}
+
+export testcase CheckTurnOn(double lightIntensity)
+{
+  long result;
+
+  @sysvar::Interface::LightIntensity = lightIntensity;
+  SwitchOffAndWaitForHeadlight();
+  SwitchOnAndWaitForHeadlight();
+
+  TestStepPass("Headlight switched on");
+}
+
+export testcase CheckTurnOff(double lightIntensity)
+{
+  @sysvar::Interface::LightIntensity = lightIntensity;
+  SwitchOnAndWaitForHeadlight();
+  SwitchOffAndWaitForHeadlight();
+
+  TestStepPass("Headlight switched off");
+}
+
+void SwitchOnAndWaitForHeadlight()
+{
+  long result;
+
+  @Interface::LightSwitch = @sysvar::Interface::LightSwitch::On;
+  result = TestWaitForSignalMatch(sysvar::Interface::HeadLight, @sysvar::Interface::HeadLight::On, 500);
+
+  if ( result < 1 )
+  {
+    TestStepFail("Headlight not switched on");
+    return;
+  }
+}
+
+void SwitchOffAndWaitForHeadlight()
+{
+  long result;
+
+  @Interface::LightSwitch = @sysvar::Interface::LightSwitch::Off;
+  result = TestWaitForSignalMatch(sysvar::Interface::HeadLight, @sysvar::Interface::HeadLight::Off, 500);
+
+  if ( result < 1 )
+  {
+    TestStepFail("Headlight not switched off");
+    return;
+  }
+}

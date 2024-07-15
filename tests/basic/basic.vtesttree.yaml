@@ -1,0 +1,29 @@
+version: 2.0.0
+test-tree:
+    - capl-test-case: CheckTurnOn
+      title: TC CheckTurnOn when dark
+      description: Check turning on the light when light intensity is 10%
+      id: CheckTurnOn10
+      params:
+        - 10.0
+
+    - capl-test-case: CheckTurnOn
+      title: TC CheckTurnOn when bright
+      description: Check turning on the light when light intensity is 90%
+      id: CheckTurnOn90
+      params:
+        - 90.0
+
+    - capl-test-case: CheckTurnOff
+      title: TC CheckTurnOff when dark
+      description: Check turning off the light when light intensity is 10%
+      id: CheckTurnOff10
+      params:
+        - 10.0
+
+    - capl-test-case: CheckTurnOff
+      title: TC CheckTurnOff when bright
+      description: Check turning off the light when light intensity is 90%
+      id: CheckTurnOff90
+      params:
+        - 90.0

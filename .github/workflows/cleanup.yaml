@@ -1,0 +1,53 @@
+name: Clean Up Repository
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Runs at midnight UTC every day
+    - cron: '0 0 * * *'
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Clean stale pull requests and issues
+        uses: actions/stale@v9
+        with:
+          days-before-stale: 7
+          days-before-close: 1
+          stale-pr-message: 'This pull request has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs.'
+          delete-branch: false # This deletes the branch that the PR was created from
+
+      - name: Delete old Clean Up workflows
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 1
+          keep_minimum_runs: 0
+          delete_workflow_pattern: 'Clean Up Repository'  # Target specific workflows
+
+      - name: Delete old Sil-Testing workflows
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 1
+          keep_minimum_runs: 1
+          delete_workflow_pattern: 'Sil-Testing'  # Target specific workflows
+
+      - name: Delete old branches
+        uses: beatlabs/delete-old-branches-action@v0.0.10
+        with:
+          repo_token: ${{ github.token }}
+          date: '7 days ago'
+          default_branches: Golden_workflow,stage,main # Adjust the protected branches as necessary
+          dry_run: false

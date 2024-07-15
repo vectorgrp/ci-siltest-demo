@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<BuildSpecification schemaVersion="4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="VttMakeFileSchema_4_0.xsd">
+    <BuildDpa>
+        <DpaPath>LightControl.dpa</DpaPath>
+        <!-- Generates the code of all RTE modules in Vector DaVinci Configurator. -->
+        <GenerateRte />
+        <!-- Generates the code of all configured Basic Software (BSW) modules in Vector DaVinci Configurator. -->
+        <GenerateBsw />
+        <GenerateVcxProject>
+            <VsTargetVersion>VS2019</VsTargetVersion>
+            <SourceFiles>
+                <!-- Define source files with glob patterns -->
+                <File>Appl\Source\Main.c</File>
+                <File>Appl\Source\LightCtrl_SWC*.c</File>
+                <File>Appl\*\BSW_Handler.c</File>
+                <File>Appl\Source\IoHwAb.c</File>
+            </SourceFiles>
+
+            <IncludeFolders>
+                <IncludeFolder>Appl\Include</IncludeFolder>
+                <IncludeFolder>Appl\GenDataVtt</IncludeFolder>
+            </IncludeFolders>
+        </GenerateVcxProject>
+
+        <BuildVsSolution>
+            <!-- change path to the install path of build tools in the vtt container-->
+            <VsToolchainPath>C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools</VsToolchainPath>
+            <VsConfiguration>Debug</VsConfiguration>
+        </BuildVsSolution>
+        <GenerateZip />
+    </BuildDpa>
+
+</BuildSpecification>
