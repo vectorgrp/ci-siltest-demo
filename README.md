@@ -142,7 +142,7 @@ The only input artifact that is not static is the virtual ECU.
 It is collected from the [`Virtual ECU Generation` step](#virutal-ecu-generation) using the artifact handling capabilities of GitHub.
 The output artifact of this step is the simulation environment folder `environment-make/Default.venvironment`.
 
-Next, the tests for execution in `CANoe4SW Server Edition` are implemented as test units in Visual Studio Code using Vector provided plugins, they can be defined in yaml format, for example as in [auto.vtestunit.yaml](test/auto/auto.vtestunit.yaml).
+Next, the tests for execution in `CANoe4SW Server Edition` are implemented as test units in Visual Studio Code using Vector provided plugins, they can be defined in yaml format, for example as in [auto.vtestunit.yaml](tests/auto/auto.vtestunit.yaml).
 Once the tests are prepared, the compilation of the test is done by running the `test-unit-make` tool, providing it with the location of the simulation environment as well as the location of the `.vtestunit.yaml` files created previously.
 `test-unit-make` does not have a control file, it takes all of its configuration as command line parameters.
 
