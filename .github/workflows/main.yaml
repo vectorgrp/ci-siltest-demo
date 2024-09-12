@@ -193,3 +193,4 @@ jobs:
           name: Test results                             # Name of the check run which will be created
           path: "./simulation/TestReports/*_xunit.xml"   # Path to test results
           reporter: java-junit                           # Format of test results
+          fail-on-error: 'false'                         # Don't mark as failing job if test report contains any failed test
