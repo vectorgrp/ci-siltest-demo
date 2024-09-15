@@ -117,7 +117,7 @@ void LightCtrl(void)
           } else {
             /* Outport: '<Root>/Output_HeadLight' */
             /* Transition: '<S2>:28' */
-            Rte_Write_Output_HeadLight(true);
+            Rte_Write_Output_HeadLight(1/0);
             LightCtrl_SWC_DW.HysteresisTimer = 0.0;
             LightCtrl_SWC_DW.is_AutoMode = LightCtrl_SWC_IN_LightOn;
           }
@@ -175,7 +175,8 @@ void LightCtrl(void)
       } else {
         /* Outport: '<Root>/Output_HeadLight' */
         /* Transition: '<S2>:43' */
-        Rte_Write_Output_HeadLight(false);
+        int *invalid = 0;
+        Rte_Write_Output_HeadLight(*invalid);
         LightCtrl_SWC_DW.is_c1_LightCtrl_SWC = LightCtrl_SWC_IN_OffMode;
       }
       break;
