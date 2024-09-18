@@ -57,6 +57,7 @@ void LightCtrl(void)
   /* During: BC/Chart */
 
   // rtb_LightIntensity_LightIntensi = 0;
+  // Trial run without any change
 
   if (LightCtrl_SWC_DW.is_active_c1_LightCtrl_SWC == 0U) {
     /* Entry: BC/Chart */
