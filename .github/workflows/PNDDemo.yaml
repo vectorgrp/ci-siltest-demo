@@ -1,8 +1,7 @@
 name: PNDDemo_Workflow
 
 on:
-  push:
-  workflow_dispatch:
+  pull_request:
 
 permissions:
   checks: write
