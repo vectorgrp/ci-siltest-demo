@@ -12,7 +12,7 @@
  * Code generation objectives: Unspecified
  * Validation result: Not run
  */
-
+//
 #include "LightCtrl_SWC.h"
 #include "LightCtrl_SWC_private.h"
 
