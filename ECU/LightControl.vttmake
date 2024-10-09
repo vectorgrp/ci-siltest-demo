@@ -2,6 +2,9 @@
 
 <BuildSpecification schemaVersion="4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="VttMakeFileSchema_4_0.xsd">
     <BuildDpa>
+        <BuildSettings>
+            <CANoeEmuPathOption>VTTInstallation</CANoeEmuPathOption>
+        </BuildSettings>
         <DpaPath>LightControl.dpa</DpaPath>
         <!-- Generates the code of all RTE modules in Vector DaVinci Configurator. -->
         <GenerateRte />
