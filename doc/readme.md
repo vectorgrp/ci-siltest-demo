@@ -7,3 +7,4 @@ Here you can find three files and one folder.
 * [view-pipeline-and-tests](./view-pipeline-and-tests.md) is a picture based guide, how to find the pipeline results.
 
 * [resources](./resources) contains all the images.
+ 
