@@ -21,7 +21,7 @@ jobs:
         run: |
           if (Test-Path 'C:\Microsar-Sip2') {
             Write-Host "Path exists."
-          } else {
+          } else { 
             Write-Host "Path does not exist."
           }
         shell: pwsh
