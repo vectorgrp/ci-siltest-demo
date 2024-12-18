@@ -25,9 +25,8 @@ jobs:
             Write-Host "Path does not exist."
           }
         shell: pwsh
-      - name: Move all elements from C:\Microsar-Sip to C:\Microsar-Sip2
+      - name: check elements of C:\Microsar-Sip2
         run: |
-          Move-Item 'C:\Microsar-Sip\*' 'C:\Microsar-Sip2\' -Force
           ls C:\Microsar-Sip2\
         shell: pwsh
         
@@ -51,7 +50,7 @@ jobs:
 
       # run DaVinci & vVIRTUALtarget if no cache build is available
       - name: Run DaVinci & vVIRTUALtarget
-        if: steps.cache-sut.outputs.cache-hit != 'true'
+        if: always()
         env:
           cacheBSW: ${{ steps.cache-bsw.outputs.cache-hit }}
         run: |
