@@ -58,7 +58,7 @@ jobs:
             VttMake make ./ECU/LightControl.vttmake;
           }
           else {
-            VttMake make ./ECU/LightControl.vttmake --excludeDVCfgCmd;
+            VttMake make ./ECU/LightControl.vttmake;
           }
           if(-Not $?)
           {
