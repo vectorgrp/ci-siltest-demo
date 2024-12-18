@@ -27,7 +27,7 @@ jobs:
         shell: pwsh
       - name: Move all elements from C:\Microsar-Sip to C:\Microsar-Sip2
         run: |
-          Move-Item -Path 'C:\Microsar-Sip\*' -Destination 'C:\Microsar-Sip2\' -Force -Recurse
+          Move-Item 'C:\Microsar-Sip\*' 'C:\Microsar-Sip2\' -Force
           ls C:\Microsar-Sip2\
         shell: pwsh
         
