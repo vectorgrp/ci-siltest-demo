@@ -50,7 +50,7 @@ jobs:
 
       # run DaVinci & vVIRTUALtarget if no cache build is available
       - name: Run DaVinci & vVIRTUALtarget
-        if: always() 
+        if: always()
         env:
           cacheBSW: ${{ steps.cache-bsw.outputs.cache-hit }}
         run: |
