@@ -1,4 +1,4 @@
-name: Sil-Testing
+name: PNDDemo_Workflow
 
 on:
   pull_request:
