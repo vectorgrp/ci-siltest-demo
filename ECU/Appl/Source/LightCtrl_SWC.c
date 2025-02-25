@@ -56,8 +56,9 @@ void LightCtrl(void)
   /* Gateway: BC/Chart */
   /* During: BC/Chart */
 
-  rtb_LightIntensity_LightIntensi = 0;
+  // rtb_LightIntensity_LightIntensi = 0;
 
+  
   if (LightCtrl_SWC_DW.is_active_c1_LightCtrl_SWC == 0U) {
     /* Entry: BC/Chart */
     LightCtrl_SWC_DW.is_active_c1_LightCtrl_SWC = 1U;
