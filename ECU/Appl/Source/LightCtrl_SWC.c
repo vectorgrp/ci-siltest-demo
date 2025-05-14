@@ -16,6 +16,8 @@
 #include "LightCtrl_SWC.h"
 #include "LightCtrl_SWC_private.h"
 
+
+
 /* Named constants for Chart: '<S1>/Chart' */
 #define LightCtrl_SWC_IN_AutoMode      ((uint8_T)1U)
 #define LightCtrl_SWC_IN_EnterAutoMode ((uint8_T)1U)
