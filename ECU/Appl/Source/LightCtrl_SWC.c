@@ -214,7 +214,7 @@ void LightCtrl_Init(void)
    *  InitializeConditions for Chart: '<S1>/Chart'
    */
   Rte_Write_Output_HeadLight(false);
-
+ //test
   /* End of InitializeConditions for SubSystem: '<Root>/BC' */
 }
 
