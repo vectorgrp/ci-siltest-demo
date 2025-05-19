@@ -213,7 +213,7 @@ void LightCtrl_Init(void)
   /* InitializeConditions for Outport: '<Root>/Output_HeadLight' incorporates:
    *  InitializeConditions for Chart: '<S1>/Chart'
    */
-  Rte_Write_Output_HeadLight(false);
+  Rte_Write_Output_HeadLight(true);
  //test
   /* End of InitializeConditions for SubSystem: '<Root>/BC' */
 }
