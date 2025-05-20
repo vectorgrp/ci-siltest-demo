@@ -119,7 +119,8 @@ void LightCtrl(void)
             /* Transition: '<S2>:28' */
             Rte_Write_Output_HeadLight(true);
             LightCtrl_SWC_DW.HysteresisTimer = 0.0;
-            LightCtrl_SWC_DW.is_AutoMode = LightCtrl_SWC_IN_LightOn;
+            //test
+            LightCtrl_SWC_DW.is_AutoMode = LightCtrl_SWC_IN_LightToOff;
           }
           break;
 
