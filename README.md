@@ -222,6 +222,8 @@ To trigger the pipeline, using the web editor, do the following steps:
 
 5. Click on `Create pull request` button to attempt to merge your changes with the main branch thus triggering the pipeline automatically
 
+
+
 ## View the pipeline
 
 To see the pipeline working and the CANoe4SW Server Edition Test Report:
