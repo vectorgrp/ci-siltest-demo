@@ -146,7 +146,7 @@ FUNC(void, IoHwAb_CODE) IoHwAb_LightIntensityPort_LightIntensity(P2VAR(uint16, A
  *********************************************************************************************************************/
 
   Adc_ReadGroup(AdcConf_AdcGroup_AdcGroupLight, &LightResultBuffer);
-  LightNormResultBuffer = (uint16) LightResultBuffer * 100 / ((1 << 10) - 1);
+  LightNormResultBuffer = (uint16) LightResultBuffer * 50 / ((1 << 10) - 1);
   *io_signal =  LightNormResultBuffer;   
 
 /**********************************************************************************************************************
