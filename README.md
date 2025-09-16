@@ -62,7 +62,6 @@ We will explain the individual steps of the test workflow in more detail in subs
 
 <br clear="right">
 
-
 ## Repository Layout
 
 - [environment-make folder](/environment-make/) contains all files to run environment-make. Most importantly the `venvironment.yaml` file, which describes the `CANoe4SW Server Edition` setup.
