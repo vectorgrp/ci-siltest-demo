@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Settings>
+  <ProductVersion>10.3.97.1</ProductVersion>
+  <Project>
+    <SerializableDictionaryOfStringObject>
+      <item>
+        <key type="System.String">
+          <string>CANoeConfigPathSutImport</string>
+        </key>
+        <value type="System.String">
+          <string>D:\Customer_Demos\ci-siltest-demo\environment-make</string>
+        </value>
+      </item>
+    </SerializableDictionaryOfStringObject>
+  </Project>
+  <WindowManagement>
+    <SerializableDictionaryOfStringObject>
+      <item>
+        <key type="System.String">
+          <string>ActiveDocumentIndex</string>
+        </key>
+        <value type="System.Int32">
+          <int>1</int>
+        </value>
+      </item>
+      <item>
+        <key type="System.String">
+          <string>DocumentLayout</string>
+        </key>
+        <value type="Vector.ITE.ViewManagement.DocInfoList">
+          <ArrayOfDocumentInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <DocumentInfo>
+              <PositionInContainer>0</PositionInContainer>
+              <ContainerIndex>0</ContainerIndex>
+              <DocType>ProjectConfiguration</DocType>
+              <SerializedBasedFileName>&lt;VFileName v="V9" f="BQL" init="1" base="cfg" name="" /&gt;</SerializedBasedFileName>
+              <ContextGUID />
+              <ContextGUIDForGUI />
+            </DocumentInfo>
+            <DocumentInfo>
+              <PositionInContainer>1</PositionInContainer>
+              <ContainerIndex>0</ContainerIndex>
+              <DocType>TTTestModule</DocType>
+              <SerializedBasedFileName>&lt;VFileName v="V9" f="BQL" init="1" base="cfg" name="TestUnit2\basic.vtt" /&gt;</SerializedBasedFileName>
+              <ContextGUID>nlbbt2ih94cl</ContextGUID>
+              <ContextGUIDForGUI>nlbbt2ih94cl</ContextGUIDForGUI>
+            </DocumentInfo>
+          </ArrayOfDocumentInfo>
+        </value>
+      </item>
+      <item>
+        <key type="System.String">
+          <string>WindowLayout</string>
+        </key>
+        <value type="System.String">
+          <string>&lt;DockSiteLayout xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" SerializationFormat="ToolWindowsOnly" Version="2"&gt;
+	&lt;AutoHideHost /&gt;
+	&lt;Content xsi:type="SplitContainer" Orientation="Horizontal" DockedSize="1958,858.8"&gt;
+		&lt;UIElement xsi:type="SplitContainer" Orientation="Vertical" DockedSize="200,600"&gt;
+			&lt;UIElement xsi:type="ToolWindowContainer" DockedSize="211,407" SelectedWindowUniqueId="80d3d55f-464d-44bb-8ea2-fa78f6b2e89b"&gt;
+				&lt;UIElement xsi:type="ToolWindowRef" UniqueId="80d3d55f-464d-44bb-8ea2-fa78f6b2e89b" /&gt;
+			&lt;/UIElement&gt;
+			&lt;UIElement xsi:type="ToolWindowContainer" DockedSize="211,266" SelectedWindowUniqueId="284e2df0-0932-4854-9bf2-dbb96b34796a"&gt;
+				&lt;UIElement xsi:type="ToolWindowRef" UniqueId="284e2df0-0932-4854-9bf2-dbb96b34796a" /&gt;
+				&lt;UIElement xsi:type="ToolWindowRef" UniqueId="0ce8c2bf-4325-402d-8ebc-52ba6d40ccf2" /&gt;
+			&lt;/UIElement&gt;
+		&lt;/UIElement&gt;
+		&lt;UIElement xsi:type="SplitContainer" Orientation="Vertical" DockedSize="716,400"&gt;
+			&lt;UIElement xsi:type="Workspace"&gt;
+				&lt;Content xsi:type="TabbedMdiHost"&gt;
+					&lt;Content xsi:type="TabbedMdiContainer" SelectedWindowUniqueId="fa710f71-4c51-4497-bacb-1f6fe709f64a"&gt;
+						&lt;UIElement xsi:type="DocumentWindowRef" UniqueId="6573c728-60eb-4972-95bc-3d86d75cad0f" /&gt;
+						&lt;UIElement xsi:type="DocumentWindowRef" UniqueId="fa710f71-4c51-4497-bacb-1f6fe709f64a" /&gt;
+					&lt;/Content&gt;
+				&lt;/Content&gt;
+			&lt;/UIElement&gt;
+			&lt;UIElement xsi:type="ToolWindowContainer" DockedSize="716,200" SelectedWindowUniqueId="b0825994-7121-418f-bf5b-233d0dedd923"&gt;
+				&lt;UIElement xsi:type="ToolWindowRef" UniqueId="b0825994-7121-418f-bf5b-233d0dedd923" /&gt;
+				&lt;UIElement xsi:type="ToolWindowRef" UniqueId="b703a70f-aa52-477d-96fe-1c8fb52528f1" /&gt;
+			&lt;/UIElement&gt;
+		&lt;/UIElement&gt;
+		&lt;UIElement xsi:type="ToolWindowContainer" DockedSize="250,200" SelectedWindowUniqueId="6ac6e7cf-52c3-491e-8377-5b5c951e99f5"&gt;
+			&lt;UIElement xsi:type="ToolWindowRef" UniqueId="6ac6e7cf-52c3-491e-8377-5b5c951e99f5" /&gt;
+			&lt;UIElement xsi:type="ToolWindowRef" UniqueId="c6ddf369-eb82-4a69-9937-df3f2de48fcc" /&gt;
+		&lt;/UIElement&gt;
+	&lt;/Content&gt;
+	&lt;RaftingHosts&gt;
+		&lt;RaftingHost UniqueId="d0bc595c-8920-4f48-a45a-bd3802886642" Location="219,530" Size="211,678" WindowState="Normal"&gt;
+			&lt;AutoHideHost /&gt;
+			&lt;Content xsi:type="ToolWindowContainer" DockedSize="0,0"&gt;
+				&lt;UIElement xsi:type="Track" ContainerDockedSize="211,676" CreationDateTime="0001-01-01T00:00:00" UniqueId="80d3d55f-464d-44bb-8ea2-fa78f6b2e89b" /&gt;
+			&lt;/Content&gt;
+		&lt;/RaftingHost&gt;
+		&lt;RaftingHost UniqueId="4830289f-d188-465e-88d0-b26ca869e692" Location="238,475" Size="211,407" WindowState="Normal"&gt;
+			&lt;AutoHideHost /&gt;
+			&lt;Content xsi:type="ToolWindowContainer" DockedSize="0,0"&gt;
+				&lt;UIElement xsi:type="Track" ContainerDockedSize="211,439" CreationDateTime="0001-01-01T00:00:00" UniqueId="0ce8c2bf-4325-402d-8ebc-52ba6d40ccf2" /&gt;
+			&lt;/Content&gt;
+		&lt;/RaftingHost&gt;
+	&lt;/RaftingHosts&gt;
+	&lt;ToolWindows&gt;
+		&lt;ToolWindow UniqueId="80d3d55f-464d-44bb-8ea2-fa78f6b2e89b" SerializationId="ProjectView" ContainerDockedSize="211,407" IsOpen="true" LastActiveDateTime="2026-01-13T09:29:25.8317657+01:00" State="Docked" /&gt;
+		&lt;ToolWindow UniqueId="170c9fa4-bfd3-4cf3-936a-f4a166fcd827" SerializationId="YamlTestUnitsView" ContainerDockedSize="211,407" IsOpen="false" State="Docked" /&gt;
+		&lt;ToolWindow UniqueId="284e2df0-0932-4854-9bf2-dbb96b34796a" SerializationId="LibraryView" ContainerDockedSize="211,266" IsOpen="true" State="Docked" /&gt;
+		&lt;ToolWindow UniqueId="0ce8c2bf-4325-402d-8ebc-52ba6d40ccf2" SerializationId="HomeDirectoryView" ContainerDockedSize="211,266" IsOpen="true" State="Docked" /&gt;
+		&lt;ToolWindow UniqueId="cbd10313-3760-4a4f-a066-0e4b153053bc" SerializationId="YamlWorkspaceView" ContainerDockedSize="211,266" IsOpen="false" State="Docked" /&gt;
+		&lt;ToolWindow UniqueId="b0825994-7121-418f-bf5b-233d0dedd923" SerializationId="OutputService" ContainerDockedSize="716,200" IsOpen="true" LastActiveDateTime="2026-01-13T09:26:54.5241893+01:00" State="Docked" /&gt;
+		&lt;ToolWindow UniqueId="b703a70f-aa52-477d-96fe-1c8fb52528f1" SerializationId="FindResults1" ContainerDockedSize="716,200" IsOpen="true" State="Docked" /&gt;
+		&lt;ToolWindow UniqueId="273e697c-d09c-47e6-9cf8-19391a67d987" SerializationId="CaplFunctionExplorer" ContainerDockedSize="211,676" IsOpen="false" State="Docked" /&gt;
+		&lt;ToolWindow UniqueId="6ac6e7cf-52c3-491e-8377-5b5c951e99f5" SerializationId="SymbolExplorer" ContainerDockedSize="250,200" IsOpen="true" LastActiveDateTime="2026-01-13T09:24:04.2208611+01:00" State="Docked" /&gt;
+		&lt;ToolWindow UniqueId="c6ddf369-eb82-4a69-9937-df3f2de48fcc" SerializationId="InterfaceFunctionExplorer" ContainerDockedSize="250,200" IsOpen="true" LastActiveDateTime="2026-01-13T09:24:29.6163389+01:00" State="Docked" /&gt;
+		&lt;ToolWindow UniqueId="792c075c-8ac2-4c17-94e9-8809753bdf66" SerializationId="TteLanguageExplorer" ContainerDockedSize="211,676" IsOpen="false" State="Docked" /&gt;
+		&lt;ToolWindow UniqueId="72257bb0-24fb-4c42-b42a-d7666b985d2e" SerializationId="TraceItemExplorer" ContainerDockedSize="250,676" IsOpen="false" State="Docked" /&gt;
+		&lt;ToolWindow UniqueId="0a159bf2-dacc-4012-800a-c8c4cea81d0a" SerializationId="AiAssistant" ContainerDockedSize="550,600" IsOpen="false" State="Docked" /&gt;
+		&lt;ToolWindow UniqueId="ec848507-ef50-46f3-a8d4-be1c443ceaaa" SerializationId="SearchAndReplaceDialog" ContainerDockedSize="305,288" IsOpen="false" State="Docked" /&gt;
+	&lt;/ToolWindows&gt;
+&lt;/DockSiteLayout&gt;</string>
+        </value>
+      </item>
+      <item>
+        <key type="System.String">
+          <string>ViewSettings</string>
+        </key>
+        <value type="System.Collections.Generic.List`1[Vector.ITE.ViewInterfaces.ViewSettings]">
+          <ArrayOfViewSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <ViewSettings>
+              <Key>Path_.\TestUnit2\basic.vtt</Key>
+              <LastTouched>2026-01-13T08:31:22.7199764Z</LastTouched>
+              <Settings>
+                <item>
+                  <key type="System.String">
+                    <string>EditorSettings</string>
+                  </key>
+                  <value type="Vector.ITE.TestTable.Editor.TtEditorSettings">
+                    <TtEditorSettings>
+                      <SplitterSettingsTet>
+                        <SplitPosition>267</SplitPosition>
+                        <Expanded>true</Expanded>
+                      </SplitterSettingsTet>
+                      <SplitterSettingsPv>
+                        <SplitPosition>400</SplitPosition>
+                        <Expanded>true</Expanded>
+                      </SplitterSettingsPv>
+                      <SplitterSettingsLv>
+                        <SplitPosition>308</SplitPosition>
+                        <Expanded>true</Expanded>
+                      </SplitterSettingsLv>
+                      <ActiveView>2</ActiveView>
+                    </TtEditorSettings>
+                  </value>
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>ParameterViewSettings</string>
+                  </key>
+                  <value type="Vector.ITE.TestTable.Editor.ParameterView.TtParameterViewSettings">
+                    <TtParameterViewSettings>
+                      <CellSizes />
+                    </TtParameterViewSettings>
+                  </value>
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>TestExecutionTreeSettings</string>
+                  </key>
+                  <value type="Vector.ITE.TestTable.Editor.TestExecutionTree.TtTetSettings">
+                    <TtTetSettings>
+                      <TreeListSettings>
+                        <TreeListColumnSettings>
+                          <TtTreeListColumnSettings>
+                            <Width>100</Width>
+                            <VisibleIndex>0</VisibleIndex>
+                          </TtTreeListColumnSettings>
+                        </TreeListColumnSettings>
+                      </TreeListSettings>
+                    </TtTetSettings>
+                  </value>
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>LibraryViewSettings</string>
+                  </key>
+                  <value type="Vector.ITE.TestTable.Editor.LibraryView.TtLvSettings">
+                    <TtLvSettings>
+                      <TreeListSettings>
+                        <TreeListColumnSettings>
+                          <TtTreeListColumnSettings>
+                            <Width>100</Width>
+                            <VisibleIndex>0</VisibleIndex>
+                          </TtTreeListColumnSettings>
+                        </TreeListColumnSettings>
+                      </TreeListSettings>
+                    </TtLvSettings>
+                  </value>
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>CommandViewSettings</string>
+                  </key>
+                  <value type="Vector.ITE.TestTable.Editor.CommandView.TtCvSettings">
+                    <TtCvSettings>
+                      <TreeListSettings>
+                        <TreeListColumnSettings>
+                          <TtTreeListColumnSettings>
+                            <Width>300</Width>
+                            <VisibleIndex>0</VisibleIndex>
+                          </TtTreeListColumnSettings>
+                          <TtTreeListColumnSettings>
+                            <Width>300</Width>
+                            <VisibleIndex>1</VisibleIndex>
+                          </TtTreeListColumnSettings>
+                        </TreeListColumnSettings>
+                      </TreeListSettings>
+                      <RootNodeId>:0</RootNodeId>
+                      <MruList />
+                    </TtCvSettings>
+                  </value>
+                </item>
+              </Settings>
+            </ViewSettings>
+            <ViewSettings>
+              <Key>ProjectConfiguration</Key>
+              <LastTouched>2026-01-13T08:31:22.7581957Z</LastTouched>
+              <Settings>
+                <item>
+                  <key type="System.String">
+                    <string>SelectedTabPage</string>
+                  </key>
+                  <value type="Vector.ITE.Document.EProjectConfigurationTabPage">
+                    <EProjectConfigurationTabPage>SutEnvironment</EProjectConfigurationTabPage>
+                  </value>
+                </item>
+              </Settings>
+            </ViewSettings>
+            <ViewSettings>
+              <Key>SymbolExplorer</Key>
+              <Settings>
+                <item>
+                  <key type="System.String">
+                    <string>State</string>
+                  </key>
+                  <value type="System.String">
+                    <string>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;SymbolSelectionProperties xmlns:i="http://www.w3.org/2001/XMLSchema-instance"&gt;
+&lt;AreDiagQualifiersShown&gt;true&lt;/AreDiagQualifiersShown&gt;
+&lt;CurrentViewId&gt;None&lt;/CurrentViewId&gt;
+&lt;SearchProperties&gt;
+&lt;SearchTermHistory /&gt;
+&lt;/SearchProperties&gt;
+&lt;ViewProperties&gt;
+&lt;ViewProperties&gt;
+&lt;ColumnsProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;IsVisible&gt;true&lt;/IsVisible&gt;
+&lt;Position&gt;0&lt;/Position&gt;
+&lt;Sorting&gt;Ascending&lt;/Sorting&gt;
+&lt;Width&gt;200&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;IsVisible&gt;true&lt;/IsVisible&gt;
+&lt;Position&gt;1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;IsVisible&gt;true&lt;/IsVisible&gt;
+&lt;Position&gt;2&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;IsVisible&gt;true&lt;/IsVisible&gt;
+&lt;Position&gt;3&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;IsVisible&gt;true&lt;/IsVisible&gt;
+&lt;Position&gt;4&lt;/Position&gt;
+&lt;Width&gt;200&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;ColumnProperties&gt;
+&lt;Position&gt;-1&lt;/Position&gt;
+&lt;Width&gt;100&lt;/Width&gt;
+&lt;/ColumnProperties&gt;
+&lt;/ColumnsProperties&gt;
+&lt;Key&gt;Embedded/NetworkSymbols&lt;/Key&gt;
+&lt;NodeTreeProperties /&gt;
+&lt;/ViewProperties&gt;
+&lt;/ViewProperties&gt;
+&lt;/SymbolSelectionProperties&gt;</string>
+                  </value>
+                </item>
+              </Settings>
+            </ViewSettings>
+            <ViewSettings>
+              <Key>TraceItemExplorer</Key>
+              <Settings>
+                <item>
+                  <key type="System.String">
+                    <string>TraceItems_Expanded</string>
+                  </key>
+                  <value type="System.Collections.ArrayList">
+                    <ArrayOfAnyType />
+                  </value>
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>TraceItems_Selected</string>
+                  </key>
+                  <value type="System.Collections.ArrayList">
+                    <ArrayOfAnyType />
+                  </value>
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>TraceItems_Focused</string>
+                  </key>
+                  <value type="null" />
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>TraceItems_TopIndex</string>
+                  </key>
+                  <value type="System.Int32">
+                    <int>0</int>
+                  </value>
+                </item>
+              </Settings>
+            </ViewSettings>
+            <ViewSettings>
+              <Key>HomeDirectoryView</Key>
+              <Settings>
+                <item>
+                  <key type="System.String">
+                    <string>HomeDirectoryView_Expanded</string>
+                  </key>
+                  <value type="System.Collections.ArrayList">
+                    <ArrayOfAnyType>
+                      <anyType xsi:type="xsd:string">tests/tests</anyType>
+                    </ArrayOfAnyType>
+                  </value>
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>HomeDirectoryView_Selected</string>
+                  </key>
+                  <value type="System.Collections.ArrayList">
+                    <ArrayOfAnyType />
+                  </value>
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>HomeDirectoryView_Focused</string>
+                  </key>
+                  <value type="System.String">
+                    <string>tests/tests</string>
+                  </value>
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>HomeDirectoryView_TopIndex</string>
+                  </key>
+                  <value type="System.Int32">
+                    <int>0</int>
+                  </value>
+                </item>
+              </Settings>
+            </ViewSettings>
+            <ViewSettings>
+              <Key>LibraryView</Key>
+              <Settings>
+                <item>
+                  <key type="System.String">
+                    <string>LibraryView_Expanded</string>
+                  </key>
+                  <value type="System.Collections.ArrayList">
+                    <ArrayOfAnyType />
+                  </value>
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>LibraryView_Selected</string>
+                  </key>
+                  <value type="System.Collections.ArrayList">
+                    <ArrayOfAnyType />
+                  </value>
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>LibraryView_Focused</string>
+                  </key>
+                  <value type="null" />
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>LibraryView_TopIndex</string>
+                  </key>
+                  <value type="System.Int32">
+                    <int>0</int>
+                  </value>
+                </item>
+              </Settings>
+            </ViewSettings>
+            <ViewSettings>
+              <Key>ProjectView</Key>
+              <Settings>
+                <item>
+                  <key type="System.String">
+                    <string>ProjectView_Expanded</string>
+                  </key>
+                  <value type="System.Collections.ArrayList">
+                    <ArrayOfAnyType>
+                      <anyType xsi:type="xsd:string">tests/ProjectRoot</anyType>
+                      <anyType xsi:type="xsd:string">tests/ProjectRoot/Test Units/TestUnit1</anyType>
+                      <anyType xsi:type="xsd:string">tests/ProjectRoot/Test Units/TestUnit2</anyType>
+                    </ArrayOfAnyType>
+                  </value>
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>ProjectView_Selected</string>
+                  </key>
+                  <value type="System.Collections.ArrayList">
+                    <ArrayOfAnyType>
+                      <anyType xsi:type="xsd:string">tests/ProjectRoot</anyType>
+                    </ArrayOfAnyType>
+                  </value>
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>ProjectView_Focused</string>
+                  </key>
+                  <value type="System.String">
+                    <string>tests/ProjectRoot</string>
+                  </value>
+                </item>
+                <item>
+                  <key type="System.String">
+                    <string>ProjectView_TopIndex</string>
+                  </key>
+                  <value type="System.Int32">
+                    <int>0</int>
+                  </value>
+                </item>
+              </Settings>
+            </ViewSettings>
+          </ArrayOfViewSettings>
+        </value>
+      </item>
+    </SerializableDictionaryOfStringObject>
+  </WindowManagement>
+  <DocumentManagement>
+    <SerializableDictionaryOfStringObject />
+  </DocumentManagement>
+  <BookmarkService>
+    <SerializableDictionaryOfStringObject />
+  </BookmarkService>
+  <SearchAndReplace>
+    <SerializableDictionaryOfStringObject />
+  </SearchAndReplace>
+  <FunctionExplorer>
+    <SerializableDictionaryOfStringObject />
+  </FunctionExplorer>
+  <TempFileRepository>
+    <SerializableDictionaryOfStringObject />
+  </TempFileRepository>
+  <TestTableEditor>
+    <SerializableDictionaryOfStringObject>
+      <item>
+        <key type="System.String">
+          <string>TtRUList</string>
+        </key>
+        <value type="System.Collections.Generic.List`1[System.String]">
+          <ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        </value>
+      </item>
+    </SerializableDictionaryOfStringObject>
+  </TestTableEditor>
+  <TestSequenceDiagram>
+    <SerializableDictionaryOfStringObject />
+  </TestSequenceDiagram>
+  <LanguagesCommon>
+    <SerializableDictionaryOfStringObject />
+  </LanguagesCommon>
+  <InterfaceFunctionExplorer>
+    <SerializableDictionaryOfStringObject />
+  </InterfaceFunctionExplorer>
+  <ITETester>
+    <SerializableDictionaryOfStringObject />
+  </ITETester>
+  <MeasurePerformance>
+    <SerializableDictionaryOfStringObject />
+  </MeasurePerformance>
+  <TraceItems>
+    <SerializableDictionaryOfStringObject />
+  </TraceItems>
+  <IntelliSymbolManagement>
+    <SerializableDictionaryOfStringObject />
+  </IntelliSymbolManagement>
+  <PrintDialog>
+    <SerializableDictionaryOfStringObject />
+  </PrintDialog>
+  <TestCaseIDGeneration>
+    <SerializableDictionaryOfStringObject />
+  </TestCaseIDGeneration>
+  <StateChartDiagram>
+    <SerializableDictionaryOfStringObject />
+  </StateChartDiagram>
+  <TcAttributesPropagation>
+    <SerializableDictionaryOfStringObject />
+  </TcAttributesPropagation>
+  <WaveformEditor>
+    <SerializableDictionaryOfStringObject />
+  </WaveformEditor>
+  <Application>
+    <SerializableDictionaryOfStringObject />
+  </Application>
+  <Workspace>
+    <SerializableDictionaryOfStringObject />
+  </Workspace>
+</Settings>

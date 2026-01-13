@@ -15,3 +15,4 @@ ECU/Solution/
 ECU/*_workingCopy.*
 ECU/MakeParameters.xml
 *.vector
+tests/obj_vTESTstudio_Projekt/

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ttroot
+  version="26" xmlns="http://www.vector-informatik.de/ITE/TestTable/1.0">
+  <tt>
+    <capltestcase>
+      <title>TC CheckTurnOn when dark</title>
+      <name>CheckTurnOn</name>
+      <param>
+        <type>float</type>
+        <value>
+          <const>10</const>
+        </value>
+      </param>
+      <tcid>CheckTurnOn10</tcid>
+      <description>Check turning on the light when light intensity is 10%</description>
+    </capltestcase>
+    <capltestcase>
+      <title>TC CheckTurnOn when bright</title>
+      <name>CheckTurnOn</name>
+      <param>
+        <type>float</type>
+        <value>
+          <const>90</const>
+        </value>
+      </param>
+      <tcid>CheckTurnOn90</tcid>
+      <description>Check turning on the light when light intensity is 90%</description>
+    </capltestcase>
+    <capltestcase>
+      <title>TC CheckTurnOff when dark</title>
+      <name>CheckTurnOff</name>
+      <param>
+        <type>float</type>
+        <value>
+          <const>10</const>
+        </value>
+      </param>
+      <tcid>CheckTurnOff10</tcid>
+      <description>Check turning off the light when light intensity is 10%</description>
+    </capltestcase>
+    <capltestcase>
+      <title>TC CheckTurnOff when bright</title>
+      <name>CheckTurnOff</name>
+      <param>
+        <type>float</type>
+        <value>
+          <const>90</const>
+        </value>
+      </param>
+      <tcid>CheckTurnOff90</tcid>
+      <description>Check turning off the light when light intensity is 90%</description>
+    </capltestcase>
+  </tt>
+  <ttlib>
+    <ts_definitions />
+    <tc_definitions />
+    <function_definitions />
+  </ttlib>
+</ttroot>

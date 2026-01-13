@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ttroot
+  version="26" xmlns="http://www.vector-informatik.de/ITE/TestTable/1.0">
+  <tt>
+    <capltestcase>
+      <title>TC CheckInstantAutoOnAfterOff</title>
+      <name>CheckInstantAutoOnAfterOff</name>
+      <tcid>CheckInstantAutoOnAfterOff</tcid>
+      <description>Check automatically turning immediatly on when dark and switching to Auto</description>
+    </capltestcase>
+    <capltestcase>
+      <title>TC CheckInstantAutoOffAfterOn</title>
+      <name>CheckInstantAutoOffAfterOn</name>
+      <tcid>CheckInstantAutoOffAfterOn</tcid>
+      <description>Check automatically turning immediatly on when bright and switching to Auto</description>
+    </capltestcase>
+    <capltestcase>
+      <title>TC CheckStayAutoOffAfterOff</title>
+      <name>CheckStayAutoOffAfterOff</name>
+      <tcid>CheckStayAutoOffAfterOff</tcid>
+      <description>Check automatic stays off when not dark and switching to Auto</description>
+    </capltestcase>
+    <capltestcase>
+      <title>TC CheckAutoOffAmbLightOn</title>
+      <name>CheckAutoOffAmbLightOn</name>
+      <tcid>CheckAutoOffAmbLightOn</tcid>
+      <description>Check automatically turning off when ambient light turns on</description>
+    </capltestcase>
+    <capltestcase>
+      <title>TC CheckAutoOnAmbLightOff</title>
+      <name>CheckAutoOnAmbLightOff</name>
+      <tcid>CheckAutoOnAmbLightOff</tcid>
+      <description>Check automatically turning on when ambient light turns off</description>
+    </capltestcase>
+  </tt>
+  <ttlib>
+    <ts_definitions />
+    <tc_definitions />
+    <function_definitions />
+  </ttlib>
+</ttroot>

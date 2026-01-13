@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <FileFormatVersion>13</FileFormatVersion>
+  <ProjectModelRoot>
+    <UniqueId>e8jtklr193bm</UniqueId>
+    <EmbeddedSysVars>
+      <ExternalFiles />
+      <MainFile>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;systemvariables version="1" /&gt;</MainFile>
+      <PersistencyGuid>55886gr34f1r</PersistencyGuid>
+    </EmbeddedSysVars>
+    <CANoeEmbeddedSysVars>
+      <ExternalFiles />
+      <MainFile>
+      </MainFile>
+      <PersistencyGuid>1oqbkhsf5hi2</PersistencyGuid>
+    </CANoeEmbeddedSysVars>
+    <EmbeddedBasicDiagnosisFiles />
+    <EmbeddedEthernetPortsFile>
+      <Content>
+      </Content>
+      <PersistencyGuid>moj1jt8mhr9c</PersistencyGuid>
+    </EmbeddedEthernetPortsFile>
+    <ExternalReferences />
+    <Libraries />
+    <ProjectRoot>
+      <TestUnits>
+        <FolderName>Test Units</FolderName>
+        <SubFolders>
+          <TestUnit>
+            <FolderName>TestUnit1</FolderName>
+            <Files>
+              <ProjectBasedFileLink>
+                <SerializedBasedFileName>&lt;VFileName v="V9" f="BQL" init="1" base="cfg" name="auto\auto.can" /&gt;</SerializedBasedFileName>
+                <PersistencyGuid>595va59ugtvo</PersistencyGuid>
+              </ProjectBasedFileLink>
+              <ProjectFile>
+                <FileName>auto.vtt</FileName>
+                <PersistencyGuid>ko7eppas2i48</PersistencyGuid>
+              </ProjectFile>
+            </Files>
+            <PersistencyGuid>0j6od4v5iivb</PersistencyGuid>
+            <FilesExcludedFromTestTree />
+            <FilesExcludedFromBuild />
+            <EditableParameterFiles />
+            <ExcludeFromBuild>False</ExcludeFromBuild>
+            <EmbeddedTUVariantProperties>
+              <Content>&lt;TUVariantPropertyModel&gt;
+  &lt;FileFormatVersion&gt;1&lt;/FileFormatVersion&gt;
+  &lt;TUVariantPropertyValues&gt;
+    &lt;VariantPropertyRefs /&gt;
+  &lt;/TUVariantPropertyValues&gt;
+&lt;/TUVariantPropertyModel&gt;</Content>
+              <PersistencyGuid>iedd75in837o</PersistencyGuid>
+            </EmbeddedTUVariantProperties>
+            <EmbeddedTUProperties>
+              <Content>&lt;TUProperties&gt;
+  &lt;Caption&gt;&lt;/Caption&gt;
+  &lt;Description&gt;&lt;/Description&gt;
+  &lt;Version&gt;&lt;/Version&gt;
+  &lt;PreBuildEvent&gt;&lt;/PreBuildEvent&gt;
+  &lt;PostBuildEvent&gt;&lt;/PostBuildEvent&gt;
+  &lt;MultiCANoeYaml&gt;&lt;/MultiCANoeYaml&gt;
+  &lt;TestDesigners&gt;
+    &lt;Columns /&gt;
+    &lt;TestDesignerEntries /&gt;
+  &lt;/TestDesigners&gt;
+  &lt;TUInfos /&gt;
+&lt;/TUProperties&gt;</Content>
+              <PersistencyGuid>305a7aku4lkn</PersistencyGuid>
+            </EmbeddedTUProperties>
+            <ModellingLibraries>
+              <Files />
+            </ModellingLibraries>
+            <SystemModelingLibraries />
+          </TestUnit>
+          <TestUnit>
+            <FolderName>TestUnit2</FolderName>
+            <Files>
+              <ProjectBasedFileLink>
+                <SerializedBasedFileName>&lt;VFileName v="V9" f="BQL" init="1" base="cfg" name="basic\basic.can" /&gt;</SerializedBasedFileName>
+                <PersistencyGuid>8gt35tkmsjp2</PersistencyGuid>
+              </ProjectBasedFileLink>
+              <ProjectFile>
+                <FileName>basic.vtt</FileName>
+                <PersistencyGuid>6rvic1d5h6bs</PersistencyGuid>
+              </ProjectFile>
+            </Files>
+            <PersistencyGuid>nlbbt2ih94cl</PersistencyGuid>
+            <FilesExcludedFromTestTree />
+            <FilesExcludedFromBuild />
+            <EditableParameterFiles />
+            <ExcludeFromBuild>False</ExcludeFromBuild>
+            <EmbeddedTUVariantProperties>
+              <Content>&lt;TUVariantPropertyModel&gt;
+  &lt;FileFormatVersion&gt;1&lt;/FileFormatVersion&gt;
+  &lt;TUVariantPropertyValues&gt;
+    &lt;VariantPropertyRefs /&gt;
+  &lt;/TUVariantPropertyValues&gt;
+&lt;/TUVariantPropertyModel&gt;</Content>
+              <PersistencyGuid>hqvrcpqjkio6</PersistencyGuid>
+            </EmbeddedTUVariantProperties>
+            <EmbeddedTUProperties>
+              <Content>&lt;TUProperties&gt;
+  &lt;Caption&gt;&lt;/Caption&gt;
+  &lt;Description&gt;&lt;/Description&gt;
+  &lt;Version&gt;&lt;/Version&gt;
+  &lt;PreBuildEvent&gt;&lt;/PreBuildEvent&gt;
+  &lt;PostBuildEvent&gt;&lt;/PostBuildEvent&gt;
+  &lt;MultiCANoeYaml&gt;&lt;/MultiCANoeYaml&gt;
+  &lt;TestDesigners&gt;
+    &lt;Columns /&gt;
+    &lt;TestDesignerEntries /&gt;
+  &lt;/TestDesigners&gt;
+  &lt;TUInfos /&gt;
+&lt;/TUProperties&gt;</Content>
+              <PersistencyGuid>jkedjtqoisb1</PersistencyGuid>
+            </EmbeddedTUProperties>
+            <ModellingLibraries>
+              <Files />
+            </ModellingLibraries>
+            <SystemModelingLibraries />
+          </TestUnit>
+        </SubFolders>
+      </TestUnits>
+    </ProjectRoot>
+    <ProjectSettings>
+      <NetGenerateNsNetwork>False</NetGenerateNsNetwork>
+      <NetGenerateNsDatabase>False</NetGenerateNsDatabase>
+      <NetGenerateNsNode>False</NetGenerateNsNode>
+      <NetGenerateNsFrame>False</NetGenerateNsFrame>
+      <BuildDirLocal>
+      </BuildDirLocal>
+      <BuildMode>Local</BuildMode>
+      <IncludeSources>False</IncludeSources>
+      <CreateExecutableFolder>False</CreateExecutableFolder>
+      <ExportTraceabilityMatrix>False</ExportTraceabilityMatrix>
+      <ExportType>XML_EXCEL</ExportType>
+      <GenerateXmlDocumentation>False</GenerateXmlDocumentation>
+      <EncryptCaplFiles>False</EncryptCaplFiles>
+      <TdeBreakOnFailDefault>True</TdeBreakOnFailDefault>
+      <TdePartialPathSeparator>_</TdePartialPathSeparator>
+      <TdeTestCaseAttributeSeparator>_</TdeTestCaseAttributeSeparator>
+      <TdeTcAnUseId>False</TdeTcAnUseId>
+      <StateChartAlgorithm>BreadthFirst</StateChartAlgorithm>
+      <StateChartCoverage>Transition</StateChartCoverage>
+      <TteTcBreakOnFailDefault>True</TteTcBreakOnFailDefault>
+      <TteTsBreakOnFailDefault>True</TteTsBreakOnFailDefault>
+      <IsIdAwareProject>True</IsIdAwareProject>
+      <FullNavigationSupported>True</FullNavigationSupported>
+      <UsesPDULayer>False</UsesPDULayer>
+      <UseAllNetworks>False</UseAllNetworks>
+      <UseOutputDirAsWorkingDir>False</UseOutputDirAsWorkingDir>
+      <NetVersion>Net47</NetVersion>
+      <TdeGenerateDescriptionFromComments>False</TdeGenerateDescriptionFromComments>
+      <IsDiagramIdAwareProject>False</IsDiagramIdAwareProject>
+      <ExportDiagramsAsImage>False</ExportDiagramsAsImage>
+      <ExportTestDesignDocumentation>False</ExportTestDesignDocumentation>
+      <UseConfigSpecificNames>False</UseConfigSpecificNames>
+      <CaplTarget>Win64</CaplTarget>
+      <FBEnableChangeInfo>True</FBEnableChangeInfo>
+      <PythonInterpreterVersion>
+      </PythonInterpreterVersion>
+      <CaplWarnings />
+      <AdditionalLicenseInfos />
+    </ProjectSettings>
+    <SUTEnvironment>
+      <SUTSystemVariables>
+        <FolderName>SUT System Variables</FolderName>
+        <Files>
+          <ProjectBasedFileLink>
+            <SerializedBasedFileName>&lt;VFileName v="V9" f="BQL" init="1" base="cfg" name="..\environment-make\SysVar\interface.vsysvar" /&gt;</SerializedBasedFileName>
+            <PersistencyGuid>3s61vnvs5dae</PersistencyGuid>
+          </ProjectBasedFileLink>
+        </Files>
+      </SUTSystemVariables>
+      <DiagnosticTargets>
+        <FolderName>Diagnostic Targets</FolderName>
+      </DiagnosticTargets>
+      <SUTNetworks>
+        <FolderName>SUT Networks</FolderName>
+        <SubFolders>
+          <Channel>
+            <FolderName>CAN00</FolderName>
+            <Files>
+              <DatabaseFileLink>
+                <SerializedBasedFileName>&lt;VFileName v="V9" f="BQL" init="1" base="cfg" name="..\environment-make\Database\CAN.dbc" /&gt;</SerializedBasedFileName>
+                <Caption>CANDB</Caption>
+                <ChannelType>CAN</ChannelType>
+                <Cluster>CAN</Cluster>
+                <IgnoredNodes>
+                </IgnoredNodes>
+                <DatabaseFileType>DBC</DatabaseFileType>
+                <PersistencyGuid>dbut2i8tablb</PersistencyGuid>
+                <FlexRayABCompatibility>0</FlexRayABCompatibility>
+                <ASRShortNameUsage>ISignalOrGroup</ASRShortNameUsage>
+                <FlexRayPostfixOption>0</FlexRayPostfixOption>
+                <AfdxPduMode>0</AfdxPduMode>
+                <AsrNamesSuffixMode>1</AsrNamesSuffixMode>
+                <FilterUnrecognizedNodes>0</FilterUnrecognizedNodes>
+                <AsrTextTableNamingMode>0</AsrTextTableNamingMode>
+                <AsrNormalizeTimings>0</AsrNormalizeTimings>
+                <ServiceGenerationActive>0</ServiceGenerationActive>
+                <SplitOverlappingFlexRayNMFrames>1</SplitOverlappingFlexRayNMFrames>
+              </DatabaseFileLink>
+            </Files>
+            <ChannelNum>1</ChannelNum>
+            <ChannelType>CAN</ChannelType>
+          </Channel>
+        </SubFolders>
+      </SUTNetworks>
+      <COLibParts>
+        <FolderName>CO Lib Parts</FolderName>
+      </COLibParts>
+      <ComCoDataSource>VcodmFiles</ComCoDataSource>
+      <SourceOfDescriptionFiles>EnvironmentYaml</SourceOfDescriptionFiles>
+      <EnvironmentMakeConfiguration>
+        <EnvironmentMakeFolder>.\..\environment-make\</EnvironmentMakeFolder>
+        <SelectedScenario>Default</SelectedScenario>
+      </EnvironmentMakeConfiguration>
+    </SUTEnvironment>
+  </ProjectModelRoot>
+</Project>
